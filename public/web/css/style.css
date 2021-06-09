@@ -1,0 +1,23 @@
+@charset "utf-8";
+
+/*  1920센터 정렬 완벽 구현 */
+.slideshow5_wrap {position:relative; height:368px; overflow:hidden;  width:100%; float:left;} 
+.slideshow5_wrap_center {width:1300px; position:absolute; left:50%; margin-left:-650px; }
+
+
+/*  화살표 스타일1 */
+.arrow_wrap { position:absolute;width:1800px; left:50%; margin-left:-900px;  top:150px;  z-index:10000;} /* 화살표 위치구현 */
+.arrow_left {float: left;}
+.arrow_right{float: right;}
+
+
+/*  화살표 스타일2 */
+.wrap_btn {position: absolute; bottom:50px; left:50%; width:100px; z-index:110; margin-left: -50px;} /* 화살표 위치구현 */
+.slide1 {position: relative;}
+.wrap_btn span {float: left; cursor: pointer;}
+
+
+/*  점 스타일 */
+.slide_pager {position:absolute; left:50%; bottom:0px;  z-index:110; transform:translateX(-50%);} /* 점의 위치설성 */
+.slide_pager span {font-size:50px; float: left; width:35px; color: #eee; cursor:pointer; text-align:left;} /* 점의 기본 색상 */
+.slide_pager span.cycle-pager-active {color: #6b411f;} /* 점의 선택시 색상 */

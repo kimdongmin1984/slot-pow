@@ -1,0 +1,73 @@
+{
+  "name": "fx",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "@material-ui/core": "^4.9.14",
+    "@material-ui/icons": "^4.9.1",
+    "@material-ui/lab": "^4.0.0-alpha.53",
+    "@testing-library/jest-dom": "^4.2.4",
+    "@testing-library/react": "^9.3.2",
+    "@testing-library/user-event": "^7.1.2",
+    "@types/canvasjs": "^1.9.5",
+    "@types/d3-format": "^1.3.1",
+    "@types/d3-time-format": "^2.1.1",
+    "@types/jest": "^24.0.0",
+    "@types/node": "^12.0.0",
+    "@types/react": "^16.9.0",
+    "@types/react-dom": "^16.9.0",
+    "@types/react-router-dom": "^5.1.5",
+    "@types/styled-components": "^5.1.0",
+    "axios": "^0.19.2",
+    "d3-dsv": "^1.2.0",
+    "iframe-resizer": "^4.2.10",
+    "iframe-resizer-react": "^1.0.3",
+    "moment": "^2.25.3",
+    "react": "^16.13.1",
+    "react-animated-slider": "^2.0.0",
+    "react-compound-timer": "^1.2.0",
+    "react-confirm-alert": "^2.6.1",
+    "react-cookie": "^4.0.3",
+    "react-device-detect": "^1.12.1",
+    "react-dom": "^16.13.1",
+    "react-google-charts": "2",
+    "react-iframe": "^1.8.0",
+    "react-router-dom": "^5.1.2",
+    "react-scripts": "3.4.1",
+    "react-stockcharts": "^0.7.8",
+    "reactjs-popup": "^1.5.0",
+    "styled-components": "^5.1.0",
+    "typescript": "~3.7.2"
+  },
+  "scripts": {
+    "start": "set PORT=3007 && react-scripts start",
+    "start:sty": "env-cmd -f .env.sty react-scripts start",
+    "build": "react-scripts build",
+    "build:sty": "env-cmd -f .env.sty react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
+  },
+  "eslintConfig": {
+    "extends": "react-app"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "devDependencies": {
+    "@types/classnames": "^2.2.9",
+    "@types/node": "^13.7.1",
+    "@types/react-router-dom": "^5.1.3",
+    "@types/react-transition-group": "^4.2.3",
+    "env-cmd": "^10.1.0",
+    "react-context-menu": "^3.0.2"
+  }
+}
