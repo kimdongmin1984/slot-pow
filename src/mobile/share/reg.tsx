@@ -338,7 +338,7 @@ export class Reg extends Component<Props, State> {
 
                     <div className="_inner_modal_content">
                       <div className="_inner_title py-0 pb-3 mb-3">
-                        <label>찬스 슬롯에 오신것을 환영합니다.</label>
+                        <label>파워 메가 슬롯에 오신것을 환영합니다.</label>
                       </div>
 
                       <div className="_inner_inputs">

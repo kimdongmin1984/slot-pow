@@ -705,7 +705,7 @@ button,a,input,select,textarea{
     animation:banerGlowAnim 15s ease infinite;
 }
 .banner-section .background-images .caishen{
-    width:43.7%;
+    width:33.0%;
     right:10%;
     transform-origin:bottom center;
     animation:caishenAnim 15s ease infinite;

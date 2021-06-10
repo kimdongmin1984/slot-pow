@@ -293,7 +293,7 @@ class game extends Component<Props, State> {
     <section className="board-section">
     <div className="board-pane">
         <div className="header">
-            <p> 찬스 공지</p>
+            <p>파워 메가 슬롯 공지</p>
         </div>
         <table>
                     </table>

@@ -208,7 +208,7 @@ export class Companylist extends Component<Props, State> {
             <div className="title-container">
                 <div className="title-pane">
                     <i className="fa fa-star" aria-hidden="true"></i>
-                    <span className="title">찬스 게임즈</span>
+                    <span className="title">파워 메가 슬롯</span>
                     <i className="fa fa-star" aria-hidden="true"></i>
                 </div>
             </div>
@@ -228,7 +228,7 @@ export class Companylist extends Component<Props, State> {
             </section>
             <section className="slot-section">
                 <div className="container">
-                  <a className="slot-btn hot">
+                  {/* <a className="slot-btn hot">
                     <img className="hot-tag" src="/last/image/main/hot-tag.png" alt="" />
                     <div className="main-container">
                         <img className="main-img" src="/last/image/main/hot.png" alt="" />
@@ -244,7 +244,7 @@ export class Companylist extends Component<Props, State> {
                     <div className="slot-name">
                         <span>HOT GAMES</span>
                     </div>
-                </a>
+                </a> */}
                   {
                     this.state.casionos.map((info: any) => {
                       return (
