@@ -169,12 +169,13 @@ export class Web extends Component<Props, State> {
             />
           </Route>
         </Switch>
-        <GlobalStyles />
-
         {<NotePopup
             SetCookie={this.props.SetCookie}
             GetCookie={this.props.GetCookie}
         ></NotePopup>}
+
+        <GlobalStyles />
+
 
         <div id="helpCount" style={{ display: 'none' }}>0</div>
 

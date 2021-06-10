@@ -7,6 +7,13 @@ import { UserService } from '../../service/user.service';
 import { GetTimeStemp } from '../../help/utils';
 // import { UserService } from '../service/user.service';
 
+import {
+  BrowserView,
+  MobileView,
+  isBrowser,
+  isMobile,
+} from "react-device-detect";
+
 interface Props {
    SetCookie: (name: string, data: any) => any;
    GetCookie: (name: string) => any;
@@ -59,7 +66,7 @@ export class NotePopup extends React.Component<Props, State> {
 
       return (
 
-        <div className="pop01_popup1 draggable02" id="divpopup20210131045005" style={{position: 'absolute', top: `${pop.posY}px`, left: `${pop.posX}px`, zIndex: 1000}} >
+        <div className="pop01_popup1 draggable02" id="divpopup20210131045005" style={isMobile ? {position: 'absolute', top: `${pop.posY}px`,  zIndex: 1000} : {position: 'absolute', top: `${pop.posY}px`, left: `${pop.posX}px`, zIndex: 1000}} >
         <div className="pop01_popup_wrap">
             <div className="pop01_popup_btn_wrap">
                 <ul>
@@ -70,7 +77,7 @@ export class NotePopup extends React.Component<Props, State> {
                 </ul>
             </div>
             <div className="pop01_popup_box">
-              <div className="pop01_popup_text" style={{padding:'30px', width:'500px'}}>
+              <div className="pop01_popup_text" style={isMobile ?  {padding:'30px', width:'100%'} :  {padding:'30px', width:'500px'} }>
                   <span className="pop01_popup_font1" style={{borderBottom:'2px solid #fff', marginBottom:'15px', color : pop.titleColor}}>{pop.title}</span>
                   <span className="pop01_popup_font2" >
                         <div dangerouslySetInnerHTML={{ __html:  pop.contents }}></div>
@@ -82,26 +89,7 @@ export class NotePopup extends React.Component<Props, State> {
             </div>
         </div>
     </div>
-      //   <div id="hd_pops_41" className="hd_pops" style={{ top: `${pop.posY}px`, left: `${pop.posX}px`, width:'500px', zIndex : 99,  position: 'fixed'}}>
-      //     <div className="hd_pops_pannel">
-      //       <div className="hd_pops_con" style={{width:'500px', height:'400px'}}>
-      //         <span style={{color: pop.titleColor, fontSize:'18pt',}}>{pop.title}</span>
-      //         <div dangerouslySetInnerHTML={{ __html:  pop.contents }}></div>
-      //       </div>
-      //       <div className="hd_pops_footer">
-      //           <button className="hd_pops_reject hd_pops_41 1 _f_left _btn _btn_01" onClick={()=>{
-      //             this.props.SetCookie(`pop_${pop.idx}`, GetTimeStemp())
-      //             this.state.close_popup[`pop_${pop.idx}`] = true
-      //             this.setState({ close_popup : this.state.close_popup })
-                  
-      //             }}><strong>1</strong>시간 동안 다시 열람하지 않습니다.</button>
-      //           <button className="hd_pops_close hd_pops_41 _f_right _btn _btn_01" 
-      //             onClick={()=>{
-      //               this.state.close_popup[`pop_${pop.idx}`] = true
-      //               this.setState({ close_popup : this.state.close_popup })}}>닫기</button>
-      //       </div>
-      //   </div>
-      // </div>
+
     
       );
     };
