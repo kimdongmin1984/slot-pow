@@ -149,7 +149,7 @@ class reg extends Component<any, State> {
     ) {
       confirmAlert({
         title: "회원 가입",
-        message: "아이디를 입력 또는 4자리 이상 20자리 이하로 작성해주세요",
+        message: "아이디를 입력 또는 3자리 이상 20자리 이하로 작성해주세요",
         buttons: [
           {
             label: "확인",
@@ -199,7 +199,7 @@ class reg extends Component<any, State> {
     ) {
       confirmAlert({
         title: "회원 가입",
-        message: "아이디를 입력 또는 4자리 이상 20자리 이하로 작성해주세요",
+        message: "아이디를 입력 또는 3자리 이상 20자리 이하로 작성해주세요",
         buttons: [
           {
             label: "확인",
@@ -227,7 +227,6 @@ class reg extends Component<any, State> {
       });
       return;
     }
-    
 
     if (this.state.phone == null || this.state.phone.length <= 10) {
       confirmAlert({
@@ -384,7 +383,7 @@ class reg extends Component<any, State> {
                         this.setState({ pass: e.target.value });
                       }}
                     />
-                    (패스워드는 6자리 이상~16자리 입니다.)
+                    (패스워드는 6~16자리 입니다.)
                   </td>
                 </tr>
                 <tr>

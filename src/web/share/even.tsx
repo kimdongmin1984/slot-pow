@@ -93,125 +93,190 @@ export class Even extends Component<Props, State> {
         onClose={() => {}}
       >
         {(close) => (
-       <div  id="fade_2"  className="slideDown popup_none popup_content" data-popup-initialized="true" aria-hidden="false" role="dialog" style={{opacity: 1, visibility: 'visible', display: 'inline-block', outline: 'none', transition: 'all 0.3s ease 0s', textAlign: 'left', position: 'relative', verticalAlign: 'middle', overflowY : 'auto', height : '600px'}}>
-       <div className="popup_wrap">
-         <div className="close_box">
-           <a onClick={()=>{this.props.handleClose()}} className="fade_1_close"><img src="/web/images/popup_close.png" /></a>
-         </div>
-         <div className="popupbox">
+          
+          <div className="modal noticeModal fade show" style={{display: 'block', paddingRight: '17px'}} aria-modal="true" role="dialog">
+              <div className="modal-dialog modal-dialog-centered">
+                  <div className="modal-content">
+                      {/* <img className="logo-modal" src="./last/image/logo/logo-footer.png" alt="" /> */}
+                      <div className="modal-header">
+                          <div className="title text-left">
+                              <h5>이벤트</h5>
+                              <span>Event</span>
+                          </div>
+                          <button className="close-btn" data-dismiss="modal" onClick={()=>{this.props.handleClose()}} ></button>
+                      </div>
+                      <div className="modal-body">
+                          <div className="modal-menu">
+                              <button className="mm-btn event-link"  onClick={()=>{this.props.handleActive('notice')}}>공지사항</button>
+                              <button className="mm-btn active" >이벤트</button>
+                          </div>
+                          <table className="bs-table with-depth">
+                              <thead>
+                                <tr>
+                                    <th>제목</th>
+                                    <th>작성자</th>
+                                    <th>날짜</th>
+                                    <th></th>
+                                </tr>
+                              </thead>
+                              <tbody>
 
-         {this.props.handleActive != null && <SubMenu handleActive={(active : string)=>{this.props.handleActive(active)}}></SubMenu> }
+                                {evens.map((row: any) => {
+                                  return (
+                                    <>
+                                      
+                                        <tr className="" onClick={()=>{this.setState({detail : row, mode :  EvenView.detail})}}>
+                                        <td className="td_subject text-left" style={{color : row.title_color}}>{row.title}</td>
+                                        <td className="td_name sv_use hidden visible-lg text-center" style={{width:'15%'}}><span>관리자</span></td>
+                                        <td className="td_date  text-center" style={{width:'15%'}}>{ConvertDate(row.regdate)}</td>
+                                        </tr>
+                                    {
+
+                                          this.state.detail != null && this.state.detail.regdate != null && this.state.detail.regdate === row.regdate && (
+                                            <tr className="dropdown">
+                                                <td colSpan={3} >
+                                                    <div className="mess-cont" style={{display: 'block'}}>
+                                                        <div className="inner">
+                                                          <div dangerouslySetInnerHTML={{ __html: this.state.detail.contents }}></div>        
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                              </tr>
+                                        )
+
+                                    }
+                                    </>
+
+                                  )
+                                })}
+
+                 
+                              </tbody>
+                          </table>
+                      </div>
+                  </div>
+              </div>
+          </div>
+
+    //    <div  id="fade_2"  className="slideDown popup_none popup_content" data-popup-initialized="true" aria-hidden="false" role="dialog" style={{opacity: 1, visibility: 'visible', display: 'inline-block', outline: 'none', transition: 'all 0.3s ease 0s', textAlign: 'left', position: 'relative', verticalAlign: 'middle'}}>
+    //    <div className="popup_wrap">
+    //      <div className="close_box">
+    //        <a onClick={()=>{this.props.handleClose()}} className="fade_1_close"><img src="/web/images/popup_close.png" /></a>
+    //      </div>
+    //      <div className="popupbox">
+
+    //      {this.props.handleActive != null && <SubMenu handleActive={(active : string)=>{this.props.handleActive(active)}}></SubMenu> }
 
      
-           <div id="popuptab_cont8" className="popuptab_cont popupvis_hidden">
-     <div className="title1">
-        공지사항
-     </div>
+    //        <div id="popuptab_cont8" className="popuptab_cont popupvis_hidden">
+    //  <div className="title1">
+    //     공지사항
+    //  </div>
 
-       </div>
-           <div id="popuptab_cont9" className="popuptab_cont">
+    //    </div>
+    //        <div id="popuptab_cont9" className="popuptab_cont">
      
-     <div className="title1">
-     공지사항
-     </div>
+    //  <div className="title1">
+    //  공지사항
+    //  </div>
        
-       {
-         this.state.mode === EvenView.view && (
-           <div className="contents_in">
-             <div className="con_box00">
-               <table   style={{width : '100%'}}>
-               <tbody>
-                 <tr>
-                   <td className="list_title1" style={{width : '10%'}}>번호</td>
-                   <td className="list_title1">제목</td>
-                   <td className="list_title1" style={{width : '10%'}}>작성일</td>
-                   <td className="list_title1" style={{width : '10%'}}>상태</td>
-                 </tr>
+    //    {
+    //      this.state.mode === EvenView.view && (
+    //        <div className="contents_in">
+    //          <div className="con_box00">
+    //            <table   style={{width : '100%'}}>
+    //            <tbody>
+    //              <tr>
+    //                <td className="list_title1" style={{width : '10%'}}>번호</td>
+    //                <td className="list_title1">제목</td>
+    //                <td className="list_title1" style={{width : '10%'}}>작성일</td>
+    //                <td className="list_title1" style={{width : '10%'}}>상태</td>
+    //              </tr>
 
-                 {evens.map((row: any) => {
-                   return (
-                   <tr onClick={()=>{this.setState({detail : row, mode :  EvenView.detail})}}>
-                     <td className="list_title1"><img src="/web/images/icon_notice.png"/></td>
-                     <td className="list_title1" style={{color : row.title_color}}>    {row.title}</td>
-                     <td className="list_title1" style={{width : '10%'}}> {ConvertDate(row.regDate)}</td>
-                     <td className="list_title1" style={{width : '10%'}}>    {HelpStatus(row.status)}</td>
-                   </tr>
-                   )
-                 })}
+    //              {evens.map((row: any) => {
+    //                return (
+    //                <tr onClick={()=>{this.setState({detail : row, mode :  EvenView.detail})}}>
+    //                  <td className="list_title1"><img src="/web/images/icon_notice.png"/></td>
+    //                  <td className="list_title1" style={{color : row.title_color}}>    {row.title}</td>
+    //                  <td className="list_title1" style={{width : '10%'}}> {ConvertDate(row.regDate)}</td>
+    //                  <td className="list_title1" style={{width : '10%'}}>    {HelpStatus(row.status)}</td>
+    //                </tr>
+    //                )
+    //              })}
 
-               </tbody></table>
-             </div>
+    //            </tbody></table>
+    //          </div>
 
  
-           </div>
-         ) 
-       }
+    //        </div>
+    //      ) 
+    //    }
      
-       {
-         this.state.mode ===  EvenView.detail && (
-           <div className="contents_in">
-             <div className="con_box10">
-               <table   className="write_title_top" style={{width:'100%'}}>
-                 <tbody><tr>
+    //    {
+    //      this.state.mode ===  EvenView.detail && (
+    //        <div className="contents_in">
+    //          <div className="con_box10">
+    //            <table   className="write_title_top" style={{width:'100%'}}>
+    //              <tbody><tr>
                    
-                   <td className="write_title">제목</td>
-                   <td className="write_td"></td>
-                   <td className="write_basic" style={{color : this.state.detail.title_color}}>
-                    <div dangerouslySetInnerHTML={{ __html: this.state.detail.title }}></div>
+    //                <td className="write_title">제목</td>
+    //                <td className="write_td"></td>
+    //                <td className="write_basic" style={{color : this.state.detail.title_color}}>
+    //                 <div dangerouslySetInnerHTML={{ __html: this.state.detail.title }}></div>
 
-                   </td>
-                 </tr> 
-                 <tr>
-                   <td style={{height:'5px'}}></td>
-                 </tr> 
-                 <tr  style={{ height: '300px',minHeight : '300px'}}>
-                   <td className="write_title">내용</td>
-                   <td className="write_td"></td>
-                   <td className="write_basic">
-                    <div dangerouslySetInnerHTML={{ __html: this.state.detail.contents }} 
+    //                </td>
+    //              </tr> 
+    //              <tr>
+    //                <td style={{height:'5px'}}></td>
+    //              </tr> 
+    //              <tr  style={{ height: '300px',minHeight : '300px'}}>
+    //                <td className="write_title">내용</td>
+    //                <td className="write_td"></td>
+    //                <td className="write_basic">
+    //                 <div dangerouslySetInnerHTML={{ __html: this.state.detail.contents }} 
                     
-                      style={{    overflowY: 'auto', height: '500px'}}
-                    ></div>
-                   </td>
-                 </tr>
+    //                   style={{    overflowY: 'auto', height: '500px'}}
+    //                 ></div>
+    //                </td>
+    //              </tr>
                  
 
-                 {
-                   this.state.detail.ref != null && (
-                     <tr>
-                       <td className="write_title">답변</td>
-                       <td className="write_td"></td>
-                       <td className="write_basic">
-                         <div dangerouslySetInnerHTML={{ __html: this.state.detail.ref.contents }}></div>
-                       </td>
-                     </tr>
-                   )
+    //              {
+    //                this.state.detail.ref != null && (
+    //                  <tr>
+    //                    <td className="write_title">답변</td>
+    //                    <td className="write_td"></td>
+    //                    <td className="write_basic">
+    //                      <div dangerouslySetInnerHTML={{ __html: this.state.detail.ref.contents }}></div>
+    //                    </td>
+    //                  </tr>
+    //                )
                    
-                 }
+    //              }
 
              
-               </tbody>
-               </table>  
+    //            </tbody>
+    //            </table>  
              
              
-             </div>
-             <div className="con_box20">
-               <div className="btn_wrap_center">
-                 <ul>
-                   <li><a onClick={() => { this.setState({ mode: EvenView.view }); }}><span className="btn3_1">뒤로가기</span></a></li>
-                 </ul>
-               </div>
-             </div> 
-           </div>
-         )
+    //          </div>
+    //          <div className="con_box20">
+    //            <div className="btn_wrap_center">
+    //              <ul>
+    //                <li><a onClick={() => { this.setState({ mode: EvenView.view }); }}><span className="btn3_1">뒤로가기</span></a></li>
+    //              </ul>
+    //            </div>
+    //          </div> 
+    //        </div>
+    //      )
 
-       }
+    //    }
      
-          </div>
+    //       </div>
         
-         </div>
-       </div>
-     </div>
+    //      </div>
+    //    </div>
+    //  </div>
     
         )}
       </Popup>

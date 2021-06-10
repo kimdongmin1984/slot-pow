@@ -37,13 +37,14 @@ import Paper from "@material-ui/core/Paper";
 import Pagination from "@material-ui/lab/Pagination";
 import Timer from "react-compound-timer";
 import ListItemSecondaryAction from "@material-ui/core/ListItemSecondaryAction";
-import WifiIcon from "@material-ui/icons/Wifi";
+// import WifiIcon from "@material-ui/icons/Wifi";
 import Switch from "@material-ui/core/Switch";
 import BluetoothIcon from "@material-ui/icons/Bluetooth";
 import ListSubheader from "@material-ui/core/ListSubheader";
 import IconButton from "@material-ui/core/IconButton";
 import DeleteIcon from "@material-ui/icons/Delete";
 import TextField from "@material-ui/core/TextField";
+// import CountUp from 'react-countup';
 
 // import Iframe from "react-iframe";
 
@@ -51,6 +52,7 @@ import {
   ConvertDate,
   ConverMoeny,
   ConvertBalanceStateToText,
+  GetTimeStemp
 } from "../../utility/help";
 
 import { BaseCSSProperties } from "@material-ui/core/styles/withStyles";
@@ -65,6 +67,7 @@ import { Footer } from "../share/footer";
 
 import { Companylist } from "../share/companylist";
 import { BalanceList } from "../share/balancelist";
+import { BalanceService } from "../../service/balance.service";
 
 
 // import { ConverStatus, ConverBuySell, ConverMoeny } from "../utility/help";
@@ -168,7 +171,12 @@ interface Props {
   tryLoginOut: () => any;
 }
 
-interface State {}
+interface State {
+
+  start : number
+  end :number
+  deposits : any
+}
 
 class game extends Component<Props, State> {
   divElement: any;
@@ -176,10 +184,30 @@ class game extends Component<Props, State> {
   // fxService = new FxService();
   // userService = new UserService();
   miniService = new MiniService();
+  balanceService = new BalanceService();
 
   constructor(props: Props) {
     super(props);
-    this.state = {};
+    this.state = {
+      deposits : [],
+      start : (GetTimeStemp() / 1000) % 100000000,
+      end : ((GetTimeStemp() / 1000) % 100000000)+ 1, 
+    };
+
+    
+    setInterval(() => {
+      this.setState({
+        start : (GetTimeStemp() / 1000) % 100000000,
+        end : ((GetTimeStemp() / 1000) % 100000000 )+ 1, 
+        })
+    }, 2000);
+    
+     
+    this.balanceService.get_balance_deposit_lock().then((s) => {
+      if (s.status === "success") {
+         this.setState({ deposits: s.deposits.slice(0, 6) });
+      }
+    });
   }
 
   componentDidMount() {
@@ -207,6 +235,7 @@ class game extends Component<Props, State> {
       protein,
     };
   };
+  
 
   updateUserDate = () => {
     // this.userService.getUserInfo().then((ss) => {
@@ -216,13 +245,13 @@ class game extends Component<Props, State> {
     // });
   };
 
-  updateMiniHistroy = (page: any) => {
-    this.miniService.getMiniGameBetList(page).then((s: any) => {
-      if (s.status === "success") {
-        this.setState({ history: s.minis });
-      }
-    });
-  };
+  // updateMiniHistroy = (page: any) => {
+  //   this.miniService.getMiniGameBetList(page).then((s: any) => {
+  //     if (s.status === "success") {
+  //       this.setState({ history: s.minis });
+  //     }
+  //   });
+  // };
 
   updateNowDate = (currency: string, minute: number) => {};
 
@@ -236,33 +265,92 @@ class game extends Component<Props, State> {
     // }
     // let episode = this.state.minis.episode;
 
-    const classes = this.props.classes;
-
-    console.log(this.props.user);
     return (
       <div>
- 
-        <TopBar
-          tryLogin={this.props.tryLogin}
-          tryLoginOut={this.props.tryLoginOut}
-          user={this.props.user}
-          authenticated={this.props.authenticated}
-        ></TopBar>
+<div className="wrapper">
+   
+    <TopBar 
+      tryLogin={this.props.tryLogin}
+      tryLoginOut={this.props.tryLoginOut}
+      user={this.props.user}
+      authenticated={this.props.authenticated}
+    ></TopBar>
 
-        {/* <AniSlider></AniSlider> */}
+    <section className="banner-section">
+
+    <div className="background-images">
+        <img className="glow-left" src="/last/image/main/glow-left.png" />
+        <img className="glow-right" src="/last/image/main/glow-right.png" />
+        <img className="girl" src="/last/image/main/girl.png" />
+        <img className="caishen" src="/last/image/main/caishen.png" />
+    </div>
+</section>
+    
+    {<Companylist></Companylist>}
 
 
-        {<Companylist></Companylist>}
 
-        {<BalanceList></BalanceList>}
-        {/* {<BalanceList></BalanceList>} */}
-        {/* <Deposit></Deposit>
-        <Withdraw></Withdraw>
-        <Helper></Helper>
-        <Notie></Notie>
+    <section className="board-section">
+    <div className="board-pane">
+        <div className="header">
+            <p> 찬스 공지</p>
+        </div>
+        <table>
+                    </table>
+    </div>
+    <div className="board-pane withdraw">
+        <div className="header">
+            <p>실시간 출금리스트</p>
+        </div>
+        <div className="rolling-realtime" style={{overflow: 'hidden', position: 'relative', height: '110px'}}>
+            <ul style={{position: 'absolute', margin: '0px', padding: '0px', top: '-2.64302px'}}>
+                {
+                  this.state.deposits.map((s : any) => (
+                     <li className="tr" style={{margin: '0px', padding: '0px', height: '22px'}}>
+                       <div className="user">
+                           <span className="bullet"></span>
+                           <span>{s.id}</span>
+                       </div>
+                       <div className="amount">
+                        <span>{ConverMoeny(s.balance)}</span>
+                       </div>
+                       <div className="date">
+                           <span>{ConvertDate(s.regdate)}</span>
+                       </div>
+                   </li>
+                  ))
+                }
+                   </ul>
+                  </div>
+              </div>
+              <div className="board-pane service">
+                  <div className="header">
+                      <p>24시 고객서비스센터</p>
+                  </div>
+                  <div className="service-content">
+                      <a href="https://www.google.co.kr/chrome/browser/desktop/" className="dl-link">
+                          <img src="/last/image/main/chrome.png" alt="" />
+                          <p className="mt-4 mb-0">크롬다운로드</p>
+                      </a>
+                      <a href="https://get.adobe.com/kr/flashplayer/" className="dl-link">
+                          <img src="/last/image/main/flash.png" alt="" />
+                          <p className="mt-4 mb-0">플래시다운로드</p>
+                      </a>
+                      <div className="info text-left ml-md-auto">
+                          <p>원활한 게임서비스를 위해서
+                              크롬 및 플래시를 다운로드를
+                              받으세요. 더 궁금한 사항은
+                              고객센터로 문의바랍니다.</p>
+                          <button ><img src="/last/image/main/arrow.png" alt="" /> 고객센터문의하기</button>
+                      </div>
+                  </div>
+              </div>
+          </section>
+          
 
-*/}
-        <Footer></Footer>
+              <div className="sn-overlay"></div>
+          </div>
+
       </div>
     );
   }

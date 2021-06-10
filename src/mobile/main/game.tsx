@@ -66,6 +66,7 @@ import { Footer } from "../share/footer";
 import { Companylist } from "../share/companylist";
 import { BalanceList } from "../share/balancelist";
 
+
 // import { ConverStatus, ConverBuySell, ConverMoeny } from "../utility/help";
 
 const drawerWidth = 240;
@@ -246,27 +247,11 @@ class game extends Component<Props, State> {
           tryLoginOut={this.props.tryLoginOut}
           user={this.props.user}
           authenticated={this.props.authenticated}
-          isGame={true}
         ></TopBar>
-{/* 
-        <AniSlider></AniSlider>
-        */}
 
-        {<Companylist></Companylist>} 
-        {/* {<BalanceList></BalanceList>} */}
-        {/* <Deposit></Deposit>
-        <Withdraw></Withdraw>
-        <Helper></Helper>
-        <Notie></Notie>
+        {<Companylist></Companylist>}
 
-*/}
-         {/* <div data-type="parallax" data-vert="-0.30" data-opacity-end=".65">
-            <video width="100%" id="ExpansionVideo" loop={true} webkit-playsinline="true" autoPlay  muted={true} >
-              <source src="/web/move/witchwood.webm" type="video/webm"/>
-              <source src="/web/move/witchwood.mp4" type="video/mp4"/>
-            </video>
-
-          </div> */}
+        {<BalanceList></BalanceList>}
         <Footer></Footer>
       </div>
     );

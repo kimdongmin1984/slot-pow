@@ -29,11 +29,8 @@ export const ConverStatus = (status: string): any => {
 };
 
 export const ConvertBalanceStateToText = (status: any) => {
-  if (status === "wait") return "대기";
-  if (status === "reg") return "대기";
-  if (status === "already") return "완료";
-  if (status === "cansel") return "취소";
-  return "-";
+  if (status === "deposit") return "입금";
+  return "출금";
 };
 export const ConverBuySell = (status: string): any => {
   if (status === "high") {
@@ -53,6 +50,17 @@ export const HelpStatus = (status: any) => {
 
   return status;
 };
+
+
+export const ConvertBalanceStatus = (status: any) => {
+  if (status === "wait") return "대기";
+  if (status === "reg") return "대기";
+  if (status === "already") return "완료";
+  if (status === "cansel") return "취소";
+
+  return status;
+};
+
 
 export const ConverMoeny = (balance: Number): any => {
   return Number(balance).toLocaleString();

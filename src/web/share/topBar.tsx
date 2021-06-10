@@ -25,21 +25,38 @@ import {
   ConverMoeny,
   ConvertBalanceStateToText,
 } from "../../utility/help";
+
+import {
+  BrowserView,
+  MobileView,
+  isBrowser,
+  isMobile,
+} from "react-device-detect";
+
 import { normalizeUnits } from "moment";
 import { UserService } from "../../service/user.service";
 import { SlotService } from "../../service/slot.service";
+import { BalanceService } from "../../service/balance.service";
+
 
 import { Deposit } from "./deposit";
 import { Withdraw } from "./withdraw";
 import { Help } from "./help";
 import { User } from "./user";
-import { Notie } from "./notie";
+import { Notice } from "./notice";
 import { Reg } from "./reg";
 import { Login } from "./login";
 import { Even } from "./even";
 import { Coupon } from "./coupon";
 import { Edit } from "./edit";
-import { Message } from "./message";
+import { Point } from "./point";
+import { Note } from "./note";
+import { BalanceList } from "./balancelist";
+import { Bet } from "./bet";
+
+import SoundPlays from "../../SoundPlay";
+
+
 
 
 export enum popupView {
@@ -57,7 +74,9 @@ export enum popupView {
   login = "login",
   coupon = "coupon",
   edit= "edit",
-  message= "message",
+  point= "point",
+  balance= "balance",
+  bet = "bet",
   
   
 }
@@ -132,33 +151,27 @@ interface State {
   PW: string;
 
   balance: number;
+  messageCount: number;
 
   postCount: number;
 
   note: any;
-  isOpen: boolean;
 
   popupStatuses: string;
+  mobileMenuOpen: boolean;
+
+  width : number
+
+  openSide : boolean
+
 }
 
-
-
-// const RenderCss = ()=>{
-
-//   var head  = document.getElementsByTagName('head')[0];
-
-//   var link  = document.createElement('link');
-//   link.rel  = 'stylesheet';
-//   link.type = 'text/css';
-//   link.href = '/web/css/logo.css';
-//   link.media = 'all';
-//   head.appendChild(link);
-// } 
 
 class topBar extends Component<Props, State> {
   static propTypes: { classes: PropTypes.Validator<object> };
   userService = new UserService();
   slotService = new SlotService();
+  balanceService = new BalanceService();
 
   constructor(props: Props) {
     super(props);
@@ -167,9 +180,13 @@ class topBar extends Component<Props, State> {
       ID: "",
       PW: "",
       postCount: 0,
+      messageCount: 0,
+      
       note: [],
-      isOpen: false,
       popupStatuses: popupView.none,
+      mobileMenuOpen : false,
+      width : window.innerWidth,
+      openSide : false
     };
   }
 
@@ -177,11 +194,19 @@ class topBar extends Component<Props, State> {
     setInterval(() => {
       this.handleUpdateNote();
     }, 30000);
+
+    setInterval(() => {
+      this.handleUpdateMessage();
+    }, 10000);
     this.handleUpdateNote();
     this.handleUpdateInBalance();
+    this.handleUpdateMessage();
+    
   }
 
   handleUpdateInBalance = () => {
+
+
     this.slotService.get_in_game_balance().then((data: any) => {
       if (data.status === "success") {
         this.setState({
@@ -192,23 +217,42 @@ class topBar extends Component<Props, State> {
     });
   };
 
+  
+  handleUpdateMessage = () => {
+    // if(this.state.messageCount > 0){
+    //   return 
+    // }
+
+    this.slotService.get_help_no_read_message().then((data: any) => {
+      if (data.status === "success") {
+        this.setState({
+          messageCount: data.count ?? 0,
+        });
+
+
+        if( data.count > 0) {
+          // SoundPlays('helpCount')
+        }
+      } else {
+      }
+    });
+  };
+
   handleUpdateNote = () => {
-    if(this.state.popupStatuses === popupView.message){
+    if(this.state.popupStatuses === popupView.note){
       return 
     }
-    
     this.userService.get_user_note().then((data: any) => {
       if (data.status === "success") {
-
+        // this.setState({
+        //   postCount: data.count,
+        //   note: data.note,
+        //   isOpen: data.count > 0 ? true : false,
+        // });
         if(data.count > 0){
-          this.handleSetState(popupView.message)
+          this.handleSetState(popupView.note)
         }
 
-        this.setState({
-          postCount: data.count,
-          note: data.note,
-          isOpen: data.count > 0 ? true : false,
-        });
       } else if (this.props.authenticated) {
         this.props.tryLoginOut();
       }
@@ -223,6 +267,52 @@ class topBar extends Component<Props, State> {
     this.setState({ popupStatuses: popupView.none });
   };
 
+  
+
+  handleAskToAccount = () => {
+  
+    this.balanceService.askToAccount().then((data) => {
+      if (data.status === "success") {
+        confirmAlert({
+          title: "계좌문의",
+          message: "계좌문의을 성공하였습니다.",
+          buttons: [
+            {
+              label: "확인",
+              onClick: () => {
+              },
+            },
+          ],
+        });
+        return;
+      } else if (data.status === "pass") {
+        confirmAlert({
+          title: "계좌문의",
+          message: "환전 비밀번호를 확인해주세요.",
+          buttons: [
+            {
+              label: "확인",
+              onClick: () => {},
+            },
+          ],
+        });
+        return;
+      } else {
+        confirmAlert({
+          title: "계좌문의",
+          message:
+            "알수없는 예러가 발상하였습니다 문제가 지속된다면 관리자에게 문의 바람니다.",
+          buttons: [
+            {
+              label: "확인",
+              onClick: () => {},
+            },
+          ],
+        });
+      }
+    });
+  };
+
   render() {
     const classes = this.props.classes;
     const user = this.props.user;
@@ -233,20 +323,23 @@ class topBar extends Component<Props, State> {
       
 
       if (this.state.popupStatuses === popupView.reg) {
-        return <Reg handleClose={this.handleClosePopup}></Reg>;
+        return <Reg handleClose={this.handleClosePopup} handleActive={this.handleSetState} ></Reg>;
       }
       
       if (this.state.popupStatuses === popupView.login) {
-        return <Login handleClose={this.handleClosePopup} tryLogin={this.props.tryLogin}></Login>;
+        return <Login handleClose={this.handleClosePopup}  handleActive={this.handleSetState} tryLogin={this.props.tryLogin}></Login>;
       }
 
-      if((user == null || user.id == '' || user.id == null)  && this.state.popupStatuses != popupView.none && this.state.popupStatuses != popupView.message ){
+      if((user == null || user.id == '' || user.id == null)  && this.state.popupStatuses != popupView.none){
         confirmAlert({
           title: '로그인 이후 사용가능합니다.',
           buttons: [
             {
               label: '확인',
-              onClick: () => { },
+              onClick: () => { 
+
+                this.setState({popupStatuses : popupView.none})
+              },
             },
           ],
         })
@@ -269,12 +362,13 @@ class topBar extends Component<Props, State> {
             handleActive={this.handleSetState}></Withdraw>;
       }
       if (this.state.popupStatuses === popupView.notice) {
-        return <Notie 
+        return <Notice 
           handleClose={this.handleClosePopup}
-          handleActive={this.handleSetState}        ></Notie>
+          handleActive={this.handleSetState}        ></Notice>
       }
 
 
+      
       if (this.state.popupStatuses === popupView.coupon) {
         return <Coupon 
           handleClose={this.handleClosePopup} 
@@ -304,227 +398,191 @@ class topBar extends Component<Props, State> {
 
       if (this.state.popupStatuses === popupView.edit) {
         return <Edit 
-        user={this.props.user}
-          handleClose={this.handleClosePopup}       ></Edit>;
+        handleClose={this.handleClosePopup} 
+        handleActive={this.handleSetState}   
+        user={this.props.user}    ></Edit>;
       }
 
-      if (this.state.popupStatuses === popupView.message) {
-        return <Message 
+      if (this.state.popupStatuses === popupView.point) {
+        return <Point 
         user={this.props.user}
-        handleClose={this.handleClosePopup} 
-        handleActive={this.handleSetState}        ></Message>;
+          handleClose={this.handleClosePopup}       ></Point>;
       }
       
+      
+      if (this.state.popupStatuses === popupView.note) {
+        return <Note   
+        handleClose={this.handleClosePopup} 
+        handleActive={this.handleSetState}     ></Note>;
+      }
+      
+
+         
+      if (this.state.popupStatuses === popupView.balance) {
+        return <BalanceList   
+        handleClose={this.handleClosePopup} 
+        handleActive={this.handleSetState}     ></BalanceList>;
+      }
+      
+      if (this.state.popupStatuses === popupView.bet) {
+        return <Bet   
+        handleClose={this.handleClosePopup} 
+        handleActive={this.handleSetState}     ></Bet>;
+      }
       
       return <div></div>;
     };
 
-    const RenderLogin = () => {
-      if (authenticated === false) {
-        return (      
-        <div className="util_right">
-          <div className="my">
-            <a onClick={() => { this.setState({popupStatuses: popupView.login});}} className="fade_2_open" data-popup-ordinal="0" ><img src="/web/images/top_btn_001.png" /></a> 
-            <a onClick={() => { this.setState({popupStatuses:  popupView.reg});}} className="fade_3_open" data-popup-ordinal="0" ><img src="/web/images/top_btn_002.png" /></a>
-          </div>
-        </div>
-
-        );
-      }
-
-      return (
-        <div className="util_right">
-          <div className="my_a">
-            <span style={{margin:'0 0 10px 0', display:'inline-block'}}>
-              <span style={{lineHeight:'15px', display:'table', float:'left', paddingTop:'5px', fontWeight:'bold', fontSize:'15px'}}>
-                <img src={`/web/images/icon4_${user.level}.png`} style={{width : '24px'}} />
-              </span>&nbsp;&nbsp;
-              <span className="font07">{user.id}</span> 님&nbsp;&nbsp;지갑 : 
-              <span className="font05" id="myWallet"> {ConverMoeny(this.state.balance)}</span>
-              <a onClick={() => { this.handleUpdateInBalance();}}><img src="/web/images/icon_re.png" className="icon_re" /></a>
-              <span style={{fontSize: '14px' , marginLeft : '10px'}}>새로고침 해주세요.</span>
-
-              </span><br />
-            <a onClick={() => { this.setState({popupStatuses: popupView.user,});}} className="fade_1_open" data-popup-ordinal="6" id="open_75076113"><img src="/web/images/top_btn_003.png" /></a> 
-            <a onClick={() => { this.setState({popupStatuses: popupView.edit,});}} className="fade_3_open" data-popup-ordinal="0" id="open_55563334"><img src="/web/images/top_btn_005.png" /></a>
-            <a onClick={() => {
-               this.props.tryLoginOut();
-               window.location.reload();
-             }}>
-               <img src="/web/images/top_btn_004.png" />
-             </a>
-
-          </div>
-        </div>
-
-      );
-    };
 
     return (
-      <>
-      
-      <div id="header_wrap">
-        <div className="util_wrap">
-          <div className="header_box">
-            <div className="util_left">
-              <img src="/web/images/top_icon.png" />&nbsp;&nbsp;&nbsp;필독! 입금신청시 계좌 확인 필수 입니다.
-            </div>
-            <a href="./" className="bs-logo" style={{display: 'block'}}>
-              {/* <img src="/web/images/logo_01.png"  /> */}
-              <img src="/web/images/logo_02.png"  />
-              {/* <img src="/web/images/logo_03.png" />
-              <img src="/web/images/logo_04.png"  />
-              <img src="/web/images/logo_05.png"  /> */}
-            </a>
-
-            
-            {RenderLogin()}
-          </div>
-        </div>
-          <div className="gnb_wrap">
-            <div className="gnb">
-              <ul>
-                <li><a  onClick={() => { this.setState({popupStatuses: popupView.deposit,});}}><img src="/web/images/gnb01.png" /> 입금신청</a></li>
-                <li><a  onClick={() => { this.setState({popupStatuses: popupView.withdraw,});}}><img src="/web/images/gnb02.png" /> 출금신청</a></li>
-                {/* <li><a  onClick={() => { this.setState({popupStatuses: popupView.coupon});}}><img src="/web/images/gnb04.png" /> 쿠폰발급현황</a></li> */}
-                {/* <li><a  onClick={() => { this.setState({popupStatuses: popupView.even});}}><img src="/web/images/gnb06.png" /> 이벤트</a></li> */}
-                <li><a  onClick={() => { this.setState({popupStatuses: popupView.notice,});}}><img src="/web/images/gnb07.png" /> 공지사항</a></li>
-                <li><a  onClick={() => { this.setState({popupStatuses: popupView.help,});}}><img src="/web/images/gnb05.png" /> 고객센터</a></li>
-              </ul>
-            </div>
-          </div>
-        </div>
-        <div className="visual_ling_2"></div>
-
-        <div className="visual_wrap">
-          <div className="visual">
-            <div className="jack_wrap">
-              <div className="jack_tit">
-              </div>
-              <div className="jack_num" style={{height:'50px'}}>
-
-              </div>
-
-              <div style={{width:'1000px', height: '180px', overflow: 'hidden', position: 'relative'}}>
-                <table id="realtimeWithdraw" style={{marginLeft:'370px',position:'absolute'}}></table>
-              </div>
-
-            </div>
-            <div className="container demo-2">
-              <div id="slider" className="sl-slider-wrapper">
-                <div className="sl-slider" style={{width: '1170px', height: '392px'}}>
-                  <div className="sl-slides-wrapper"><div className="sl-slide sl-slide-horizontal" data-orientation="horizontal" data-slice1-rotation="-25" data-slice2-rotation="-25" data-slice1-scale="2" data-slice2-scale="2" style={{display: 'block'}}>
-                    <div className="sl-content-wrapper" style={{width: '1170px', height: '392px'}}><div className="sl-content"><div className="sl-slide-inner">
-                      <div className="bg-img bg-img-1"></div>
-                    </div></div></div>
-                  </div></div>
+      <header className="header-main">
+        <div className="header-top">
+            <div className="container">
+                <button className="left-menu-btn" onClick={()=>{this.state.openSide ? this.setState({openSide : false}) : this.setState({openSide : true})}}> 
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+                <div className="logo-container">
+                  <a href="/" className="ls-logo">
+                      <img className="logo-img" src="/last/image/logo-img.png" alt="" />
+                      <img className="slot-icon" src="/last/image/logo/slot-icon.png" alt="" />
+                      {/* <img className="last" src="/last/image/logo/last.png" alt="" /> */}
+                      <img className="chance" src="/last/image/logo/chance.png" alt="" />
+                      <img className="slot" src="/last/image/logo/slot.png" alt="" />
+                      <img className="kr-text" src="/last/image/logo/logo/kr-text.png" alt="" /> 
+                  </a>
+                  <button className="sound-btn active" >
+                    <i className="fa sound-icon fa-volume-up" aria-hidden="true"></i>
+                    <i className="fa fa-music deco" aria-hidden="true"></i>
+                  </button>
                 </div>
-                <nav id="nav-dots" className="nav-dots">
-                  <span className="nav-dot-current"></span>
-                  <span></span>
-                  <span></span>
-                </nav>
-              </div>
-            </div>	
-          </div>
-          
+               <div className="bal-container">
+                 {
+                   this.props.authenticated ? (
+                    <div className="after-login active">
+                      <ul className="al-ul sidebar-right">
+                          <button className="sb-close-btn"><i className="fa fa-window-close" aria-hidden="true"></i> 닫기</button>
+                          <li>
+                              <div className="labels">
+                                  <i className="icon icon-User"></i>
+                                  <p>아이디</p>
+                              </div>
+                              <div className="info">
+                                  <p>{user.id}<span>님</span></p>
+                              </div>
+                          </li>
+                          <li style={{display: 'none'}}>
+                              <div className="labels">
+                                  <i className="icon icon-Dollar"></i>
+                                  <p>보유머니</p>
+                              </div>
+                              <div className="info">
+                                  <p id="_top_money">{ConverMoeny(this.state.balance)}</p>
+                              </div>
+                          </li>
+                          <li>
+                              <div className="labels">
+                                  <i className="icon icon-Bag"></i>
+                                  <p>게임머니</p>
+                              </div>
+                              <div className="info">
+                                  <p id="_top_game_money">{ConverMoeny(this.state.balance)}</p>
+                              </div>
+                          </li>
+                          <li style={{display: 'none'}}>
+                              <div className="labels">
+                                  <i className="icon icon-Star"></i>
+                                  <p>포인트</p>
+                              </div>
+                              <div className="info">
+                                  <p id="_top_point">0</p>
+                              </div>
+                          </li>
+                          <li style={{display: 'none'}}>
+                              <div className="labels">
+                                  <i className="icon icon-Tag"></i>
+                                  <p>보유쿠폰</p>
+                              </div>
+                              <div className="info">
+                                  <p>3000 <span>개</span></p>
+                              </div>
+                          </li>
+                          <li className="btn-grp">
+                              <div className="mess-notif">
+                                  <a onClick={()=>{window.location.reload()}} className="mess-icon" data-toggle="modal" data-target=".customerModal">
+
+                                      <i className="fa fa-bell" aria-hidden="true"></i>
+                                  </a>
+                              </div>
+
+                              <button className="logout-btn" onClick={()=> this.props.tryLoginOut()}><i className="icon icon-PowerOff"></i> 로그아웃</button>
+                          </li>
+                      </ul>
+                  </div>
+                   ) : (
+                    <div className="before-login active">
+                        <div className="desktop">
+                            <button data-toggle="modal" data-target=".loginModal"  onClick={() => { this.setState({popupStatuses: popupView.login});}}><i className="fa fa-edit" aria-hidden="true"></i> 로그인</button>
+                        </div>
+                    </div>
+                   )
+                 }
+           
+               
+                   </div>
+            </div>
         </div>
-        <div className="visual_ling_2"></div>
-           {RenderPopup()}
+        <div className="header-bottom">
+            <div className="container">
+                <ul className={this.state.openSide? 'bs-ul main-menu sidebar-left active' : 'bs-ul main-menu sidebar-left'}  >
+                    <li>
+                        <a onClick={()=>{ window.location.reload() }}>게임리스트</a>
+                    </li>
+                    <li>
+                        <a onClick={()=>{ this.handleSetState(popupView.deposit) }}>입금신청</a>
+                    </li>
+                    <li>
+                        <a onClick={()=>{ this.handleSetState(popupView.withdraw) }}>출금신청</a>
+                    </li>
+                    <li>
+                        <a onClick={()=>{ this.handleSetState(popupView.notice) }}>공지사항</a>
+                    </li>
+                    {/* <li>
+                        <a onClick={()=>{ this.handleSetState(popupView.even) }}>이벤트</a>
+                    </li> */}
+                    <li>
+                        <a onClick={()=>{ this.handleSetState(popupView.edit) }}>마이페이지</a>
+                    </li>
+                    <li>
+                        <a onClick={()=>{ this.handleSetState(popupView.help) }}>고객센터</a>
+                    </li>
+                </ul>
+                <div className="bal-container">
+                                <div className="before-login h-100 active">
+                    <div className="desktop h-100">
+                    {
+                      !this.props.authenticated  && (
+                        <button className="join-btn" data-toggle="modal" data-target=".joinModal" onClick={()=>{ this.handleSetState(popupView.reg) }}><img src="/last/image/logo/controller.png" /> 회원가입</button>
+                      )
+                    }
+                    </div>
+                    <div className="mobile">
+                        <button data-toggle="modal" data-target=".loginModal" onClick={()=>{ this.handleSetState(popupView.login) }}><i className="fa fa-edit" aria-hidden="true"></i> 로그인</button>
+                        <button data-toggle="modal" data-target=".joinModal" onClick={()=>{ this.handleSetState(popupView.reg) }}><i className="fa fa-user-plus" aria-hidden="true"></i> 회원가입</button>
+                    </div>
+                </div>
+                                            </div>
+           
 
-       </>
+             
+            </div>
+        </div>
 
-      // <div className="header_wrap">
-      //   {RenderLogin()}
-      //   <div className="gnb">
-      //     <div>
-      //       <div>
-      //         <div
-      //           className="fade_1_1_open slide_open"
-      //           onClick={() => {
-      //             this.setState({
-      //               popupStatuses: popupView.deposit,
-      //             });
-      //           }}
-      //         >
-      //           입금신청
-      //         </div>
-      //       </div>
-      //       <div>
-      //         <img src={"/web/images/gnb_line.png"} />
-      //       </div>
-      //       <div>
-      //         <div
-      //           className="fade_2_1_open"
-      //           onClick={() => {
-      //             this.setState({
-      //               popupStatuses: popupView.withdraw,
-      //             });
-      //           }}
-      //         >
-      //           출금신청
-      //         </div>
-      //       </div>
-      //       <div>
-      //         <img src="/web/images/gnb_line.png" />
-      //       </div>
-      //       <div>
-      //         <div
-      //           className="fade_3_1_open"
-      //           onClick={() => {
-      //             this.setState({
-      //               popupStatuses: popupView.help,
-      //             });
-      //           }}
-      //         >
-      //           고객센터
-      //         </div>
-      //       </div>
-      //       <div>
-      //         <img src="/web/images/gnb_line.png" />
-      //       </div>
-      //       <div>
-      //         <div
-      //           className="fade_5_1_open"
-      //           onClick={() => {
-      //             this.setState({
-      //               popupStatuses: popupView.user,
-      //             });
-      //           }}
-      //         >
-      //           마이페이지
-      //         </div>
-      //       </div>
-      //       <div>
-      //         <img src="/web/images/gnb_line.png" />
-      //       </div>
-      //       <div>
-      //         <div
-      //           className="fade_6_1_open"
-      //           onClick={() => {
-      //             this.setState({
-      //               popupStatuses: popupView.notice,
-      //             });
-      //           }}
-      //         >
-      //           공지사항
-      //         </div>
-      //       </div>
-      //     </div>
-      //   </div>
-      //   <div className="notice_wrap">
-      //     {/* <div className="notice_box">
-      //       <img src="/web/images/notice_title.png" /> 안녕하십니까? 카지노에
-      //       오신것을 진심으로 환영합니다.{" "}
-      //       <span className="font05">
-      //         입금 계좌는 수시로 변경되오니 입금전 꼭 계좌번호를 고객센터로 문의
-      //       </span>
-      //       해 주시기 바랍니다.
-      //     </div> */}
-      //   </div>
+        {RenderPopup()}  
+    </header>
 
-      //   {RenderPopup()}
-      // </div>
+
     );
   }
 }

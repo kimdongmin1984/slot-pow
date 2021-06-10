@@ -1,41 +1,37 @@
 import React, { Component, useState } from "react";
+
 import { HashRouter as Router, Route, Switch } from "react-router-dom";
+
 import { createGlobalStyle } from "styled-components";
+
 import { makeStyles, withStyles } from "@material-ui/core/styles";
+
+import { Game } from "./main/game";
+import { NotePopup } from "./share/notepopup";
+
+import { UserService } from "../service/user.service";
+
 import {
   BrowserView,
   MobileView,
   isBrowser,
   isMobile,
 } from "react-device-detect";
-import { Game } from "./main/game";
-import { Reg } from "./main/reg";
-import { Deposit } from "./main/deposit";
-import { Even } from "./main/even";
-import { Help } from "./main/help";
-import { Withdraw } from "./main/withdraw";
-import { Notice } from "./main/notice";
-import { MyPage } from "./main/mypage";
-import { Edit } from "./main/edit";
-
-
-
-import { UserService } from "../service/user.service";
 
 
 
 const GlobalStyles = createGlobalStyle`
 body{
-  color: #FFC107;
-  background-color: #000;
+  color: #ffffff;
+  background-color: #fff;
 }
 
 .body{
-  color: #FFC107;
+  color: #ffffff;
 }
 
 .MuiPaper-root {
-  background-color: #000;
+  background-color: #fff;
   color: #FFC107;
 }
 
@@ -61,13 +57,15 @@ interface Props {
   session: string;
   tryLogin: (id: any, pw: any) => any;
   tryLoginOut: () => any;
+  SetCookie: (name: string, data: any) => any;
+  GetCookie: (name: string) => any;
 }
 
 interface State {
   user: {
     id: string;
+    
     level: number;
-
     in_balance: number;
     balance: number;
     point: number;
@@ -77,6 +75,7 @@ interface State {
   };
 }
 
+
 export class Mobile extends Component<Props, State> {
   userService = new UserService();
   constructor(props: Props) {
@@ -84,11 +83,11 @@ export class Mobile extends Component<Props, State> {
     this.state = {
       user: {
         id: "",
+        level: 0,
         in_balance: 0,
+        
         balance: 0,
         point: 0,
-        level: 0,
-        
         bankname: "",
         banknum: "",
         bankowner: "",
@@ -97,13 +96,12 @@ export class Mobile extends Component<Props, State> {
   }
 
   componentDidMount() {
-    if(isMobile){
-
+    if(isBrowser){
       setInterval(() => {
         this.updateUser();
       }, 10000);
       this.updateUser();
-      }
+    }
   }
 
   updateUser = () => {
@@ -111,9 +109,9 @@ export class Mobile extends Component<Props, State> {
       if (s.status === "success") {
         let user = {
           id: s.user.id,
-          in_balance: s.user.in_balance,
-          level: s.user.level,
           
+          level: s.user.level,
+          in_balance: s.user.in_balance,
           balance: s.user.balance,
           point: s.user.point,
           bankname: s.user.bankname,
@@ -125,17 +123,14 @@ export class Mobile extends Component<Props, State> {
           this.setState({ user: user });
         }
       } else {
+        window.location.hash = "/";
       }
     });
   };
 
   render() {
-    console.log(this.state.user);
-    if(isBrowser){
-      return (<></>)
-    }
-    
-    // require("./indexmo.css")
+
+    // require("./indexweb.css")
 
     return (
       <Router>
@@ -151,7 +146,7 @@ export class Mobile extends Component<Props, State> {
                 this.setState({
                   user: {
                     id: "",
-                    level : 1,
+                    level:1,
                     in_balance: 0,
                     balance: 0,
                     point: 0,
@@ -161,204 +156,17 @@ export class Mobile extends Component<Props, State> {
                   },
                 });
                 this.props.tryLoginOut();
-
-                window.location.reload();
               }}
             />
           </Route>
-          <Route exact path="/deposit">
-
-            <Deposit
-              authenticated={this.props.authenticated}
-              session={this.props.session}
-              user={this.state.user}
-              tryLogin={this.props.tryLogin}
-              tryLoginOut={() => {
-                this.setState({
-                  user: {
-                    id: "",
-                    level : 1,
-
-                    in_balance: 0,
-                    balance: 0,
-                    point: 0,
-                    bankname: "",
-                    banknum: "",
-                    bankowner: "",
-                  },
-                });
-                this.props.tryLoginOut();
-                window.location.reload();
-
-              }}
-            />
-          </Route>
-          <Route exact path="/withdraw">
-            <Withdraw
-              authenticated={this.props.authenticated}
-              session={this.props.session}
-              user={this.state.user}
-              tryLogin={this.props.tryLogin}
-              tryLoginOut={() => {
-                this.setState({
-                  user: {
-                    id: "",
-                    level : 1,
-
-                    in_balance: 0,
-                    balance: 0,
-                    point: 0,
-                    bankname: "",
-                    banknum: "",
-                    bankowner: "",
-                  },
-                });
-                this.props.tryLoginOut();
-                window.location.reload();
-
-              }}
-            />
-            </Route>
-          
-
-
-          <Route exact path="/reg">
-            <Reg/>
-          </Route>
-          
-          
-          <Route exact path="/even">
-            <Even 
-              authenticated={this.props.authenticated}
-              session={this.props.session}
-              user={this.state.user}
-              tryLogin={this.props.tryLogin}
-              tryLoginOut={() => {
-                this.setState({
-                  user: {
-                    id: "",
-                    level : 1,
-
-                    in_balance: 0,
-                    balance: 0,
-                    point: 0,
-                    bankname: "",
-                    banknum: "",
-                    bankowner: "",
-                  },
-                });
-                this.props.tryLoginOut();
-                window.location.reload();
-
-              }}/>
-          </Route>
-          <Route exact path="/help">
-            <Help 
-              authenticated={this.props.authenticated}
-              session={this.props.session}
-              user={this.state.user}
-              tryLogin={this.props.tryLogin}
-              tryLoginOut={() => {
-                this.setState({
-                  user: {
-                    id: "",
-                    level : 1,
-
-                    in_balance: 0,
-                    balance: 0,
-                    point: 0,
-                    bankname: "",
-                    banknum: "",
-                    bankowner: "",
-                  },
-                });
-                this.props.tryLoginOut();
-                window.location.reload();
-
-              }}/>
-          </Route>
-          <Route exact path="/notice">
-            <Notice 
-              authenticated={this.props.authenticated}
-              session={this.props.session}
-              user={this.state.user}
-              tryLogin={this.props.tryLogin}
-              tryLoginOut={() => {
-                this.setState({
-                  user: {
-                    id: "",
-                    level : 1,
-
-                    in_balance: 0,
-                    balance: 0,
-                    point: 0,
-                    bankname: "",
-                    banknum: "",
-                    bankowner: "",
-                  },
-                });
-                this.props.tryLoginOut();
-                window.location.reload();
-
-              }}/>
-          </Route>
-
-          <Route exact path="/mypage">
-            <MyPage 
-              authenticated={this.props.authenticated}
-              session={this.props.session}
-              user={this.state.user}
-              tryLogin={this.props.tryLogin}
-              tryLoginOut={() => {
-                this.setState({
-                  user: {
-                    id: "",
-                    level : 1,
-
-                    in_balance: 0,
-                    balance: 0,
-                    point: 0,
-                    bankname: "",
-                    banknum: "",
-                    bankowner: "",
-                  },
-                });
-                this.props.tryLoginOut();
-                window.location.reload();
-
-              }}/>
-          </Route>
-          <Route exact path="/edit">
-            <Edit 
-              authenticated={this.props.authenticated}
-              session={this.props.session}
-              user={this.state.user}
-              tryLogin={this.props.tryLogin}
-              tryLoginOut={() => {
-                this.setState({
-                  user: {
-                    id: "",
-                    level : 1,
-
-                    in_balance: 0,
-                    balance: 0,
-                    point: 0,
-                    bankname: "",
-                    banknum: "",
-                    bankowner: "",
-                  },
-                });
-                this.props.tryLoginOut();
-                window.location.reload();
-
-              }}/>
-          </Route>
-
-
-
-          
         </Switch>
         <GlobalStyles />
+
+        {<NotePopup
+            SetCookie={this.props.SetCookie}
+            GetCookie={this.props.GetCookie}
+        ></NotePopup>}
+
       </Router>
     );
   }

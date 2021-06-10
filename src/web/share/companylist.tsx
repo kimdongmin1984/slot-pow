@@ -6,7 +6,17 @@ import CircularProgress from "@material-ui/core/CircularProgress";
 import { confirmAlert } from "react-confirm-alert"; // Import
 import { ViewGame  } from "./viewgame";
 
+import {
+  BrowserView,
+  MobileView,
+  isBrowser,
+  isMobile,
+} from "react-device-detect";
+
+import { ConvertDate2, ConverMoeny, ConvertDate } from "../../utility/help";
+
 import { SlotService } from "../../service/slot.service";
+import { BalanceService } from "../../service/balance.service";
 
 export enum Mode {
   none = "none",
@@ -19,24 +29,48 @@ interface Props {}
 interface State {
   mode: string;
   slots: any;
+  casionos: any;
+  
   gameCode : any;
   games : any; 
   name : string;
+  withdraws: any;
+  deposits: any;
 }
 
 export class Companylist extends Component<Props, State> {
   slotService = new SlotService();
+  balanceService = new BalanceService();
 
   constructor(props: any) {
     super(props);
     this.state = {
       mode: Mode.none,
       slots: [],
+      casionos: [],
+      
       gameCode : '',
       name : '',
-      games : []
+      games : [],
+      withdraws: [],
+      deposits: [],
     };
+
+    
+    this.balanceService.get_balance_deposit_lock().then((s) => {
+      if (s.status === "success") {
+        this.setState({ deposits: s.deposits });
+      }
+    });
+
+    this.balanceService.get_balance_withdraw_lock().then((s) => {
+      if (s.status === "success") {
+        this.setState({ withdraws: s.withdraws });
+      }
+    });
+   
   }
+
 
   componentDidMount() {
     this.slotService.getSlotSetting().then((s) => {
@@ -44,7 +78,15 @@ export class Companylist extends Component<Props, State> {
         this.setState({ slots: s.slot, mode: Mode.slot });
       }
     });
+
+    this.slotService.getCasinoSetting().then((s) => {
+      if (s.status === "success") {
+        this.setState({ casionos: s.casiono, mode: Mode.slot });
+      }
+    });
+    
   }
+
 
   handleOpenSlot = (code: string, company : string ) => {
     this.slotService.OpenSlot(code, company).then((data: any) => {
@@ -74,210 +116,220 @@ export class Companylist extends Component<Props, State> {
     this.slotService.get_slot_by_company(name).then((s: any) => {
       if (s.status === "success") {
         const oriArray = s.games 
-        let temp : any= []
-        const division = 6
-        const cnt = Math.floor(oriArray.length / division) + (Math.floor(oriArray.length / division) > 0 ? 1 : 0)
-
-        for(var i = 0 ; i < cnt; i++)
-        {
-          temp.push(oriArray.splice(0, division))
-        }
-
-        this.setState({ games: temp, mode: Mode.game , gameCode : name, name : nameKo});
+        this.setState({ games:  s.games , mode: Mode.game , gameCode : name, name : nameKo});
       }
     });
   };
 
-  RenderSlot = (info: any) => {
+  RenderSlot = () => {
+
+    if(this.state.games.length <= 0 || this.state.mode !==  Mode.game) {
+      return (<></>)
+    }
 
     return (
-        <a className="slot-btn gl-title-click"
-        
-          onClick={() => {
-            if (info.used === "y") {
-              this.handleGame(info.code, info.nameKo)
-            } else {
-              confirmAlert({
-                title: "점검중",
-                message: "현재 해당게임은 점검중입니다 .",
-                buttons: [
-                  {
-                    label: "확인",
-                    onClick: () => {},
-                  },
-                ],
-              });
-            }
-          }}
-        >
-          <div className="inner">
-            <img className="slot-bg" src="/web/images/slot-bg.png" style={{opacity : 100}} />
-            <div className="hover-bg">
-              <span></span><span></span><span></span><span></span>
-            </div>
-            <div className="slot-cont">
-              <img className="slot-img" src={info.mobileImg} />
-            </div>
-          </div>
-        </a>
+
+      
+
+     <div className="modal joinModal fade show" style={{overflowY: 'auto', display: 'block', paddingRight: '17px'}} aria-modal="true" role="dialog">
+     <div className="modal-dialog modal-dialog-centered" style={{ maxWidth : '1400px'}}>
+         <div className="modal-content" style={{ maxWidth : '1400px'}}>
+             {/* <img className="logo-modal" src="/last/image/logo/logo-footer.png" alt=""  /> */}
+
+             <div className="modal-header">
+                 <div className="title text-left">
+                     <h5>게임 리스트</h5>
+                 </div>
+                 <button className="close-btn" data-dismiss="modal" onClick={()=>{this.setState({mode :  Mode.none})}}></button>
+             </div>
+             <div className="modal-body">
+             
+             <div className="game-list" id="game-list-area">
+               {
+                    Object.values(this.state.games ?? []).map((game :any) =>
+                    (
+                      <a className="game-btn" onClick={()=> this.handleOpenSlot(game.code, game.gameCompany)}>
+                        <div className="main-cont">
+                            <img className="main-img"  src={game.imgUrl} alt="" style={isMobile ? {width: '130px', height: '130px'} : {width: '200px', height: '200px'}} />
+                            <button className="play-btn"><i className="fa fa-play" aria-hidden="true"></i></button>
+                            </div>
+                            <div className="footer">
+                          <span>{game.nameKo}</span>
+                        </div>
+                      </a>
+                   
+                    )
+                    )
+               }   
+     
+              </div>
+
+
+
+           </div>
+       </div>
+   </div>
+</div>
+
 
     );
   };
   
+
   RenderGame = () => {
      return (
-      <div style={{   opacity: 1,
-        visibility: 'visible',
-        position: 'fixed',
-        overflow: 'auto',
-        zIndex: 100001,
-        transition: 'all 0.3s ease 0s',
-        width: '100%',
-        height: '100%',
-        top: '0px',
-        left: '0px',
-        textAlign: 'center',
-        backgroundColor: '#000',
-        display: 'block'}}>
-
-      <div id="fade_3" className="expandOpen popup_none popup_content" data-popup-initialized="true" aria-hidden="false" role="dialog" aria-labelledby="open_55563334" 
-        style={{opacity: 1, visibility: 'visible', display: 'inline-block', outline: 'none', transition: 'all 0.3s ease 0s', textAlign: 'left', position: 'relative', verticalAlign: 'middle'}}>
-        <div className="popup_wrap">
-          <div className="close_box">
-            <a onClick={()=>{
-              this.setState({ mode: Mode.slot });
-            }} className="fade_3_close"><img src="/web/images/popup_close.png" /></a>
-          </div>
-          <div className="popupbox_ajax"><div>
-          <div className="title1">
-            &nbsp;&nbsp;&nbsp;{this.state.name} 슬롯
-          </div>
-            <div style={{width:'100%', marginTop:'-5px'}}>
-            <table>
-              <tbody><tr>
-                <td>&nbsp;</td>
-              </tr>
-              <tr>
-                <td>
-                  <table>
-                    <tbody><tr>
-                      <td>
-                        <table>
-                          <tbody>
-                            {
-                              Object.values(this.state.games ?? []).map((games :any) =>{
-                                return (
-                                  <tr>
-                                    {
-                                        Object.values(games).map((game : any) =>{
-                                    
-                                          return (
-                                          <td style={{width: 220, paddingBottom : 20}} onClick={()=>{
-                                            this.handleOpenSlot(game.code, game.gameCompany)
-                                          }}>
-                                            <table>
-                                            <tbody>
-                                            <tr>
-                                              <td>
-                                                <div>
-                                                  <a style={{cursor:'pointer'}}>
-                                                    <img src={game.imgUrl} id="xImag" width="170" height="170" /></a>
-                                                </div>
-                                              </td>
-                                            </tr>
-                                            <tr>
-                                              <td >
-                                                <div style={{textAlign:'center', position: 'absolute',width:'170px'}}>
-                                                  <span className="slot_txt_style">{game.nameKo}</span>
-                                                </div>
-                                              </td>
-                                            </tr>
-                                            </tbody>
-                                            </table>
-                                          </td>
-                                          )
-                                        })
-                                      }
-                                </tr>
-                            )})
-
-                            }
-                    
-                          </tbody>
-                        </table>
-                      </td>
-                    </tr>
-                    </tbody>
-                    </table>
-                    </td>
-                </tr>
-                </tbody>
-              </table>
-
-              <div className="con_box20">
-                <div className="btn_wrap_center">
-                  <ul>
-                    <li>
-                      <a  onClick={()=>{this.setState({ mode: Mode.slot });}} >
-                        <span className="btn3_1">목록으로</span>
-                      </a>
-                    </li>
-                  </ul>
-                </div>
-              </div> 
-              <div className="con_box20">
-                <div className="btn_wrap_center">
-
-                </div>
-              </div> 
-              </div>
+       
+      <div className="_front_game">
+        {this.state.slots.map((info: any) => {
+          return (
+            <div className="_game_list"  onClick={()=> this.handleGame(info.code, info.nameKo)}>
+              <div className="_bg_start" >GAME START</div>
+              <img src={`/light/slots/${info.code}.png`} />
             </div>
-          </div>
-        </div>
-      </div>
+          )
+        })}
     </div>
+   
+
+
      );
    };
 
   render() {
-      // if (this.state.mode === Mode.none) {
-      //   return (
-      //     <div id="contents_wrap">
-      //       <div className="sc-inner"></div>
-      //       <div className="game_wrap">
-      //         <div className="game_box">
-      //           <div
-      //             style={{
-      //               textAlign: "center",
-      //               zoom: 10,
-      //             }}
-      //           >
-      //             <CircularProgress />
-      //           </div>
-      //         </div>
-      //       </div>
-      //       </div>
-      //   );
-      // }
+
+
+    
   
       return (
-        <div id="contents_wrap">
-        <div className="sc-inner">
 
-        {this.state.mode === Mode.game && this.RenderGame()}
+        
+        <div className="page-content">
+          <section className="title-section">
+            <div className="title-container">
+                <div className="title-pane">
+                    <i className="fa fa-star" aria-hidden="true"></i>
+                    <span className="title">찬스 게임즈</span>
+                    <i className="fa fa-star" aria-hidden="true"></i>
+                </div>
+            </div>
+          </section>
+          <section className="notice-section mt-2">
+              <div className="notice-carousel carousel" data-ride="carousel" data-interval="3000" data-pause="false">
+                  <i className="fa fa-bell" aria-hidden="true"></i>
+                  <div className="carousel-inner">
+                      <div className="carousel-item active">
+                          <span className="text">입금시 반드시  입금게좌문의를 하셔야 합니다.</span>
+                      </div>
+                      <div className="carousel-item">
+                          <span className="text">입금시 반드시  입금게좌문의를 하셔야 합니다.</span>
+                      </div>
+                  </div>
+              </div>
+            </section>
+            <section className="slot-section">
+                <div className="container">
+                  <a className="slot-btn hot">
+                    <img className="hot-tag" src="/last/image/main/hot-tag.png" alt="" />
+                    <div className="main-container">
+                        <img className="main-img" src="/last/image/main/hot.png" alt="" />
+                        <img className="slot-man" src="/last/image/main/slot-man.png" alt="" />
+                        <div className="hover">
+                            <p className="view-text">HOT GAMES</p>
+                            <button className="view-btn">게임보기</button>
+                        </div>
+                    </div>
+                    <div className="slot-logo">
+                        <span>찬스 추천 핫게임!!</span>
+                    </div>
+                    <div className="slot-name">
+                        <span>HOT GAMES</span>
+                    </div>
+                </a>
+                  {
+                    this.state.casionos.map((info: any) => {
+                      return (
+                        <a className="slot-btn"  
+                        
+                        onClick={() => {
+                          if (info.used === "y") {
+                            this.handleOpenSlot(info.code, info.nameEn)
+                          } else {
+                            confirmAlert({
+                              title: "점검중",
+                              message: "현재 해당게임은 점검중입니다 .",
+                              buttons: [
+                                {
+                                  label: "확인",
+                                  onClick: () => {},
+                                },
+                              ],
+                            });
+                          }
+                        }} >
+                          
+                          <div className="main-container">
+                            <img className="main-img" src={`${info.mobileImg}`} alt="" />
+                            <div className="hover">
+                                <p className="view-text">VIEW GAME</p>
+                                <button className="view-btn">게임보기</button>
+                            </div>
+                          </div>
+                          <div className="slot-logo">
+                              <img  src={`/last/image/logo/${info.code}.png`}  alt="" />
+                          </div>
+                          <div className="slot-name">
+                              <span>{info.nameKo}</span>
+                          </div>
+                      </a>
+                      )
+                    })
+                    }
 
-        {this.state.slots.map((row: any) => this.RenderSlot(row))}
 
-        </div>
-    {/* <div className="game_wrap">
-          <div className="game_box">
-            <ul className="slots"> */}
-            {/* </ul>
-          </div>
-          </div> */}
-          </div>
-      );
-  
+                    {this.state.slots.map((info: any) => {
+                      return (
+                        <a className="slot-btn"  
+                        
+                        onClick={() => {
+                          if (info.used === "y") {
+                            this.setState({ mode: Mode.none, name : info.nameKo  });
+                            this.handleGame(info.code, info.nameKo);
+                          } else {
+                            confirmAlert({
+                              title: "점검중",
+                              message: "현재 해당게임은 점검중입니다 .",
+                              buttons: [
+                                {
+                                  label: "확인",
+                                  onClick: () => {},
+                                },
+                              ],
+                            });
+                          }
+                        }} >
+                        <div className="main-container">
+                            <img className="main-img" src={`/last/image/main/${info.code}.png`} alt="" />
+                            <div className="hover">
+                                <p className="view-text">VIEW GAME</p>
+                                <button className="view-btn">게임보기</button>
+                            </div>
+                        </div>
+                        <div className="slot-logo">
+                            <img  src={`/last/image/logo/${info.code}.png`}  alt="" />
+                        </div>
+                        <div className="slot-name">
+                            <span>{info.nameKo}</span>
+                        </div>
+                    </a>)
+                  })}
+                  </div>
+            </section>
     
+            {this.RenderSlot()}
+
+          </div>
+        
+
+        );
   }
 }

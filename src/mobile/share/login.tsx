@@ -6,25 +6,13 @@ import { confirmAlert } from "react-confirm-alert"; // Import
 import { UserService } from "../../service/user.service";
 
 interface Props {
-  handleClose: () => any;
   tryLogin: (id: any, pw: any) => any;
-
+  handleClose: () => any;
 }
 
 interface State {
-  id: string;
-  pass: string;
-  pass_check: string;
-  phone1: string;
-  phone2: string;
-  phone3: string;
-  phone: string;
-
-  bankname: string;
-  banknumber: string;
-  bankowner: string;
-  exchange_pw: string;
-  code: string;
+  ID: string;
+  PW: string;
 }
 
 export class Login extends Component<Props, State> {
@@ -33,106 +21,96 @@ export class Login extends Component<Props, State> {
     super(props);
 
     this.state = {
-      id: "",
-      pass: "",
-      pass_check: "",
-      phone1: "",
-      phone2: "",
-      phone3: "",
-      phone: "",
-
-      bankname: "",
-      banknumber: "",
-      bankowner: "",
-      exchange_pw: "",
-      code: "",
+      ID: "",
+      PW: "",
+   
     };
   }
 
+  doLogin = ()=>{
+    if(this.state.ID == '' || this.state.PW.length < 4)
+    {
+      confirmAlert({
+        title: '로그인 아이디를 입력해주세요 .',
+        buttons: [
+          {
+            label: '확인',
+            onClick: () => { },
+          },
+        ],
+      })
+      return
+    }
+
+    if(this.state.PW == '' || this.state.PW.length < 4) 
+    {
+      confirmAlert({
+        title: '로그인 비밀번호를 입력해주세요 .',
+        buttons: [
+          {
+            label: '확인',
+            onClick: () => { },
+          },
+        ],
+      })
+      return
+    }
+
+    this.props.tryLogin(this.state.ID, this.state.PW)
+  }
+
+
   render() {
     return (
-      <Popup
+        <Popup
         // key={`main_popup_note_${pop.idx}`}
         open={true}
         contentStyle={{
-          zIndex: 99,
+          zIndex: 97,
           background: "none",
           border: "none",
           width: "none",
         }}
+        onClose={() => {}}
       >
         {(close) => (
-          <div id="fade_0_1">
-            <div className="mo_close_wrap">
-              <div className="mo_close_box">
-                <a
-                  href="#"
-                  className="mo_fade_0_1_close"
-                  onClick={() => {
-                    this.props.handleClose();
-                  }}
-                >
-                  <img src="/web/images/close.png" />
-                </a>
-              </div>
-            </div>
-            <div className="mo_popup_wrap">
-              <div className="mo_popup_box">
-                <div className="mo_popup_start">
-                  <div className="mo_popup">
-             
-                    <div className="mo_con_box10">
-                      <table className="mo_write_title_top">
-                        <tr>
-                          <td className="mo_write_title">아이디</td>
-                          <td className="mo_write_basic">
-                            <input
-                              className="mo_input3"
-                              value={this.state.id}
-                              onChange={(e: any) => {
-                                this.setState({ id: e.target.value });
-                              }}
-                            />{" "}
-                          </td>
-                        </tr>
-                        <tr>
-                          <td className="mo_write_title">비밀번호</td>
-                          <td className="mo_write_basic">
-                            <input
-                              className="mo_input3"
-                              value={this.state.pass}
-                              onChange={(e: any) => {
-                                this.setState({ pass: e.target.value });
-                              }}
-                            />{" "}
-                          </td>
-                        </tr>
-
-
-                      </table>
+            <div id="fade_2" className="slideDown popup_none popup_content" data-popup-initialized="true" aria-hidden="false" role="dialog" aria-labelledby="open_63141101" style={{opacity: 1, visibility: 'visible', display: 'inline-block', outline: 'none', transition: 'all 0.3s ease 0s', textAlign: 'left', position: 'relative', verticalAlign: 'middle'}} >
+                <div className="login_wrap">
+                    <div className="login_close_box">
+                            <a onClick={()=>{ this.props.handleClose()}} className="fade_2_close"><img src="/web/images/popup_close.png" /></a>
                     </div>
-                    <div className="mo_con_box10">
-                      <div className="mo_btn_wrap_center">
-                        <ul>
-                          <li>
-                            <a
-                              onClick={() => {
-                                this.props.tryLogin(this.state.id, this.state.pass);
-                              }}
-                            >
-                              <span className="mo_btn3_1">로그인</span>
-                            </a>
-                          </li>
-                        </ul>
-                      </div>
+                        <div className="login_box_wrap">
+                            <div className="login_tit"><img src="/web/images/in_login_logo.png" /></div>
+                            <div className="login">
+                                <table   className="login_table">
+                                    <tbody><tr>
+                                        <td className="login_td1">
+                                          <input name="login_id" id="login_id" type="text" className="input_login" placeholder="아이디" 
+                                            onChange={({ target: { value } }) =>
+                                              this.setState({ ID: value })
+                                            }
+                                        /></td>
+                                    </tr>
+                                    <tr>
+                                        <td className="login_td2"><input type="password" name="login_pw" id="login_pw" className="input_login" placeholder="비밀번호"
+                                                               onChange={({ target: { value } }) =>
+                                                               this.setState({ PW: value })
+                                                             }
+                                      
+                                        /></td>
+                                    </tr>
+                                    <tr>
+                                        <td className="login_td3"><a onClick={()=>this.doLogin()}><img src="/web/images/login_btn.png" /></a></td>
+                                    </tr>
+                                </tbody></table>
+                            </div>
+                        </div>
                     </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        )}
-      </Popup>
+
+                    </div>
+            )}
+        </Popup>
+
     );
   }
 }

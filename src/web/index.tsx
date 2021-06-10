@@ -22,12 +22,12 @@ import {
 
 const GlobalStyles = createGlobalStyle`
 body{
-  color: #FFC107;
-  background-color: #000;
+  color: #ffffff;
+  background-color: #fff;
 }
 
 .body{
-  color: #FFC107;
+  color: #ffffff;
 }
 
 .MuiPaper-root {
@@ -93,18 +93,24 @@ export class Web extends Component<Props, State> {
         bankowner: "",
       },
     };
-  }
+
+    setInterval(() => {
+      this.updateUser();
+    }, 10000);
+    this.updateUser();
+}
 
   componentDidMount() {
-    if(isBrowser){
-      setInterval(() => {
-        this.updateUser();
-      }, 10000);
-      this.updateUser();
-    }
+    // if(isBrowser){
+    // }
   }
 
   updateUser = () => {
+
+    if(this.props.authenticated === false){
+      return 
+    }
+
     this.userService.healthCheck().then((s: any) => {
       if (s.status === "success") {
         let user = {
@@ -123,15 +129,16 @@ export class Web extends Component<Props, State> {
           this.setState({ user: user });
         }
       } else {
+        this.props.tryLoginOut()
         window.location.hash = "/";
       }
     });
   };
 
   render() {
-    if(isMobile){
-      return (<></>)
-    }
+    // if(isMobile){
+    //   return (<></>)
+    // }
     // require("./indexweb.css")
 
     return (
@@ -168,6 +175,8 @@ export class Web extends Component<Props, State> {
             SetCookie={this.props.SetCookie}
             GetCookie={this.props.GetCookie}
         ></NotePopup>}
+
+        <div id="helpCount" style={{ display: 'none' }}>0</div>
 
       </Router>
     );

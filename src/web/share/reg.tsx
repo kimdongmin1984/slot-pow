@@ -5,9 +5,18 @@ import CloseIcon from "@material-ui/icons/Close";
 import { confirmAlert } from "react-confirm-alert"; // Import
 import { UserService } from "../../service/user.service";
 import { runInThisContext } from "vm";
+import { ThemeProvider } from "styled-components";
+
+export enum RegView {
+  code = "code",
+  reg = "reg",
+}
+
 
 interface Props {
   handleClose: () => any;
+  handleActive: (active:string) => any;
+
 }
 
 interface State {
@@ -24,6 +33,8 @@ interface State {
   bankowner: string;
   exchange_pw: string;
   code: string;
+  nick :string;
+  mode: string;
 }
 
 export class Reg extends Component<Props, State> {
@@ -35,7 +46,7 @@ export class Reg extends Component<Props, State> {
       id: "",
       pass: "",
       pass_check: "",
-      phone1: "010",
+      phone1: "",
       phone2: "",
       phone3: "",
       phone: "",
@@ -44,9 +55,53 @@ export class Reg extends Component<Props, State> {
       banknumber: "",
       bankowner: "",
       exchange_pw: "",
+      nick : "",
       code: "",
+      mode : RegView.code
     };
   }
+
+  
+  handleCheckCode = async() => {
+    if (
+      this.state.code === undefined ||
+      this.state.code.length <= 3 ||
+      20 <= this.state.code.length
+    ) {
+      confirmAlert({
+        title: "회원 가입",
+        message: "가입 코드를 입력해주세요",
+        buttons: [
+          {
+            label: "확인",
+            onClick: () => {},
+          },
+        ],
+      });
+      return;
+    }
+
+    let data = await this.userService.checkUserCode(this.state.code).then(s => s)
+      if (data.status === "success") {
+        this.setState({ mode  : RegView.reg })
+        return;
+      } else {
+        confirmAlert({
+          title: "회원 가입",
+          message: "가입 코드를 확인해주세요.",
+          buttons: [
+            {
+              label: "확인",
+              onClick: () => {
+                this.setState({ id: "" });
+              },
+            },
+          ],
+        });
+        return;
+      }
+  };
+
 
   handleCheck = () => {
     if (
@@ -56,7 +111,7 @@ export class Reg extends Component<Props, State> {
     ) {
       confirmAlert({
         title: "회원 가입",
-        message: "아이디를 입력 또는 4자리 이상 20자리 이하로 작성해주세요",
+        message: "아이디를 입력 또는 3자리 이상 20자리 이하로 작성해주세요",
         buttons: [
           {
             label: "확인",
@@ -106,7 +161,7 @@ export class Reg extends Component<Props, State> {
     ) {
       confirmAlert({
         title: "회원 가입",
-        message: "아이디를 입력 또는 4자리 이상 20자리 이하로 작성해주세요",
+        message: "아이디를 입력 또는 3자리 이상 20자리 이하로 작성해주세요",
         buttons: [
           {
             label: "확인",
@@ -121,12 +176,12 @@ export class Reg extends Component<Props, State> {
       this.state.pass == null ||
       this.state.pass_check == null ||
       this.state.pass !== this.state.pass_check ||
-      this.state.pass_check.length < 4 
+      this.state.pass_check.length <= 3 
 
     ) {
       confirmAlert({
         title: "회원 가입",
-        message: "비밀번호를 확인해주세요 . 비밀번호는 최소 4자리를 사용하셔야합니다",
+        message: "비밀번호를 확인해주세요 . 비밀번호는 최소 6자리를 사용하셔야합니다",
         buttons: [
           {
             label: "확인",
@@ -207,6 +262,7 @@ export class Reg extends Component<Props, State> {
         bankowner: this.state.bankowner,
         exchange_pw: this.state.bankowner,
         code: this.state.code,
+        nick: this.state.nick,
       })
       .then((data: any) => {
         if (data.status === "alread_have_user") {
@@ -270,211 +326,189 @@ export class Reg extends Component<Props, State> {
         }}
       >
         {(close) => (
-          <div  id="fade_2"  className="slideDown popup_none popup_content" data-popup-initialized="true" aria-hidden="false" role="dialog" style={{opacity: 1, visibility: 'visible', display: 'inline-block', outline: 'none', transition: 'all 0.3s ease 0s', textAlign: 'left', position: 'relative', verticalAlign: 'middle', overflowY : 'auto'}}>
-          <div className="popup_wrap">
-            <div className="close_box">
-              <a onClick={()=>{ this.props.handleClose() }}  className="fade_3_close"><img src="/web/images/popup_close.png" /></a>
-            </div>
-            <div className="popupbox_ajax">
-        
-        
-        
-        
-        <form id="frm_join" name="frm_join">
-              <div className="title1">
-                회원가입
-              </div>
-              <div className="contents_in_2">
-                
-                 <div className="con_box00">
-              <table  className="write_title_top">
-                <tbody><tr>
-                  <td className="write_title">이름</td>
-                  <td className="write_td"></td>
-                  <td className="write_basic"><input className="input1" name="membername" type="text" id="membername"      value={this.state.bankowner} onChange={(e: any) => { this.setState({ bankowner: e.target.value }); }}  /><span> ( 입금과 출금시 사용하시는 실제 예금주명으로 기입하여 주시기 바랍니다 )</span></td>
-                </tr>    
-                <tr>
-                  <td style={{height:'5px'}}></td>
-                </tr> 
-                
-                <tr>
-                  <td className="write_title">ID</td>
-                  <td className="write_td"></td>
-                  <td className="write_basic">
-                    <input className="input1" name="memberid" type="text" id="memberid" value={this.state.id} onChange={(e: any) => { this.setState({ id: e.target.value }); }}/> 
-                    <a onClick={() => { this.handleCheck(); }}><span className="btn1_1">중복확인</span></a>
-                    <span>아이디는 4자리 이상 사용하시길 바람니다</span>
-
-                    </td>
-                    
-                </tr> 
-                <tr>
-                  <td  style={{height:'5px'}}></td>
-                </tr> 
-                
-        
-                <tr>
-                  <td className="write_title">비밀번호</td>
-                  <td className="write_td"></td>
-        
-                  <td className="write_basic">
-                    <input className="input1" name="memberpw" type="password" id="memberpw" placeholder="4자리 이상 ~ 16자리 (영문, 숫자)" value={this.state.pass} onChange={(e: any) => { this.setState({ pass: e.target.value }); }}/>
-                    <span>4자리 이상 ~ 16자리 (영문, 숫자) </span>
-                    </td>
-                </tr>
-                <tr>
-                  <td  style={{height:'5px'}}></td>
-                </tr> 
-                
-                
-                <tr>
-                  <td className="write_title">비밀번호 확인</td>
-                  <td className="write_td"></td>
-        
-                  <td className="write_basic"><input className="input1" name="confirmpw" type="password" id="confirmpw" value={this.state.pass_check} onChange={(e: any) => { this.setState({ pass_check: e.target.value }); }}/></td>
-                </tr> 
-                <tr>
-                  <td  style={{height:'5px'}}></td>
-                </tr> 
-                
-        
-                <tr>
-                  <td className="write_title">은행선택</td>
-                  <td className="write_td"></td>
-        
-                  <td className="write_basic">
-                    <select className="input1" name="bankname" id="bankname" value={this.state.bankname}   onChange={(e: any) => { this.setState({ bankname: e.target.value });}}>
-                      <option value="">은행선택</option>
-                       <option value="기업은행">기업은행</option>
-                       <option value="국민은행">국민은행</option>
-                       <option value="외환은행">외환은행</option>
-                       <option value="수협">수협</option>
-                       <option value="농협중앙회">농협중앙회</option>
-                       <option value="단위농협">단위농협</option>
-                       <option value="우리은행">우리은행</option>
-                       <option value="SC제일은행">SC제일은행</option>
-                       <option value="한국씨티은행">한국씨티은행</option>
-                       <option value="대구은행">대구은행</option>
-                       <option value="부산은행">부산은행</option>
-                       <option value="광주은행">광주은행</option>
-                       <option value="제주은행">제주은행</option>
-                       <option value="전북은행">전북은행</option>
-                       <option value="경남은행">경남은행</option>
-                       <option value="새마을금고">새마을금고</option>
-                       <option value="신협중앙회">신협중앙회</option>
-                       <option value="상호저축은행">상호저축은행</option>
-                       <option value="산림조합중앙회">산림조합중앙회</option>
-                       <option value="우체국">우체국</option>
-                       <option value="하나은행">하나은행</option>
-                       <option value="신한은행">신한은행</option>
-                       <option value="케이뱅크">케이뱅크</option>
-                       <option value="카카오뱅크">카카오뱅크</option>
-                       <option value="유안타증권">유안타증권</option>
-                       <option value="KB증권">KB증권</option>
-                       <option value="미래에셋">미래에셋</option>
-                       <option value="대우증권">대우증권</option>
-                       <option value="한국투자증권">한국투자증권</option>
-                       <option value="삼성증권">삼성증권</option>
-                       <option value="우리투자증권">우리투자증권</option>
-                       <option value="SK증권">SK증권</option>
-                       <option value="신한금융투자">신한금융투자</option>
-                       <option value="하이증권">하이증권</option>
-                       <option value="HMC증권">HMC증권</option>
-                       <option value="대신증권">대신증권</option>
-                       <option value="하나대투증권">하나대투증권</option>
-                       <option value="동부증권">동부증권</option>
-                       <option value="유진증권">유진증권</option>
-                       <option value="메리츠증권">메리츠증권</option>
-                       <option value="신영증권">신영증권</option>
-                        <option value="미래에셋증권">미래에셋증권</option>
-                        <option value="동양증권">동양증권</option>
-                        <option value="현대증권">현대증권</option>
-                        <option value="신한금융투자증권">신한금융투자증권</option>
-                        <option value="주택은행">주택은행</option>
-                        <option value="산업은행">산업은행</option>
-                    </select>
-                    <span id="banknmId" style={{display: 'none'}}><input className="input1" name="banknm" type="text" id="banknm"  placeholder="은행명직접입력" /></span>
-                  </td>
-                </tr> 
-                <tr>
-                  <td style={{height:'5px'}}></td>
-                </tr> 
-                
-        
-                <tr>
-                  <td className="write_title">계좌번호</td>
-                  <td className="write_td"></td>
-        
-                  <td className="write_basic">
-                    <input className="input1" name="accountnumber" type="text" id="accountnumber" placeholder="계좌번호를 입력하세요"  value={this.state.banknumber} onChange={(e: any) => { this.setState({ banknumber: e.target.value }); }}/>
-                    <span>( 띄어쓰기와 - 없이 숫자로만 기입하여 주시기 바랍니다 )</span>
-                  </td>
-                </tr>    
-                <tr>
-                  <td style={{height:'5px'}}></td>
-                </tr> 
-                
-                
-                <tr>
-                  <td className="write_title">핸드폰</td>
-                  <td className="write_td"></td>
-        
-                  <td className="write_basic">
-                  <select className="input1" name="mobile" id="mobile"  value={this.state.phone1}  onChange={(e: any) => { this.setState({ phone1: e.target.value }); }}
-                  >
-                      <option value="010" >010</option>
-                      <option value="011">011</option>
-                      <option value="016">016</option>
-                      <option value="017">017</option>
-                      <option value="018">018</option>
-                      <option value="019">019</option>
-                    </select> 
-                  - <input className="input1" type="tel" name="mobile2" id="mobile2" value={this.state.phone2} onChange={(e: any) => { this.setState({ phone2: e.target.value }); }}
-
-                  /> - <input className="input1" type="tel" name="mobile3" id="mobile3"   value={this.state.phone3} onChange={(e: any) => { this.setState({ phone3: e.target.value }); }}/>
-                  
-                  
-                  
-                  
-                  </td>
-                </tr>     
-           
-                <tr>
-                  <td  style={{height:'5px'}}></td>
-                </tr> 
-                
-        
-                <tr>
-                  <td className="write_title">지인추천 ID</td>
-                  <td className="write_td"></td>
-        
-                  <td className="write_basic">
-                    <input className="input1" name="recommend_id" type="text" id="recommend_id"        value={this.state.code} onChange={(e: any) => { this.setState({ code: e.target.value });}}/>
-                    <span>
-               
-                    </span>
-                  </td>
-                </tr>
-        
-                      
-        
-        
-        
-              </tbody></table>
-            </div>
-            <div className="con_box10">
-              <div className="btn_wrap_center">
-                <ul>
-                  <li><a  onClick={() => { this.handleReg();}}><span className="btn3_1">회원가입완료</span></a></li>
-                </ul>
-              </div>
-            </div>
-        
-        
      
-        </div></form></div>
-          </div>
+
+     <div className="modal joinModal fade show" style={{overflowY: 'auto', display: 'block', paddingRight: '17px'}} aria-modal="true" role="dialog">
+      <div className="modal-dialog modal-dialog-centered">
+          <div className="modal-content">
+              {/* <img className="logo-modal" src="/last/image/logo/logo-footer.png" alt="" /> */}
+
+              <div className="modal-header">
+                  <div className="title text-left">
+                      <h5>회원가입</h5>
+                      <span>SIGN UP</span>
+                  </div>
+                  <button className="close-btn" data-dismiss="modal" onClick={()=> this.props.handleClose()}></button>
+              </div>
+              <div className="modal-body">
+                  <div className="modal-menu">
+                      <button className="mm-btn login-link"  onClick={()=> this.props.handleActive('login')}>로그인</button>
+                      <button className="mm-btn active">회원가입</button>
+                  </div>
+ 
+
+                  <input type="hidden" name="_token" value="7Do1ybOiRnawRmta69DbJcslEoctv8aY2mIEFPco" />      
+                    <div className="form-head">
+                          <span className="title"><i className="fa fa-caret-right" aria-hidden="true"></i> 필수정보</span>
+                      </div>
+                      <div className="form-container">
+                          <div className="form-group w-btn">
+                              <div className="labels">
+                                  <span className="dot"></span>
+                                  <span>유저아이디</span>
+                              </div>
+                              <div className="infos">
+                                  <input type="text" name="user_id" id="user_id" placeholder="유저아이디"  value={this.state.id} onChange={(e: any) => { this.setState({id: e.target.value }); }}  />
+                                  <button type="button"  onClick={()=> this.handleCheck()} ><i className="fa fa-check-double" aria-hidden="true"></i> 중복체크</button>
+                              </div>
+                          </div>
+                          {/* <div className="form-group w-btn">
+                              <div className="labels">
+                                  <span className="dot"></span>
+                                  <span>닉네임</span>
+                              </div>
+                              <div className="infos">
+                                  <input type="text" name="nickname" id="nickname" placeholder="닉네임"  value={this.state.id} onChange={(e: any) => { this.setState({nick: e.target.value }); }}  />
+                                  <button type="button" ><i className="fa fa-check-double" aria-hidden="true"></i> 중복체크</button>
+                              </div>
+                          </div> */}
+                          <div className="form-group">
+                              <div className="labels">
+                                  <span className="dot"></span>
+                                  <span>비밀번호</span>
+                              </div>
+                              <div className="infos">
+                                  <input id="password" type="password" name="password" placeholder="비밀번호" value={this.state.pass} onChange={(e: any) => { this.setState({pass: e.target.value }); }}  />
+                              </div>
+                          </div>
+                          <div className="form-group">
+                              <div className="labels">
+                                  <span className="dot"></span>
+                                  <span>비밀번호확인</span>
+                              </div>
+                              <div className="infos">
+                                  <input id="password_cnfm" type="password" name="password_confirmation" placeholder="비밀번호확인"  value={this.state.pass_check} onChange={(e: any) => { this.setState({pass_check: e.target.value }); }}  />
+                              </div>
+                          </div>
+                          <div className="form-group ">
+                              <div className="labels">
+                                  <span className="dot"></span>
+                                  <span>전화번호</span>
+                              </div>
+                              <div className="infos">
+                                  <input type="number" pattern="[0-9]*" id="user_mobile" name="user_mobile" placeholder="*통화가능한번호 필수입력" value={this.state.phone1} onChange={(e: any) => { this.setState({phone1: e.target.value }); }}   />
+                              </div>
+                          </div>
+                      </div>
+                      <div className="form-head">
+                          <span className="title"><i className="fa fa-caret-right" aria-hidden="true"></i> 계좌정보</span>
+                      </div>
+                      <div className="form-container">
+                          <div className="form-group">
+                              <div className="labels">
+                                  <span className="dot"></span>
+                                  <span>은행명</span>
+                              </div>
+                              <div className="infos">
+                                  <select id="bank" name="bank" value={this.state.bankname}   onChange={(e: any) => { this.setState({ bankname: e.target.value });}}  >
+                                    <option value="">==은행선택하기==</option>
+                                    <option value="신한">신한(088)</option>
+                                    <option value="KEB하나">KEB하나(081)</option>
+                                    <option value="경남">경남(039)</option>
+                                    <option value="광주">광주(034)</option>
+                                    <option value="국민">국민(004)</option>
+                                    <option value="기업">기업(003)</option>
+                                    <option value="농협">농협(011)</option>
+                                    <option value="대구">대구(031)</option>
+                                    <option value="도이치">도이치(055)</option>
+                                    <option value="부산">부산(032)</option>
+                                    <option value="산업">산업(002)</option>
+                                    <option value="상호저축">상호저축(050)</option>
+                                    <option value="새마을">새마을(045)</option>
+                                    <option value="수협">수협(007)</option>
+                                    <option value="신협">신협(048)</option>
+                                    <option value="씨티">씨티(027)</option>
+                                    <option value="외환">외환(005)</option>
+                                    <option value="우리">우리(020)</option>
+                                    <option value="우체국">우체국(071)</option>
+                                    <option value="전북">전북(037)</option>
+                                    <option value="제주">제주(035)</option>
+                                    <option value="지역농축협">지역농축협(012)</option>
+                                    <option value="케이뱅크">케이뱅크(089)</option>
+                                    <option value="카카오뱅크">카카오뱅크(089)</option>
+                                    <option value="BNP파리바">BNP파리바(061)</option>
+                                    <option value="JP모간">JP모간(057)</option>
+                                    <option value="BOA">BOA(060)</option>
+                                    <option value="HSBC">HSBC(054)</option>
+                                    <option value="SC">SC(023)</option>
+                                    <option value="산림조합중앙회">산림조합중앙회(064)</option>
+                                    <option value="유안타증권">유안타증권(209)</option>
+                                    <option value="KB증권">KB증권(218)</option>
+                                    <option value="미래에셋증권">미래에셋증권(230)</option>
+                                    <option value="미래에셋대우">미래에셋대우(238)</option>
+                                    <option value="삼성증권">삼성증권(240)</option>
+                                    <option value="한국투자증권">한국투자증권(243)</option>
+                                    <option value="에이치엠씨투자증권">에이치엠씨투자증권(263)</option>
+                                    <option value="에스케이증권">에스케이증권(266)</option>
+                                    <option value="한화증권">한화증권(269)</option>
+                                    <option value="하나금융투자">하나금융투자(270)</option>
+                                    <option value="신한금융투자">신한금융투자(278)</option>
+                                    <option value="메리츠종합금융증권">메리츠종합금융증권(287)</option>
+                                    <option value="유진투자증권">유진투자증권(280)</option>
+                                    <option value="신영증권">신영증권(291)</option>
+                                    <option value="교보증권">교보증권(261)</option>
+                                    <option value="대신증권">대신증권(267)</option>
+                                    <option value="동부증권">동부증권(279)</option>
+                                    <option value="부국증권">부국증권(290)</option>
+                                    <option value="이베스트투자증권">이베스트투자증권(265)</option>
+                                    <option value="솔로몬투자증권">솔로몬투자증권(268)</option>
+                                    <option value="케이프투자증권">케이프투자증권(292)</option>
+                                    <option value="키움증권">키움증권(264)</option>
+                                    <option value="펀드온라인">펀드온라인(294)</option>
+                                    <option value="KTB투자증권">KTB투자증권(227)</option>
+                                </select>
+                              </div>
+                          </div>
+                          <div className="form-group">
+                              <div className="labels">
+                                  <span className="dot"></span>
+                                  <span>예금주</span>
+                              </div>
+                              <div className="infos">
+                                  <input type="text" placeholder="영문과 한글만 입력하세요" name="acct_nm"   value={this.state.bankowner} onChange={(e: any) => { this.setState({ bankowner: e.target.value }); }} />
+                              </div>
+                          </div>
+                          <div className="form-group">
+                              <div className="labels">
+                                  <span className="dot"></span>
+                                  <span>계좌번호</span>
+                              </div>
+                              <div className="infos">
+                                  <input type="number" pattern="[0-9]*" placeholder="숫자만 입력하세요." name="acct_no"   value={this.state.banknumber} onChange={(e: any) => { this.setState({ banknumber: e.target.value }); }}   />
+                              </div>
+                          </div>
+                          <div className="form-group">
+                              <div className="labels">
+                                  <span className="dot"></span>
+                                  <span>추천인</span>
+                              </div>
+                              <div className="infos">
+                                  <input type="text" pattern="[0-9]*" placeholder="추천인을 입력하세요." name="acct_no"   value={this.state.code} onChange={(e: any) => { this.setState({ code: e.target.value }); }} />
+                              </div>
+                          </div>
+                      </div>
+                      <div className="modal-footer">
+                          <div className="btn-grp one-btn">
+                              <button type="button" onClick={()=> this.handleReg()} ><i className="fa fa-check-square-o" aria-hidden="true"></i> 회원가입</button>
+                          </div>
+                      </div>
+            </div>
         </div>
+    </div>
+</div>
+
+          
+            
         )}
       </Popup>
     );

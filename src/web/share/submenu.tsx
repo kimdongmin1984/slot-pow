@@ -37,13 +37,13 @@ export class SubMenu extends Component<Props, State> {
                 </a>
             </li>
         
-            {/* <li className="tab4" data-target="#popuptab_cont4">
+            <li className="tab4" data-target="#popuptab_cont4">
             <a onClick={()=>{this.props.handleActive('coupon')}}>
                 <span><img src="/web/images/gnb04.png" /> 쿠폰발급현황</span>
                 </a>
             </li>
         
-            <li className="tab6" data-target="#popuptab_cont6">
+            {/* <li className="tab6" data-target="#popuptab_cont6">
             <a onClick={()=>{this.props.handleActive('even')}}>
                 <span><img src="/web/images/gnb06.png" /> 이벤트</span>
                 </a>

@@ -179,19 +179,19 @@ class deposit extends Component<Props, State> {
 
   handleAskAccount = () => {
     confirmAlert({
-      title: "통장문의",
+      title: "계좌문의",
       message: "통장 문의 를 하시겠습니까?",
       buttons: [
         {
           label: "확인",
           onClick: () => {
             this.userService
-              .user_wirte_help("입금통장문의", "-")
+              .user_wirte_help("입금계좌문의", "-")
               .then((data) => {
                 if (data.status === "success") {
                   confirmAlert({
-                    title: "통장문의",
-                    message: "통장문의 신청이 완료되습니다.",
+                    title: "계좌문의",
+                    message: "계좌문의 신청이 완료되습니다.",
                     buttons: [
                       {
                         label: "확인",
@@ -242,35 +242,6 @@ class deposit extends Component<Props, State> {
       });
       return;
     }
-
-    if (Number(this.state.balance) < 10000) {
-      confirmAlert({
-        title: "입금",
-        message: "입금금액을 입력해주세요. 최소 충전금액은 10,000원입니다",
-        buttons: [
-          {
-            label: "확인",
-            onClick: () => {},
-          },
-        ],
-      });
-      return;
-    }
-
-    if (Number(this.state.balance) % 10000 > 0) {
-      confirmAlert({
-        title: "입금",
-        message: "입금은 만원 단위로 가능합니다.",
-        buttons: [
-          {
-            label: "확인",
-            onClick: () => {},
-          },
-        ],
-      });
-      return;
-    }
-    
     confirmAlert({
       title: "입금",
       message: "입금신청을 하시겠습니까?",
@@ -460,7 +431,7 @@ class deposit extends Component<Props, State> {
                       }}
                     />
 
-                      <table style={{width: '100%'}}> 
+                      <table style={{width: '100%'}}>
                             <tbody><tr>
                                 <td style={{width: '10%'}} align="center"><a onClick={() => { this.setState({ balance: this.state.balance + 10000 }); }} ><span className="m_btn1">1만원</span></a></td>                
                                 <td style={{width: '10%'}} align="center"><a onClick={() => { this.setState({ balance: this.state.balance + 50000 }); }}  ><span className="m_btn1">5만원</span></a></td>                

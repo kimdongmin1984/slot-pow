@@ -18,6 +18,10 @@ export class SlotService extends AxiosService {
   }
 
   ///
+  getCasinoSetting() {
+    return this.SendMessageByPost("/casino/get_casino_setting", {}).then((res : any) => res);
+  }
+  ///
   get_slot_bets_list(params: any) {
     return this.SendMessageByPost("/slot/get_slot_bets_list", params).then(
       (res) => res
@@ -36,6 +40,14 @@ export class SlotService extends AxiosService {
       .then((res) => res.data.data);
   }
 
+
+  get_help_no_read_message() {
+    return axios
+      .post("/community/admin_get_help_no_read_message", {})
+      .then((res) => res.data.data);
+  }
+
+
   TransferIn(balance: string) {
     return axios
       .post("/casino/user_transfer_in", { balance: balance })
@@ -51,6 +63,13 @@ export class SlotService extends AxiosService {
   withdraw(balance: string) {
     return axios
       .post("/slot/withdrawV3", { balance: balance })
+      .then((res) => res.data.data);
+  }
+
+  
+  get_slot_bets(skip : number) {
+    return axios
+      .post("/slot/get_slot_bets", {skip })
       .then((res) => res.data.data);
   }
 }

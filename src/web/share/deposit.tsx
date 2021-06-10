@@ -51,31 +51,17 @@ export class Deposit extends Component<Props, State> {
 
 
   handleAskToAccount = () => {
-    // if (this.state.pass ===  '') {
-    //   confirmAlert({
-    //     title: "입금",
-    //     message: "환전비밀번호를 입력해주세요.",
-    //     buttons: [
-    //       {
-    //         label: "확인",
-    //         onClick: () => {},
-    //       },
-    //     ],
-    //   });
-    //   return;
-    // }
-
-    this.balanceService.askToAccountPass(this.state.pass).then((data) => {
-      console.log(data);
+  
+    this.balanceService.askToAccount().then((data) => {
       if (data.status === "success") {
         confirmAlert({
-          title: "통장문의",
-          message: "통장문의 하였습니다.",
+          title: "계좌문의",
+          message: "계좌문의을 성공하였습니다.",
           buttons: [
             {
               label: "확인",
               onClick: () => {
-                window.location.reload()
+                this.props.handleClose();
               },
             },
           ],
@@ -83,7 +69,7 @@ export class Deposit extends Component<Props, State> {
         return;
       } else if (data.status === "pass") {
         confirmAlert({
-          title: "입금",
+          title: "계좌문의",
           message: "환전 비밀번호를 확인해주세요.",
           buttons: [
             {
@@ -95,7 +81,7 @@ export class Deposit extends Component<Props, State> {
         return;
       } else {
         confirmAlert({
-          title: "통장문의",
+          title: "계좌문의",
           message:
             "알수없는 예러가 발상하였습니다 문제가 지속된다면 관리자에게 문의 바람니다.",
           buttons: [
@@ -111,10 +97,10 @@ export class Deposit extends Component<Props, State> {
 
   
   handleDoDeposit = () => {
-    if (Number(this.state.balance) < 10000) {
+    if (this.state.balance <= 0) {
       confirmAlert({
         title: "입금",
-        message: "입금금액을 입력해주세요. 최소 충전금액은 10,000원입니다",
+        message: "입금금액을 입력해주세요.",
         buttons: [
           {
             label: "확인",
@@ -125,7 +111,7 @@ export class Deposit extends Component<Props, State> {
       return;
     }
 
-    if (Number(this.state.balance) % 10000 > 0) {
+    if (10000 < this.state.balance % 10000) {
       confirmAlert({
         title: "입금",
         message: "입금은 만원 단위로 가능합니다.",
@@ -191,155 +177,95 @@ export class Deposit extends Component<Props, State> {
         open={true}
         contentStyle={{
           zIndex: 99,
-          background: "#000",
+          background: "none",
           border: "none",
           width: "none",
         }}
         onClose={()=>{this.props.handleClose()}}
       >
         {(close) => (
-          <div  id="fade_2"  className="slideDown popup_none popup_content" data-popup-initialized="true" aria-hidden="false" role="dialog" style={{opacity: 1, visibility: 'visible', display: 'inline-block', outline: 'none', transition: 'all 0.3s ease 0s', textAlign: 'left', position: 'relative', verticalAlign: 'middle', overflowY : 'auto', height : '600px'}}>
-          <div className="popup_wrap">
-            <div className="close_box">
-              <a href="#" className="fade_1_close" onClick={()=>{this.props.handleClose()}}><img src="/web/images/popup_close.png" /></a>
-            </div>
-            <div className="popupbox">
-            {this.props.handleActive != null && <SubMenu handleActive={(active : string)=>{this.props.handleActive(active)}}></SubMenu> }
+             <div className="modal-dialog modal-dialog-centered">
+             <div className="modal-content">
+                 {/* <img className="logo-modal" src="/last/image/logo/logo-footer.png" alt="" /> */}
+                 <div className="modal-header">
+                     <div className="title text-left">
+                         <h5>입금신청</h5>
+                         <span>DEPOSIT</span>
+                     </div>
+                     <button className="close-btn" data-dismiss="modal"  onClick={()=> this.props.handleClose()}></button>
+                 </div>
+                 <div className="modal-body">
+                     <div className="modal-menu">
+                         <button type="button" className="mm-btn active">입금신청</button>
+                         <button type="button" className="mm-btn withdraw-link" onClick={()=> this.props.handleActive('withdraw')}>출금신청</button>
+                     </div>
+                     <div className="terms-use">
+                         <div className="text-cont">
+                         <div className="inner">
+                            <p><b><span style={{fontSize: '18pt', color: 'rgb(255, 239, 0)'}}>
+                              <span style={{color: 'rgb(255, 170, 0)', fontSize: '18pt'}}>1.꼭!!!<span style={{color: 'rgb(255, 239, 0)'}}>**</span></span>
+                              <span style={{color: 'rgb(255, 170, 0)', fontSize: '18pt'}}>아래&nbsp;</span> </span>
+                              <u><span style={{fontSize: '18pt', color: 'rgb(255, 239, 0)'}}>↓</span>
+                              <span style={{fontSize: '18pt', color: 'rgb(255, 239, 0)'}}>​</span>
+                              <span style={{fontSize: '18pt', color: 'rgb(255, 239, 0)'}}>↓</span>
+                              <span style={{fontSize: '18pt', color: 'rgb(255, 239, 0)'}}>​</span>
+                              <span style={{fontSize: '18pt', color: 'rgb(255, 239, 0)'}}>↓</span>
+                              <span style={{fontSize: '14pt', color: 'rgb(255, 0, 0)'}}>
+                              <span style={{color: 'rgb(255, 239, 0)', fontSize: '18pt'}}><u>​<span style={{color: 'rgb(0, 158, 37)', fontSize: '18pt'}}><u> 입금</u></span></u></span>
+                              <span style={{color: 'rgb(255, 239, 0)', fontSize: '18pt'}}><span style={{color: 'rgb(255, 239, 0)', fontSize: '18pt'}}><u>계좌문의하기</u></span>&nbsp;</span></span>
+                              <span style={{fontSize: '18pt', color: 'rgb(255, 239, 0)'}}>↓</span><span style={{fontSize: '14pt', color: 'rgb(255, 0, 0)'}}><span style={{color: 'rgb(255, 239, 0)', fontSize: '18pt'}}>​</span></span><span style={{fontSize: '18pt', color: 'rgb(255, 239, 0)'}}>↓</span>
+                              <span style={{fontSize: '18pt', color: 'rgb(255, 239, 0)'}}>↓</span></u>
+                              <span style={{fontSize: '18pt', color: 'rgb(255, 170, 0)'}}>​</span>
+                              <span style={{fontSize: '18pt', color: 'rgb(255, 170, 0)'}}><span style={{color: 'rgb(255, 170, 0)', fontSize: '18pt'}}>​ 클릭<span style={{color: 'rgb(255, 239, 0)'}}>**</span></span>&nbsp;</span></b></p>
+                              <p><b><span style={{fontSize: '18pt', color: 'rgb(255, 108, 0)'}}>2. 입금계좌 확인후 입금</span></b></p>
+                              <p><b><span style={{fontSize: '12pt', color: 'rgb(255, 170, 0)'}}><span style={{color: 'rgb(81, 143, 187)', fontSize: '12pt'}}>3. 입금금액 입력후 입금신청 클릭(입금확인 *10분* 불가시 자동 취소 됩니다.)</span></span></b></p>
+                              <p><b><span style={{fontSize: '12pt', color: 'rgb(0, 158, 37)'}}>4. <u><span style={{color: 'rgb(255, 239, 0)'}}><u>순차적으로 입금처리</u></span></u>가 진행되며 시간이 지연 될 수 있으니 양해 바랍니다.</span></b></p>
+                              <p><b><span style={{fontSize: '12pt', color: 'rgb(0, 158, 37)'}}>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;(입금확인은 새로고침을 눌러 주세요)</span></b></p><div className="grammarly-disable-indicator"></div>
+                        </div>
+                         </div>
+                     </div>
+                     <div className="deposit-ask">
+                         <button type="button" onClick={()=>{ this.handleAskToAccount() }}>
+                             <i className="fa fa-comment-dots" aria-hidden="true"></i>
+                             <span>입금계좌문의</span>
+                         </button>
+                         <p>* 입금 계좌는 고객센터에서 확인해주세요!</p>
+                     </div>
+                     <div className="form-container">
 
-              <div id="popuptab_cont2" className="popuptab_cont">
-        
-              <div className="title1">입금신청</div>
-        <div className="contents_in">
-          <div className="con_box00">
-            <div className="info_wrap">
-              <div className="info2">
-                주의사항
-              </div>
-              <div className="info3">
-                - 입금 최소 1만원부터 가능하며 입금전 꼭! 본사의 충전계좌 확인 후 입금바랍니다.<br />
-                - 수표 및 토스입금시 충전처리가 불가합니다.
-              </div>
-            </div>
-          </div>
-
-          <div className="con_box10">
-            <div className="info_wrap">
-              <div className="info2" style={{textAlign:"center"}}>
-                <li><a onClick={() => { this.handleAskToAccount() }}><span className="btn3_1">계좌문의</span> <span style={{fontSize: 18}}>계좌확인은 고객센터에서 본인이 보낸 글 밑에 답변 있습니다</span></a></li>
-
-                {/* <span className="ww_font">내 지갑 <img src="/web/images/ww_icon.png" height="30" />
-                <input className="input1 walletBalance" id="balance_offer" value={this.state.inBalance} readOnly /> 원</span> */}
-              </div>
-            </div>
-          </div>
-
-
-          <div className="con_box10">
-            <div className="info_wrap">
-              <div className="info2" style={{textAlign:"center"}}>
-                <span className="ww_font">내 지갑 <img src="/web/images/ww_icon.png" height="30" />
-                <input className="input1 walletBalance" id="balance_offer" value={this.state.inBalance} readOnly /> 원</span>
-              </div>
-            </div>
-          </div>
-        
-          {/* <tr>
-              <td className="write_title">입금계좌</td>
-              <td className="write_td"></td>
-              <td className="write_basic">
-                <a onClick={()=>{this.handleAskToAccount()}} style={{paddingLeft : 5}}><span className="btn1_2">문의</span></a>
-              </td>
-            </tr>    */}
-          
-        
-          <div className="con_box10">
-            <table  className="write_title_top">
-            <tbody><tr>
-              <td className="write_title">
-                ID
-              </td>
-              <td className="write_td">
-              </td>
-              <td className="write_basic">
-                <input className="input1 userID" value={this.props.user.id} readOnly />
-              </td>
-            </tr>
-            <tr>
-              <td  style={{height:"5px"}}>
-              </td>
-            </tr>
-            <tr>
-              <td className="write_title">
-              입금자명
-              </td>
-              <td className="write_td">
-              </td>
-              <td className="write_basic">
-                <input className="input1 userName" value={this.props.user.bankowner} readOnly />
-              </td>
-            </tr>
-            <tr>
-              <td colSpan={3}  style={{height:'5px'}}>
-              </td>
-            </tr>
-            <tr>
-              <td className="write_title">
-              회원은행
-              </td>
-              <td className="write_td">
-              </td>
-              <td className="write_basic">
-                <input className="input1 userBankName" value={this.props.user.bankname} readOnly />
-              </td>
-            </tr>
-            <tr>
-              <td style={{height:'5px'}}>
-              </td>
-            </tr>
-            <tr>
-              <td className="write_title">
-              회원계좌번호
-              </td>
-              <td className="write_td">
-              </td>
-              <td className="write_basic">
-                <input className="input1 userAccountNumber"    value={this.props.user.banknum} readOnly/>
-              </td>
-            </tr>
-            <tr>
-              <td  style={{height:'5px'}}>
-              </td>
-            </tr>
-          
-               
-           
-            <tr>
-              <td className="write_title">입금금액</td>
-              <td className="write_td"></td>
-              <td className="write_basic"><input className="input1" id="accept_amount" name="accept_amount" placeholder="0" value={this.state.balance} onChange={(e) => this.setState({ balance: Number(e.target.value),})}/>
-                <a onClick={() => {this.setState({balance: this.state.balance + 10000,});}} style={{paddingLeft : 5}}><span className="btn1_2">1만원</span></a>
-                <a onClick={() => {this.setState({balance: this.state.balance + 50000,});}}  style={{paddingLeft : 5}}><span className="btn1_2">5만원</span></a>
-                <a onClick={() => {this.setState({balance: this.state.balance + 100000,});}}  style={{paddingLeft : 5}}><span className="btn1_2">10만원</span></a> 
-                <a onClick={() => {this.setState({balance: this.state.balance + 500000,});}}  style={{paddingLeft : 5}}><span className="btn1_2">50만원</span></a> 
-                <a onClick={() => {this.setState({balance: this.state.balance + 1000000,});}}  style={{paddingLeft : 5}}><span className="btn1_2">100만원</span></a> 
-                <a onClick={() => {this.setState({balance: this.state.balance + 5000000,});}}  style={{paddingLeft : 5}}><span className="btn1_2">500만원</span></a> 
-                <a onClick={() => {this.setState({balance: 0,});}}  style={{paddingLeft : 5}}><span className="btn1_1">정정</span></a>
-              </td>
-            </tr>  
-            </tbody></table>
-          </div>
-          <div className="con_box20">
-            <div className="btn_wrap_center">
-              <ul>
-                <li><a onClick={this.handleDoDeposit}><span className="btn3_1">입금신청하기</span></a></li>
-              </ul>
-            </div>
-          </div>
-          </div></div>
-            </div>
-          </div>
-        </div>
-     
+                        {
+                          this.props.user != null && (
+                            <div className="form-group">
+                                <div className="labels">
+                                    <span className="dot"></span>
+                                    <span>입금자명</span>
+                                </div>
+                                <div className="infos">
+                                    <input type="text"  value={this.props.user.bankowner}  readOnly />
+                                </div>
+                            </div>
+                          ) 
+                        }
+                         <div className="form-group">
+                             <div className="labels">
+                                 <span className="dot"></span>
+                                 <span>입금할 금액</span>
+                             </div>
+                             <div className="infos">
+                                 <input type="text" placeholder="최소 1만원단위" name="amount" value={this.state.balance} onChange={(e: any) => { this.setState({ balance :  Number(e.target.value) })}} />
+                             </div>
+                         </div>
+                     </div>
+                     <div className="modal-footer">
+                         <div className="btn-grp">
+                             <button type="button"  onClick={()=>this.handleDoDeposit()}><i className="fa fa-check-square-o" aria-hidden="true"></i> 입금하기</button>
+                             <button type="button" className="gray" data-dismiss="modal" onClick={()=> this.props.handleClose()}><i className="fa fa-window-close" aria-hidden="true"></i> 취소하기</button>
+                         </div>
+                     </div>
+                 </div>
+             </div>
+         </div>
+   
         )}
       </Popup>
     );

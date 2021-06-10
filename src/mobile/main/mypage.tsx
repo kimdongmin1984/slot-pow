@@ -186,7 +186,6 @@ class mypage extends Component<Props, State> {
 
     let user = this.props.user
 
-
     return (
 
       <div>
@@ -219,8 +218,7 @@ class mypage extends Component<Props, State> {
                       <td className="write_td">
                       </td>
                       <td className="write_basic">
-                        <span style={{lineHeight:'15px',display:'table',float:'left', paddingTop:'5px'}}>
-                          {/* <img src={`/mo/images/icon4_${user.level}.png`} /> {user.level}레벨 */}
+                        <span style={{lineHeight:'15px',display:'table',float:'left', paddingTop:'5px'}}><img src={`/mo/images/icon4_${user.level}.png`} /> {user.level}레벨
                         
                           &nbsp;&nbsp; <span className="font01">{user.id}</span>&nbsp;&nbsp;&nbsp;&nbsp;
                         </span>
@@ -231,21 +229,16 @@ class mypage extends Component<Props, State> {
                       </td>
                     </tr>
                   
-                  {
-                    user != null && (
-                      <tr>
-                        <td className="write_title">
-                          보유게임 총머니
-                        </td>
-                        <td className="write_td">
-                        </td>
-                        <td className="write_basic">
-                          <input className="input1"  value={user.in_balance} readOnly />
-                        </td>
-                      </tr>
-                    )
-                  }
-                  
+                    <tr>
+                      <td className="write_title">
+                        보유게임 총머니
+                      </td>
+                      <td className="write_td">
+                      </td>
+                      <td className="write_basic">
+                        <input className="input1"  value="13,809" readOnly />
+                      </td>
+                    </tr>
                     <tr>
                       <td style={{height:'3px'}}>
                       </td>

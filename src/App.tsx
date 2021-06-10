@@ -75,7 +75,6 @@ function App() {
 
   return (
     <>
-      <BrowserView>
           <Web
           tryLogin={login}
           authenticated={authenticated}
@@ -85,8 +84,7 @@ function App() {
           }}
           SetCookie={(name: string, data: any) => setCookie(name, data, { path: "/" })}
           GetCookie={(name: string)=> { return cookie[name]}}></Web>
-      </BrowserView>
-      <MobileView>
+      {/* <MobileView>
         <Mobile
         tryLogin={login}  
         authenticated={authenticated}
@@ -94,8 +92,10 @@ function App() {
         tryLoginOut={() => {
           removeCookie("session", { path: "/" });
         }}
+        SetCookie={(name: string, data: any) => setCookie(name, data, { path: "/" })}
+        GetCookie={(name: string)=> { return cookie[name]}}
       ></Mobile>
-      </MobileView>
+      </MobileView> */}
     </>
   );
 }

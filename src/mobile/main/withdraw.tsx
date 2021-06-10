@@ -211,10 +211,10 @@ class withdraw extends Component<Props, State> {
       });
       return;
     }
-    if (this.state.balance < 30000) {
+    if (this.state.balance < 10000) {
       confirmAlert({
         title: "출금",
-        message: "출금 최소금액은 3만원부터 만원단위로 출금 가능합니다.",
+        message: "출금금액을 입력해주세요.",
         buttons: [
           {
             label: "확인",
@@ -349,7 +349,7 @@ class withdraw extends Component<Props, State> {
             <div className="info_wrap">
                 <div className="info2">주의사항</div>
                 <div className="info3">
-                - 출금 최소금액은 3만원부터 만원단위로 출금 가능합니다.<br/>
+                - 출금 최소 5만원부터 만원단위로 출금 가능하십니다.<br/>
                 - 출금은 가입하신 동일 예금주로만 가능합니다.
                 </div>
             </div>

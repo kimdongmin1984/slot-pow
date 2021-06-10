@@ -3,14 +3,13 @@
   <head>
     <meta charset="utf-8" />
     <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
-
-    
-
+    <!-- <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" /> -->
+    <!-- <meta name="viewport" content="width=640, inital-scale=1, minium-scale=1, maxinum-scale=1, user-scalable=no, target-densitydpi=device-dpi"> -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="theme-color" content="#000000" />
     <meta
       name="description"
-      content="스토리 SLOT"
+      content="찬스 SLOT"
     />
     <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
     <!--
@@ -29,7 +28,17 @@
     -->
     <script src="https://code.jquery.com/jquery-1.12.3.min.js"></script>
     <script src="/web/js/TweenMax.min.js" ></script>
-    <title>스토리 SLOT</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"> -->
+
+    <link rel="stylesheet" href="/last/css/bootstrap.min.css"  />
+    <link rel="stylesheet" href="/last/css/jquery.jspanel.css"  />
+    <link rel="stylesheet" href="/last/css/style.css"  />
+
+
+    <title>찬스 SLOT</title>
+    
     <script type="text/javascript">
       var filter = "win16|win32|win64|mac";
 
@@ -43,104 +52,137 @@
         }
       }
 
-      if (isMobile()) {
-          var cssId = 'myCss';  // you could encode the css path itself to generate id..
+      if (false) {
+          // var cssId = 'myCss';  // you could encode the css path itself to generate id..
 
-          var head  = document.getElementsByTagName('head')[0];
-          var link  = document.createElement('link');
-          link.id   = cssId;
-          link.rel  = 'stylesheet';
-          link.type = 'text/css';
-          link.href = '/css/indexmo.css';
-          link.media = 'all';
-          head.appendChild(link);
+          // var head  = document.getElementsByTagName('head')[0];
+          // var link  = document.createElement('link');
+          // link.id   = cssId;
+          // link.rel  = 'stylesheet';
+          // link.type = 'text/css';
+          // link.href = '/css/indexmo.css';
+          // link.media = 'all';
+          // head.appendChild(link);
 
         } else {
 
-          var head  = document.getElementsByTagName('head')[0];
-          var link  = document.createElement('link');
-          link.id   = cssId;
-          link.rel  = 'stylesheet';
-          link.type = 'text/css';
-          link.href = '/web/css/common.css';
-          link.media = 'all';
-          head.appendChild(link);
-
-          var link  = document.createElement('link');
-          link.id   = cssId;
-          link.rel  = 'stylesheet';
-          link.type = 'text/css';
-          link.href = '/web/css/layout.css';
-          link.media = 'all';
-          head.appendChild(link);
+          // var head  = document.getElementsByTagName('head')[0];
 
 
-          var link  = document.createElement('link');
-          link.id   = cssId;
-          link.rel  = 'stylesheet';
-          link.type = 'text/css';
-          link.href = '/web/css/animations.css';
-          link.media = 'all';
-          head.appendChild(link);
+          // var link  = document.createElement('link');
+          //  link.id   = cssId;
+          //  link.rel  = 'stylesheet';
+          //  link.type = 'text/css';
+          //  link.href = '/webk/css/bootstrap.min.css';
+          //  link.media = 'all';
+          //  head.appendChild(link);
 
-          var link  = document.createElement('link');
-          link.id   = cssId;
-          link.rel  = 'stylesheet';
-          link.type = 'text/css';
-          link.href = '/web/css/slot.css';
-          link.media = 'all';
-          head.appendChild(link);
+          //  var link  = document.createElement('link');
+          //  link.id   = cssId;
+          //  link.rel  = 'stylesheet';
+          //  link.type = 'text/css';
+          //  link.href = '/webk/css/bootstrap/bootstrap.min.css';
+          //  link.media = 'all';
+          //  head.appendChild(link);
 
-          var link  = document.createElement('link');
-          link.id   = cssId;
-          link.rel  = 'stylesheet';
-          link.type = 'text/css';
-          link.href = '/web/css/custom.css';
-          link.media = 'all';
-          head.appendChild(link);
+          //  var link  = document.createElement('link');
+          //  link.id   = cssId;
+          //  link.rel  = 'stylesheet';
+          //  link.type = 'text/css';
+          //  link.href = '/webk/css/bootstrap/font-awesome.min.css';
+          //  link.media = 'all';
+          //  head.appendChild(link);
 
+          //  var link  = document.createElement('link');
+          // link.id   = cssId;
+          // link.rel  = 'stylesheet';
+          // link.type = 'text/css';
+          // link.href = '/webk/css/bootstrap/style.css';
+          // link.media = 'all';
+          // head.appendChild(link);
 
-            function repeat(){
-                TweenMax.set($('.bs-logo > img').eq(1), {transformOrigin:"50% 100%", scaleY:0});
-                TweenMax.to($('.bs-logo > img').eq(1), .6, {startAt:{transformOrigin:"50% 100%", scaleY:0}, scaleY:1, ease:Back.easeOut});
-
-                // TweenMax.set($('.bs-logo > img').eq(3), {transformOrigin:"50% 100%", scaleY:0});
-                // TweenMax.to($('.bs-logo > img').eq(3), .6, {delay:.3, scaleY:1, ease:Back.easeOut, overwrite:1});
-                // TweenMax.to($('.bs-logo > img').eq(3), .6, {delay:.9, scaleY:1.2, repeat:-1, yoyo:true, ease:Power0.easeNone});
-
-                // TweenMax.set($('.bs-logo > img').eq(0), {transformOrigin:"100% 100%", scale:0});
-                // TweenMax.to($('.bs-logo > img').eq(0), .6, {delay:.5, scale:1, ease:Back.easeOut});
-                
-                // TweenMax.set($('.bs-logo > img').eq(2), {transformOrigin:"0 100%", scale:0});
-                // TweenMax.to($('.bs-logo > img').eq(2), .6, {delay:.6, scale:1, ease:Back.easeOut});
-                
-                // TweenMax.set($('.bs-logo > img').eq(4), {opacity:0, y:0});
-                // TweenMax.to($('.bs-logo > img').eq(4), .6, {delay:.6, opacity:1, ease:Back.easeOut, overwrite:1});
-                // TweenMax.to($('.bs-logo > img').eq(4), .6, {delay:.6, y:-10, repeat:-1, yoyo:true, ease:Power0.easeNone});
-            }
-     
-
-            setInterval(function(){
-                repeat();
-            }, 5000)
         
 
-          var browser = navigator.userAgent.toLowerCase();
+          // var browser = navigator.userAgent.toLowerCase();
 
-          if (
-            (navigator.appName == "Netscape" &&
-              navigator.userAgent.search("Trident") != -1) ||
-            -1 != browser.indexOf("msie") ||
-            -1 != browser.indexOf("edge")
-          ) {
-            alert(
-              "크롬에 최적화되어습니다. 크롬으브라우저를  이용해주시길 바람니다."
-            );
-            window.location.href = "https://www.google.com/intl/ko/chrome/";
-          }
+          // if (
+          //   (navigator.appName == "Netscape" &&
+          //     navigator.userAgent.search("Trident") != -1) ||
+          //   -1 != browser.indexOf("msie") ||
+          //   -1 != browser.indexOf("edge")
+          // ) {
+          //   alert(
+          //     "크롬에 최적화되어습니다. 크롬으브라우저를  이용해주시길 바람니다."
+          //   );
+          //   window.location.href = "https://www.google.com/intl/ko/chrome/";
+          // }
         }
     </script>
 
+
+
+<script src="/js/jquery-3.1.1.min.js"></script>
+<script src="/js/jquery.jplayer.min.js"></script>
+<script src="/js/snd.js"></script>
+
+
+<script type="text/javascript">
+  $(function () {
+
+    createjs.Sound.alternateExtensions = ["ogg"];
+    createjs.Sound.registerSound("/sound/agent.wav", "ALARM01", 1);
+
+  });
+
+  window.onload = function () {
+
+    setInterval(async () => {
+      try {
+
+        if (document.getElementById("helpCount").innerHTML == '1') {
+          document.getElementById("helpCount").innerHTML = '0'
+          await createjs.Sound.play("ALARM01")
+        }
+      
+        // if (document.getElementById("helpAgentReg").innerHTML == '1') {
+        // 	await createjs.Sound.play("ALARM07")
+        // 	document.getElementById("helpAgentReg").innerHTML = '0'
+        // }
+
+      }
+      catch (ex) {
+        console.log(ex)
+
+      }
+
+
+    }, 2000); // 10초단위
+  };
+</script>
+
+
+    <script type="text/javascript" src="/mo/jq/sidebar1/jquery-1.7.1.min.js"></script>
+    <script type="text/javascript" src="/mo/jq/slideshow5/jquery.cycle2.min.js"></script>
+    <script type="text/javascript" src="/mo/jq/slideshow5/jquery.cycle2.carousel.min.js"></script>
+
+
+
+    <!-- <script type="text/javascript" src="/mo/js/common.js"></script> -->
+    <script type="text/javascript" src="/mo/js/jquery.newsTicker.js"></script>
+    <script type="text/javascript" src="/mo/js/showid.js"></script>
+    <script type="text/javascript" src="/mo/js/canvas-video-player"></script>
+
+    <!-- <link rel="stylesheet" type="text/css" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css"> -->
+    <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+ -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+    <!-- Popper JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+  
+    <!-- Latest compiled JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<!-- 
     <script
       type="text/javascript"
       src="/web/jq/slideshow5/jquery.cycle2.min.js"
@@ -149,14 +191,25 @@
       type="text/javascript"
       src="/web/jq/slideshow5/jquery.cycle2.carousel.min.js"
     ></script>
- 
+
     
 
-    <script type="text/javascript" src="/web/js/common.js"></script>
+    <script type="text/javascript" src="/mo/js/common.js"></script>
     <script type="text/javascript" src="/web/js/jquery.newsTicker.js"></script>
     <script type="text/javascript" src="/web/js/showid.js"></script>
     <script type="text/javascript" src="/mo/js/canvas-video-player"></script>
-    <link rel="stylesheet" href="/web/css/logo.css" />
+    <link rel="stylesheet" href="/web/css/logo.css" /> -->
+
+    
+
+    <!-- <script type="text/javascript" src="/web/js/common.js"></script>
+    <script type="text/javascript" src="/web/js/jquery.newsTicker.js"></script>
+    <script type="text/javascript" src="/web/js/showid.js"></script> -->
+<!-- 
+    <link rel="stylesheet" href="/webk/css/logo.css" />
+
+     -->
+    
     <!--  -->
   </head>
   <body>

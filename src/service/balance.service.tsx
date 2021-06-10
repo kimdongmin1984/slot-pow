@@ -18,7 +18,7 @@ export class BalanceService extends AxiosService {
 
   askToAccountPass(pass : any) {
     return axios
-      .post("/community/user_ask_account_wirte_help", {pass})
+      .post("/balance/user_ask_to_account_expass", {pass})
       .then((res) => res.data.data);
   }
 
@@ -40,8 +40,28 @@ export class BalanceService extends AxiosService {
       .then((res) => res.data.data);
   }
 
+
+  get_deposit_and_withdraw(skip: any) {
+    return axios
+      .post("/balance/get_deposit_and_withdraw", { skip: skip })
+      .then((res) => res.data.data);
+  }
+
+
+  
+
   //   doDeposit() {
   //   }
+
+  delAllBalance() {
+    // return  this.SendMessageByPost('/user/get_member')
+    return axios
+      .post("/balance/user_del_all_balance", {})
+      .then((res) => res.data.data);
+  }
+
+
+  
 
   getDepositList() {
     // return  this.SendMessageByPost('/user/get_member')

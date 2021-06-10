@@ -176,78 +176,78 @@ class point extends Component<Props, State> {
   };
 
   handleDoDeposit = () => {
-    let point = this.state.point;
-    if (point <= 0) {
-      confirmAlert({
-        title: "포인트",
-        message: "포인트를 입력해주세요.",
-        buttons: [
-          {
-            label: "확인",
-            onClick: () => {},
-          },
-        ],
-      });
-      return;
-    }
-    confirmAlert({
-      title: "포인트",
-      message: "포인트 변환을 하시겠습니까?",
-      buttons: [
-        {
-          label: "확인",
-          onClick: () => {
-            this.userService.user_chang_to_point().then((data) => {
-              if (data.status === "success") {
-                confirmAlert({
-                  title: "포인트",
-                  message: "출금 신청이 완료되습니다.",
-                  buttons: [
-                    {
-                      label: "확인",
-                      onClick: () => {
-                        window.location.reload();
-                      },
-                    },
-                  ],
-                });
-              } else if (data.status === "low_point") {
-                confirmAlert({
-                  title: "포인트",
-                  message:
-                    "변환할 포인트가 부족합니다 포인트 확인후 신청해주세요.",
-                  buttons: [
-                    {
-                      label: "확인",
-                      onClick: () => {
-                        window.location.reload();
-                      },
-                    },
-                  ],
-                });
-              } else {
-                confirmAlert({
-                  title: "예러...",
-                  message: "예러가 계속발생되면 관리자에게 문의 부탁드림니다.",
-                  buttons: [
-                    {
-                      label: "확인",
-                      onClick: () => {
-                        window.location.reload();
-                      },
-                    },
-                  ],
-                });
-              }
-            });
-          },
-        },
-        {
-          label: "취소",
-          onClick: () => {},
-        },
-      ],
-    });
+    // let point = this.state.point;
+    // if (point <= 0) {
+    //   confirmAlert({
+    //     title: "포인트",
+    //     message: "포인트를 입력해주세요.",
+    //     buttons: [
+    //       {
+    //         label: "확인",
+    //         onClick: () => {},
+    //       },
+    //     ],
+    //   });
+    //   return;
+    // }
+    // confirmAlert({
+    //   title: "포인트",
+    //   message: "포인트 변환을 하시겠습니까?",
+    //   buttons: [
+    //     {
+    //       label: "확인",
+    //       onClick: () => {
+    //         this.userService.user_chang_to_point().then((data) => {
+    //           if (data.status === "success") {
+    //             confirmAlert({
+    //               title: "포인트",
+    //               message: "출금 신청이 완료되습니다.",
+    //               buttons: [
+    //                 {
+    //                   label: "확인",
+    //                   onClick: () => {
+    //                     window.location.reload();
+    //                   },
+    //                 },
+    //               ],
+    //             });
+    //           } else if (data.status === "low_point") {
+    //             confirmAlert({
+    //               title: "포인트",
+    //               message:
+    //                 "변환할 포인트가 부족합니다 포인트 확인후 신청해주세요.",
+    //               buttons: [
+    //                 {
+    //                   label: "확인",
+    //                   onClick: () => {
+    //                     window.location.reload();
+    //                   },
+    //                 },
+    //               ],
+    //             });
+    //           } else {
+    //             confirmAlert({
+    //               title: "예러...",
+    //               message: "예러가 계속발생되면 관리자에게 문의 부탁드림니다.",
+    //               buttons: [
+    //                 {
+    //                   label: "확인",
+    //                   onClick: () => {
+    //                     window.location.reload();
+    //                   },
+    //                 },
+    //               ],
+    //             });
+    //           }
+    //         });
+    //       },
+    //     },
+    //     {
+    //       label: "취소",
+    //       onClick: () => {},
+    //     },
+    //   ],
+    // });
     return;
   };
 

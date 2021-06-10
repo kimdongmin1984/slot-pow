@@ -29,10 +29,10 @@ export class BetBtn extends Component<Props, State> {
           this.props.clickBet();
         }}
       >
-        <div className="mo_game_title blue" style={{ color: color }}>
+        <div className="game_title blue" style={{ color: color }}>
           {name}
         </div>
-        <div className="mo_game_rate divd rate_oe">{odds}</div>
+        <div className="game_rate divd rate_oe">{odds}</div>
       </div>
     );
   }
