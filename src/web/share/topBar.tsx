@@ -330,7 +330,7 @@ class topBar extends Component<Props, State> {
         return <Login handleClose={this.handleClosePopup}  handleActive={this.handleSetState} tryLogin={this.props.tryLogin}></Login>;
       }
 
-      if((user == null || user.id == '' || user.id == null)  && this.state.popupStatuses != popupView.none){
+      if((user == null || user.id == '' || user.id == null)  && this.state.popupStatuses != popupView.none &&  this.state.popupStatuses != popupView.note ){
         confirmAlert({
           title: '로그인 이후 사용가능합니다.',
           buttons: [
@@ -405,8 +405,10 @@ class topBar extends Component<Props, State> {
 
       if (this.state.popupStatuses === popupView.point) {
         return <Point 
-        user={this.props.user}
-          handleClose={this.handleClosePopup}       ></Point>;
+          user={this.props.user}
+          handleClose={this.handleClosePopup} 
+          handleActive={this.handleSetState}   
+        ></Point>;
       }
       
       
@@ -544,6 +546,9 @@ class topBar extends Component<Props, State> {
                     </li>
                     <li>
                         <a onClick={()=>{ this.handleSetState(popupView.withdraw) }}>출금신청</a>
+                    </li>
+                    <li>
+                        <a onClick={()=>{ this.handleSetState(popupView.point) }}>포인트</a>
                     </li>
                     <li>
                         <a onClick={()=>{ this.handleSetState(popupView.notice) }}>공지사항</a>

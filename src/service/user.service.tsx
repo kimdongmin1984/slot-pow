@@ -10,7 +10,7 @@ export class UserService extends AxiosService {
   };
 
   regUser = (params: any) => {
-    return this.SendMessageByPost("/User/regUsed?", params);
+    return this.SendMessageByPost("/User/reg?", params);
   };
 
   regCheckID = (params: any) => {

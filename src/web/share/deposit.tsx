@@ -97,7 +97,7 @@ export class Deposit extends Component<Props, State> {
 
   
   handleDoDeposit = () => {
-    if (this.state.balance <= 0) {
+    if (Number(this.state.balance) <= 0) {
       confirmAlert({
         title: "입금",
         message: "입금금액을 입력해주세요.",
@@ -111,7 +111,7 @@ export class Deposit extends Component<Props, State> {
       return;
     }
 
-    if (10000 < this.state.balance % 10000) {
+    if (Number(this.state.balance) < 10000) {
       confirmAlert({
         title: "입금",
         message: "입금은 만원 단위로 가능합니다.",
@@ -198,6 +198,7 @@ export class Deposit extends Component<Props, State> {
                      <div className="modal-menu">
                          <button type="button" className="mm-btn active">입금신청</button>
                          <button type="button" className="mm-btn withdraw-link" onClick={()=> this.props.handleActive('withdraw')}>출금신청</button>
+                        <button type="button" className="mm-btn withdraw-link"  onClick={()=> this.props.handleActive('point')}>금고</button>
                      </div>
                      <div className="terms-use">
                          <div className="text-cont">

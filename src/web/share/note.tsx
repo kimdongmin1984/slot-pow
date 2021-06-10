@@ -96,6 +96,9 @@ export class Note extends Component<Props, State> {
       this.userService.do_read_note(id).then((date: any) => {})
   }
   
+    
+
+
 
 
   render() {
@@ -122,13 +125,13 @@ export class Note extends Component<Props, State> {
                             <div className="modal-body">
                               <button data-dismiss="modal" className="mdl-close pt-0 p-3 " style={{float: 'right', background: 'transparent', color: '#fff', border: 'none', fontSize: '20px', paddingTop: '0!important'}}  onClick={()=>this.props.handleClose()}><i className="fa fa-times" aria-hidden="true" ></i></button>
                               <h4>쪽지함 <span style={{color: '#555', fontSize: '20px'}}>My Page</span></h4>
-                              <img src="/light/images/background/site-flash.svg" className="w-100" style={{marginTop: '-25px'}} />
-
+                              {/* <img src="/light/images/background/site-flash.svg" className="w-100" style={{marginTop: '-25px'}} /> */}
+{/* 
                               <div className="_menu_modal_head_button d-flex">
                                 <button className="_menu_tabs_btn _openWithdrawalTabs " >회원정보</button>
                                 <button className="_menu_tabs_btn _openWithdrawalTabs active" onClick={()=>{ this.props.handleActive('note')}}>쪽지함</button>
                                 <button className="_menu_tabs_btn _openWithdrawalTabs " onClick={()=>{ this.props.handleActive('balance')}}>입출금 기록</button>
-                              </div>
+                              </div> */}
                 
 
                               <div className="_notice_tables">
@@ -145,6 +148,7 @@ export class Note extends Component<Props, State> {
                                           return (
                                             <tr className=""  onClick={()=>{
                                                 this.setState({detail : row, mode :  Mode.detail})
+                                                this.handleDoReadNote(row._id)
                                               }}>
                                               <td className="td_subject text-left" style={{color : row.title_color}}>{row.title}</td>
                                               <td className="td_name sv_use hidden visible-lg text-center" style={{width:'15%'}}><span>관리자</span></td>
