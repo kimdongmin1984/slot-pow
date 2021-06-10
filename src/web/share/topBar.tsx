@@ -572,10 +572,14 @@ class topBar extends Component<Props, State> {
                       )
                     }
                     </div>
+                    {
+                      !this.props.authenticated  && (
                     <div className="mobile">
                         <button data-toggle="modal" data-target=".loginModal" onClick={()=>{ this.handleSetState(popupView.login) }}><i className="fa fa-edit" aria-hidden="true"></i> 로그인</button>
                         <button data-toggle="modal" data-target=".joinModal" onClick={()=>{ this.handleSetState(popupView.reg) }}><i className="fa fa-user-plus" aria-hidden="true"></i> 회원가입</button>
-                    </div>
+                    </div>)
+                                        }
+
                 </div>
                                             </div>
            
