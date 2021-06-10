@@ -269,14 +269,14 @@ export class Help extends Component<Props, State> {
                 <div className="form-head mt-3">
                     <span className="title"><i className="fa fa-volume-control-phone" aria-hidden="true"></i> 문의하기</span>
                 </div>
-
+{/* 
                 <div className="deposit-ask">
                     <button className="sendMsg()">
                         <i className="icon icon-Info"></i>
                         <span>입금계좌문의</span>
                     </button>
                     <p>* 입금시 꼭 계좌문의를 하세요!</p>
-                </div>
+                </div> */}
 
                 <div className="form-container">
                     <div className="form-group no-label">
