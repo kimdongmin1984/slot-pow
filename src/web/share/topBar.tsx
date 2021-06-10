@@ -495,7 +495,7 @@ class topBar extends Component<Props, State> {
                           <li style={{display: 'none'}}>
                               <div className="labels">
                                   <i className="icon icon-Star"></i>
-                                  <p>포인트</p>
+                                  <p>금고</p>
                               </div>
                               <div className="info">
                                   <p id="_top_point">0</p>
@@ -548,7 +548,7 @@ class topBar extends Component<Props, State> {
                         <a onClick={()=>{ this.handleSetState(popupView.withdraw) }}>출금신청</a>
                     </li>
                     <li>
-                        <a onClick={()=>{ this.handleSetState(popupView.point) }}>포인트</a>
+                        <a onClick={()=>{ this.handleSetState(popupView.point) }}>금고</a>
                     </li>
                     <li>
                         <a onClick={()=>{ this.handleSetState(popupView.notice) }}>공지사항</a>
