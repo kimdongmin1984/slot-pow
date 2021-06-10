@@ -1,0 +1,826 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+	<link rel="stylesheet" type="text/css" href="css/style.css">
+
+	<!-- Font Awesome CDN -->
+	<link rel="stylesheet" type="text/css" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css">
+
+	<!-- Latest compiled and minified CSS -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+	<!-- jQuery library -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+	<!-- Popper JS -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+
+	<!-- Latest compiled JavaScript -->
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+	<title>Layout 17</title>
+</head>
+<body style="overflow-x: hidden;">
+	<img class="_thunder_pattern" src="images/pattern/pattern.png">
+
+	<div class="_main_wrapper">
+
+		<div class="_header">
+			<div class="container">
+				<div class="_navigation_menu">
+					<button data-toggle="modal" data-target="#WithdrawalAndDepositModal">입/출금신청</button>
+					<button data-toggle="modal" data-target="#NoticeModal">공지사항</button>
+					<button data-toggle="modal" data-target="#ServiceModal">고객센터</button>
+					<button data-toggle="modal" data-target="#MypageModal">마이페이지</button>
+				</div>
+				<div class="_nav_button" style="padding: 0px 15px; z-index: 5;">
+					<i class="fas fa-bars"></i>
+				</div>
+				<div class="_user_nav_button" style="padding: 0px 15px; z-index: 5;">
+					<i class="fas fa-user"></i>
+				</div>
+				<div class="_logo_container text-center px-4" style="z-index: 2;">
+					<a href="index.html">
+						<img src="images/logo/logo.png" class="img-fluid">
+					</a>
+				</div> <!-- end of logo container -->
+				<div class="_bal_container">
+					<div class="_user_show _show_login" style="margin-right: 10px;">
+						<label>아이디 :	test01</label>
+						<label>통합머니 :	100,000,000원</label>
+						<label>쿠폰 : <div style="display:inline-block; padding: 5px; font-size: 12px;  border-bottom: 3px solid #ffde00; border-radius: 5px;background: black;">0 개</div></label>
+						<button class="_modal_bottom_button_type_1 _log_out" style="border: none;">로그아웃</button>
+					</div>
+
+					<div class="_guest_show">	
+						<input type="text" name="userid" placeholder="아이디">
+						<input type="password" name="userpassword" placeholder="비밀번호">
+						<button class="ml-2 _login_button"><i class="far fa-edit" aria-hidden="true"></i> 로그인</button>
+						<button class="blue-bg" data-toggle="modal" data-target="#_Register_Modal"><i class="far fa-gem" aria-hidden="true"></i> 회원가입</button>
+					</div>
+				</div> <!-- end of bal container -->
+			</div> <!-- end of container -->
+		</div> <!-- end of header -->
+
+		<div class="_home_banner"></div>
+
+		<!-- Mobile Jackpot Container -->
+		<div class="p-2">
+			<div class="_mobile_jackpot_container">
+				<button class="_jackpot_dropdown"><i class="fas fa-caret-square-down"></i></button>
+				<div class="_jackpot_info">
+					<h3>
+						<i>MEGA</i>
+						<br>
+						<strong>Jackpot</strong>
+					</h3>
+					<h2 class="_mega_jackpot" >7,036,842</h2>
+				</div>
+				<div class="_jackpot_info">
+					<h3>
+						<i>MAJOR</i>
+						<br>
+						<strong>Jackpot</strong>
+					</h3>	
+					<h2 class="_major_jackpot">1,797,180</h2>
+				</div>
+				<div class="_jackpot_info">
+					<h3>
+						<i>Minor</i>
+						<br>
+						<strong>Jackpot</strong>
+					</h3>	
+					<h2 class="_minor_jackpot">93,974</h2>
+				</div>
+			</div>
+		</div>
+		<!-- Mobile Jackpot Container -->
+
+		<section class="_jackpot_container">
+			<div class="_jackpot_info">
+				<h3>
+					<i>MEGA</i>
+					<br>
+					<strong>Jackpot</strong>
+				</h3>
+				<h2 class="_mega_jackpot" >7,036,842</h2>
+			</div>
+			<div class="_jackpot_info">
+				<h3>
+					<i>MAJOR</i>
+					<br>
+					<strong>Jackpot</strong>
+				</h3>	
+				<h2 class="_major_jackpot">1,797,180</h2>
+			</div>
+			<div class="_jackpot_info">
+				<h3>
+					<i>Minor</i>
+					<br>
+					<strong>Jackpot</strong>
+				</h3>	
+				<h2 class="_minor_jackpot">93,974</h2>
+			</div>
+		</section> <!-- end of jackpot container -->
+
+		<section class="_hot_games">
+			<div class="_hot_games_header">
+				<h2>
+					<span style=" letter-spacing: -10px; color:#fdcb07;">H</span>
+					<span style=" letter-spacing: -10px; color:#fdcb07;">o</span>
+					<span style=" letter-spacing: 0px; color:#fdcb07;">t</span> Games
+				</h2>
+			</div>
+
+			<div class="_front_game">
+				<div class="_game_list">
+					<div class="_bg_start" >GAME START</div>
+					<img src="images/front_game/2.png">
+				</div>
+				<div class="_game_list">
+					<div class="_bg_start" >GAME START</div>
+					<img src="images/front_game/1.png">
+				</div>
+				<div class="_game_list">
+					<div class="_bg_start" >GAME START</div>
+					<img src="images/front_game/3.png">
+				</div>
+				<div class="_game_list">
+					<div class="_bg_start" >GAME START</div>
+					<img src="images/front_game/4.png">
+				</div>
+				<div class="_game_list">
+					<div class="_bg_start" >GAME START</div>
+					<img src="images/front_game/10.png">
+				</div>
+				<div class="_game_list">
+					<div class="_bg_start" >GAME START</div>
+					<img src="images/front_game/7.png">
+				</div>
+				<div class="_game_list">
+					<div class="_bg_start" >GAME START</div>
+					<img src="images/front_game/15.png">
+				</div>
+				<div class="_game_list">
+					<div class="_bg_start" >GAME START</div>
+					<img src="images/front_game/6.png">
+				</div>
+				<div class="_game_list">
+					<div class="_bg_start" >GAME START</div>
+					<img src="images/front_game/11.png">
+				</div>
+				<div class="_game_list">
+					<div class="_bg_start" >GAME START</div>
+					<img src="images/front_game/12.png">
+				</div>
+				<div class="_game_list">
+					<div class="_bg_start" >GAME START</div>
+					<img src="images/front_game/19.png">
+				</div>
+				<div class="_game_list">
+					<div class="_bg_start" >GAME START</div>
+					<img src="images/front_game/13.png">
+				</div>
+				<div class="_game_list">
+					<div class="_bg_start" >GAME START</div>
+					<img src="images/front_game/16.png">
+				</div>
+				<div class="_game_list">
+					<div class="_bg_start" >GAME START</div>
+					<img src="images/front_game/21.png">
+				</div>
+				<div class="_game_list">
+					<div class="_bg_start" >GAME START</div>
+					<img src="images/front_game/18.png">
+				</div>
+				<div class="_game_list">
+					<div class="_bg_start" >GAME START</div>
+					<img src="images/front_game/14.png">
+				</div>
+				<div class="_game_list">
+					<div class="_bg_start" >GAME START</div>
+					<img src="images/front_game/9.png">
+				</div>
+				<div class="_game_list">
+					<div class="_bg_start" >GAME START</div>
+					<img src="images/front_game/8.png">
+				</div>
+				<div class="_game_list">
+					<div class="_bg_start" >GAME START</div>
+					<img src="images/front_game/17.png">
+				</div>
+				<div class="_game_list">
+					<div class="_bg_start" >GAME START</div>
+					<img src="images/front_game/20.png">
+				</div>
+				<div class="_game_list">
+					<div class="_bg_start" >GAME START</div>
+					<img src="images/front_game/22.png">
+				</div>
+				<div class="_game_list">
+					<div class="_bg_start" >GAME START</div>
+					<img src="images/front_game/5.png">
+				</div>
+				<div class="_game_list">
+					<div class="_bg_start" >GAME START</div>
+					<img src="images/front_game/23.png">
+				</div>
+
+			</div>
+		</section> <!-- end of hot games -->
+
+		<footer class="text-center" style="background: url('images/background/pattern.jpg');">
+			<img  class="img-fluid" src="images/background/footer.png">
+		</footer> <!-- end of footer -->
+
+	</div> <!-- end of main wrapper -->
+
+
+	<!-- Register Modal -->
+	<div class="modal fade" id="_Register_Modal" tabindex="-1" role="dialog" aria-labelledby="_Register_ModalTitle" aria-hidden="true">
+	  	<div class="modal-dialog modal-dialog-centered" role="document">
+	    	<div class="modal-content">
+	      		<div class="modal-body">
+        			<div class="_top_title_overlay">
+        				<label class="m-0"><i class="fa fa-edit" aria-hidden="true"></i> 회원가입</label>
+        				<button data-dismiss="modal" class="mdl-close" style="z-index: 5;"><i class="fa fa-times" aria-hidden="true" ></i></button>
+        			</div>
+
+        			<div class="_inner_modal_content">
+        				<div class="_inner_title py-0 pb-3 mb-3">
+        					<label>찬스 슬롯에 오신것을 환영합니다.</label>
+        				</div>
+
+        				<div class="_inner_inputs">
+        					<div class="_custom_group_inputs">
+        						<span>아이디</span>
+        						<input type="text" name="" placeholder="아이디">
+        						<button>중복체크</button>
+        					</div>
+        					<div class="_custom_group_inputs">
+        						<span>닉네임</span>
+        						<input type="text" name="" placeholder="닉네임">
+        						<button>중복체크</button>
+        					</div>
+        					<div class="_custom_group_inputs" >
+        						<span>비밀번호</span>
+        						<input type="text" name=""  placeholder="비밀번호"style="width: 68%;">
+        					</div>
+        					<div class="_custom_group_inputs">
+        						<span>비밀번호확인</span>
+        						<input type="text" name="" placeholder="비밀번호확인" style="width: 68%;">
+        					</div>
+  
+        					<div class="_custom_group_inputs">
+        						<span>전화번호</span>
+        						<input type="text" name="" placeholder="*통화가능한번호 필수입력">
+        						<button>중복체크</button>
+        					</div>
+
+        					<small class="text-white float-left" style="margin-left: 30%;">( 실시간통화 후 인증번호 안내 )</small>
+
+        					<div class="clearfix mb-3"></div>
+
+        					<div class="_custom_group_inputs">
+        						<span>은행명</span>
+        						<select id="bank" name="bank" style="width: 68%;">
+    		                        <option value="">은행명</option>
+    		                        <option value="신한">신한(088)</option>
+    		                        <option value="KEB하나">KEB하나(081)</option>
+    		                        <option value="경남">경남(039)</option>
+    		                        <option value="광주">광주(034)</option>
+    		                        <option value="국민">국민(004)</option>
+    		                        <option value="기업">기업(003)</option>
+    		                        <option value="농협">농협(011)</option>
+    		                        <option value="대구">대구(031)</option>
+    		                        <option value="도이치">도이치(055)</option>
+    		                        <option value="부산">부산(032)</option>
+    		                        <option value="산업">산업(002)</option>
+    		                        <option value="상호저축">상호저축(050)</option>
+    		                        <option value="새마을">새마을(045)</option>
+    		                        <option value="수협">수협(007)</option>
+    		                        <option value="신협">신협(048)</option>
+    		                        <option value="씨티">씨티(027)</option>
+    		                        <option value="외환">외환(005)</option>
+    		                        <option value="우리">우리(020)</option>
+    		                        <option value="우체국">우체국(071)</option>
+    		                        <option value="전북">전북(037)</option>
+    		                        <option value="제주">제주(035)</option>
+    		                        <option value="지역농축협">지역농축협(012)</option>
+    		                        <option value="케이뱅크">케이뱅크(089)</option>
+    		                        <option value="카카오뱅크">카카오뱅크(089)</option>
+    		                        <option value="BNP파리바">BNP파리바(061)</option>
+    		                        <option value="JP모간">JP모간(057)</option>
+    		                        <option value="BOA">BOA(060)</option>
+    		                        <option value="HSBC">HSBC(054)</option>
+    		                        <option value="SC">SC(023)</option>
+    		                        <option value="산림조합중앙회">산림조합중앙회(064)</option>
+    		                        <option value="유안타증권">유안타증권(209)</option>
+    		                        <option value="KB증권">KB증권(218)</option>
+    		                        <option value="미래에셋증권">미래에셋증권(230)</option>
+    		                        <option value="미래에셋대우">미래에셋대우(238)</option>
+    		                        <option value="삼성증권">삼성증권(240)</option>
+    		                        <option value="한국투자증권">한국투자증권(243)</option>
+    		                        <option value="에이치엠씨투자증권">에이치엠씨투자증권(263)</option>
+    		                        <option value="에스케이증권">에스케이증권(266)</option>
+    		                        <option value="한화증권">한화증권(269)</option>
+    		                        <option value="하나금융투자">하나금융투자(270)</option>
+    		                        <option value="신한금융투자">신한금융투자(278)</option>
+    		                        <option value="메리츠종합금융증권">메리츠종합금융증권(287)</option>
+    		                        <option value="유진투자증권">유진투자증권(280)</option>
+    		                        <option value="신영증권">신영증권(291)</option>
+    		                        <option value="교보증권">교보증권(261)</option>
+    		                        <option value="대신증권">대신증권(267)</option>
+    		                        <option value="동부증권">동부증권(279)</option>
+    		                        <option value="부국증권">부국증권(290)</option>
+    		                        <option value="이베스트투자증권">이베스트투자증권(265)</option>
+    		                        <option value="솔로몬투자증권">솔로몬투자증권(268)</option>
+    		                        <option value="케이프투자증권">케이프투자증권(292)</option>
+    		                        <option value="키움증권">키움증권(264)</option>
+    		                        <option value="펀드온라인">펀드온라인(294)</option>
+    		                        <option value="KTB투자증권">KTB투자증권(227)</option>
+    		                    </select>
+        					</div>
+
+        					<div class="_custom_group_inputs">
+        						<span>계좌번호</span>
+        						<input type="text" name="" placeholder="계좌번호" style="width: 68%;">
+        					</div>
+
+        					<div class="_custom_group_inputs">
+        						<span>예금주</span>
+        						<input type="text" name="" placeholder="예금주" style="width: 68%;">
+        					</div>
+        					<div class="text-center mt-4">
+        						<button class="_modal_bottom_button_type_1">가입신청</button>
+        					</div>
+        				</div> <!--  end of inner inputs -->
+        			</div> <!--  end of inner modal content -->
+	      		</div> <!--  end of modal body -->
+	    	</div> <!-- end of modal content -->
+	  	</div> <!-- end of modal dialog -->
+	</div> <!-- end of modal -->
+
+
+
+	<!-- Web Overlay -->
+	<div class="_overlay"></div>
+	<!-- Navigation Sidebar -->
+	<div class="_sidebar">
+		<button class="float-right mb-1 _close_side_navigation"><i class="fas fa-times"></i></button>
+		<div class="clearfix"></div>
+		<div class="_sidebar_hotgames">
+			<img src="images/icon/fire.png" class="_hot_fire">
+			<img src="images/icon/hotgames.png" class="w-100">
+			<span class="_hot_text">핫게임바로가기</span>
+		</div>
+
+		<div class="_sidebar_menu my-2">
+			<img src="images/icon/casino/pragmatic.png" >
+			<label class="_casino_name">프라그매틱플레이</label>
+		</div>
+		<div class="_sidebar_menu my-2">
+			<img src="images/icon/casino/cq9.png" >
+			<label class="_casino_name">CQ9</label>
+		</div>
+		<div class="_sidebar_menu my-2">
+			<img src="images/icon/casino/habanero.png" >
+			<label class="_casino_name">하바네로</label>
+		</div>
+		<div class="_sidebar_menu my-2">
+			<img src="images/icon/casino/playngo.png" >
+			<label class="_casino_name">플레이엔고</label>
+		</div>
+		<div class="_sidebar_menu my-2">
+			<img src="images/icon/casino/playstar.png" >
+			<label class="_casino_name">플레이스타</label>
+		</div>
+		<div class="_sidebar_menu my-2">
+			<img src="images/icon/casino/bng.png" >
+			<label class="_casino_name">비엔지</label>
+		</div>
+		<div class="_sidebar_menu my-2">
+			<img src="images/icon/casino/isoftbet.png" >
+			<label class="_casino_name">아이소프트벳</label>
+		</div>
+		<div class="_sidebar_menu my-2">
+			<img src="images/icon/casino/playson.png" >
+			<label class="_casino_name">플레이슨</label>
+		</div>
+		<div class="_sidebar_menu my-2">
+			<img src="images/icon/casino/gameart.png" >
+			<label class="_casino_name">게임아트</label>
+		</div>
+		<div class="_sidebar_menu my-2">
+			<img src="images/icon/casino/genesis.png" >
+			<label class="_casino_name">제네시스</label>
+		</div>
+		<div class="_sidebar_menu my-2">
+			<img src="images/icon/casino/dreamtech.png" >
+			<label class="_casino_name">드림테크</label>
+		</div>
+		<div class="_sidebar_menu my-2">
+			<img src="images/icon/casino/ag.png" >
+			<label class="_casino_name">아시아게이밍</label>
+		</div>
+		<div class="_sidebar_menu my-2">
+			<img src="images/icon/casino/betsoft.png" >
+			<label class="_casino_name">벳소프트</label>
+		</div>
+		<div class="_sidebar_menu my-2">
+			<img src="images/icon/casino/evoplay.png" >
+			<label class="_casino_name">에보플레이</label>
+		</div>
+		<div class="_sidebar_menu my-2">
+			<img src="images/icon/casino/bgaming.png" >
+			<label class="_casino_name">BGaming</label>
+		</div>
+	</div>
+	<!-- User Sidebar -->
+	<div class="_user_sidebar">
+		<button class="float-right mb-1 _close_side_navigation"><i class="fas fa-times"></i></button>
+		<div class="clearfix"></div>
+
+		<div class="_login_form p-2 text-center  _guest_show" style="margin-bottom: 50px;">
+			<div class="_custom_group_inputs">	
+				<input type="text" name="" placeholder="아이디" style="width: 100%;">
+			</div>
+			<div class="_custom_group_inputs">
+				
+				<input type="password" name="" placeholder="비밀번호" style="width: 100%;">
+			</div>
+			<div class="text-center mt-4 _bal_container px-3" style="top: 150px; right: -50%; width: 100%; ">
+				<button class="w-100 _login_button"><i class="far fa-edit" aria-hidden="true"></i> 로그인</button>
+				<button class="w-100 blue-bg" data-toggle="modal" data-target="#_Register_Modal"><i class="far fa-gem" aria-hidden="true"></i> 회원가입</button>
+			</div>
+		</div>
+
+
+		<div class="_user_info _user_show" style="padding-top: 40px;">
+
+			<img class="img-fluid _login_icon" src="images/icon/pre-login-reg.png">
+			<table class="w-100" >
+				<tr>
+					<td>아이디 :</td>
+					<td>test01</td>
+				</tr>
+				<tr>
+					<td>통합머니 :</td>
+					<td>100,000,000원</td>
+				</tr>
+				<tr>
+					<td>쿠폰 :</td>
+					<td><button class="btn-money button-type-two" data-toggle="modal" data-target="#couponModal"><span class="text-danger">0 개</span></button></td>
+				</tr>
+			</table>
+			<div class="text-center mt-4">
+				<button class="_modal_bottom_button_type_1 _log_out" style="border-radius: 10px;">로그아웃</button>
+			</div>
+		</div>
+
+		<div class="_user_menu">
+			<div class="_inner_user_menu" data-toggle="modal" data-target="#WithdrawalAndDepositModal">
+				입/출금신청
+			</div>
+			<div class="_inner_user_menu" data-toggle="modal" data-target="#NoticeModal">
+				공지사항
+			</div>
+			<div class="_inner_user_menu" data-toggle="modal" data-target="#ServiceModal">
+				고객센터
+			</div>
+			<div class="_inner_user_menu" data-toggle="modal" data-target="#MypageModal">
+				마이페이지
+			</div>
+		</div>
+
+	</div>
+
+
+
+	<!-- Deposit / WIthdrawal Modal -->
+
+	<!-- Modal -->
+	<div class="modal fade" id="WithdrawalAndDepositModal" tabindex="-1" role="dialog" aria-labelledby="WithdrawalAndDepositModalTitle" aria-hidden="true">
+	  	<div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+	    	<div class="modal-content">
+	      		<div class="modal-body">
+	      			<button data-dismiss="modal" class="mdl-close pt-0 p-3 " style="float: right; background: transparent; color: #fff; border: none; font-size: 20px;"><i class="fa fa-times" aria-hidden="true" ></i></button>
+	        		<h4>입/출금신청 <span style="color: #555; font-size: 20px;">Money Change</span></h4>
+	        		<img src="images/background/site-flash.svg" class="w-100" style="margin-top: -25px;">
+	        		<div class="_menu_modal_head_button d-flex">
+	        			<button class="_menu_tabs_btn _openDepositTabs active">입금신청</button>
+	        			<button class="_menu_tabs_btn _openWithdrawalTabs">출금신청</button>
+	        		</div>
+	        		<div class="_deposit_tabs" >	        		
+		        		<div class="_modal_box_infomation">
+		        			<p style="color: #ffd200">수표입금시 입금처리 절대 되지 않습니다.</p>
+		        			<p><span style="color: #00f0ff">최소 입금액은 3만원이상, 만원단위</span>로 신청가능, 입금전 반드시 계좌문의 하시기바랍니다.</p>
+		        		</div>
+		        		<div class="_form_tables my-3">
+		        			<table class="w-100">
+		        				<tr>
+		        					<td style="width: 20%;">입금금액	</td>
+		        					<td>
+		        						<div class="d-flex _table_form_inputs">	
+			        						<input type="text" name="" class="w-100 _deposit_input">
+			        						
+		        						</div>
+		        						<div class="_table_form_inputs mt-2">
+		        							<button onclick="addDepositMoney(30000)">3만원</button>
+		        							<button onclick="addDepositMoney(50000)">5만원</button>
+		        							<button onclick="addDepositMoney(100000)">10만원</button>
+		        							<button onclick="addDepositMoney(500000)">50만원</button>
+		        							<button onclick="resetDeposit()">정정하기</button>
+		        						</div>
+		        					</td>
+		        				</tr>
+		        				<tr>
+		        					<td>입금계좌	</td>
+		        					<td>고객센터로 문의해 주시기 바랍니다.</td>
+		        				</tr>
+		        			</table>
+		        		</div>
+		        		<div class="_modal_box_infomation">
+		        			<p >23:50 ~ 00:30, 휴일 다음 첫 영업일 새벽에는 은행점검으로 인해 계좌이체가 지연될 수 있습니다.</p>
+		        			<p>위 시간 이외에도 몇몇 은행은 추가적 점검시간이 따로 있으니 이점 유념하시기 바랍니다.</p>
+		        		</div>
+		        		<div class="text-center mt-4">
+		        			<button class="_modal_bottom_button_type_1 ">입금신청</button>
+		        		</div>
+	        		</div>
+	        		<div class="_withdrawal_tabs" style="display: none;">
+		        		<div class="_modal_box_infomation">
+		        			<p style="color: #ffd200">수표입금시 입금처리 절대 되지 않습니다.</p>
+		        			<p><span style="color: #00f0ff">최소 입금액은 3만원이상, 만원단위</span>로 신청가능, 입금전 반드시 계좌문의 하시기바랍니다.</p>
+		        		</div>
+		        		<div class="_form_tables my-3">
+		        			<table class="w-100">
+		        				<tr>
+		        					<td style="width: 20%;">출금금액	</td>
+		        					<td>
+		        						<div class="d-flex _table_form_inputs">	
+			        						<input type="text" name="" class="w-100 _withdrawal_input">
+			        						
+		        						</div>
+		        						<div class="_table_form_inputs mt-2">
+		        							<button onclick="addWithdrawalMoney(30000)">3만원</button>
+		        							<button onclick="addWithdrawalMoney(50000)">5만원</button>
+		        							<button onclick="addWithdrawalMoney(100000)">10만원</button>
+		        							<button onclick="addWithdrawalMoney(500000)">50만원</button>
+		        							<button onclick="resetWithdrawal()">정정하기</button>
+		        						</div>
+		        					</td>
+		        				</tr>
+		        				<tr>
+		        					<td>환전비번	</td>
+		        					<td>
+		        						<div class="d-flex _table_form_inputs">	
+			        						<input type="text" name="" class="w-100">
+		        						</div>
+		        					</td>
+		        				</tr>
+		        				<tr>
+		        					<td>은행	</td>
+		        					<td></td>
+		        				</tr>
+		        				<tr>
+		        					<td>출금자명	</td>
+		        					<td></td>
+		        				</tr>
+		        				<tr>
+		        					<td>계좌번호	</td>
+		        					<td></td>
+		        				</tr>
+		        			</table>
+		        		</div>
+		        		<div class="_modal_box_infomation">
+		        			<p ><span style="color: #00f0ff;">출금은 3만원 이상부터 가능하며, 부분 출금이 되지 않습니다.</span> 출금시 천원단위까지 전액 출금부탁드립니다.</p>
+		        			<p>입금자명과 출금자명이 다를경우 본인확인 요청이 있을 수 있습니다.</p>
+		        		</div>
+		        		<div class="text-center mt-4">
+		        			<button class="_modal_bottom_button_type_1 ">출금신청</button>
+		        		</div>
+	        		</div>
+	      		</div>
+	    	</div>
+	  	</div>
+	</div>
+
+
+	<!-- Notice Modal -->
+	<!-- Modal -->
+	<div class="modal fade" id="NoticeModal" tabindex="-1" role="dialog" aria-labelledby="NoticeModalTitle" aria-hidden="true">
+	  	<div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+	    	<div class="modal-content">
+	      		<div class="modal-body">
+	        		<button data-dismiss="modal" class="mdl-close pt-0 p-3 " style="float: right; background: transparent; color: #fff; border: none; font-size: 20px; padding-top: 0!important;"><i class="fa fa-times" aria-hidden="true" ></i></button>
+	        		<h4>공지사항 <span style="color: #555; font-size: 20px;">Notice</span></h4>
+	        		<img src="images/background/site-flash.svg" class="w-100" style="margin-top: -25px;">
+	        		<div class="_notice_tables">
+	        			<table class="w-100" style="background: #111">
+	        				<tr>
+	        					<td style="width: 30%; text-align: center;">제 목</td>
+	        					<td style="width: 50%;">작성일</td>
+	        					<td>상태</td>
+	        				</tr>
+	        			</table>
+	        			<table class="w-100 _table_list_content">
+	        				<tr>
+	        					<td style="width: 30%; text-align: left;">마틴 루틴 금지 규정</td>
+	        					<td style="width: 50%;">03-15 10:25</td>
+	        					<td style="white-space: nowrap;">상태</td>
+	        				</tr>
+	        			</table>
+	        			<div class="_next_table_content" style="height: 0; overflow: hidden; padding: 0;">
+	        				   <p>**** 지속적인 마틴 루틴 배팅은 규제 대상입니다. </p>
+	        				   <p>예)  처음 배팅금액 미당첨 될경우  금액을  배수로 올려서 당첨될때까지 배팅을 하고 </p>
+	        				   <p>당첨되면  또 처음으로 돌아와서 배팅을 하는경우 반복적이고 지속적으로 할경우 </p>
+	        				   <p>당첨금 뿐만 아니라 원금 까지 몰수 처리 됩니다. </p>
+	        			</div>
+	        			<table class="w-100 _table_list_content">
+	        				<tr>
+	        					<td style="width: 30%; text-align: left;">바카라 양빵 관련 공지</td>
+	        					<td style="width: 50%;">03-15 10:26</td>
+	        					<td style="white-space: nowrap;">상태</td>
+	        				</tr>
+	        			</table>
+	        			<div class="_next_table_content" style="height: 0; overflow: hidden; padding: 0;">
+	        				   <p>바카라 양빵관련 공지</p>
+	        				   <p>바카라의 경우 양빵배팅을 할수 없습니다.</p>
+	        				   <p>예를 들어 뱅커 와 플레이어 둘중 한곳만 배팅을 하셔야 하며</p>
+	        				   <p>둘다 배팅할경우 양빵으로 간주하여 당첨금 몰수 처리됩니다.</p>
+	        				   <p>규정위반 1회를 넘기시거나 경고를 받으시고 다시한번 양빵을</p>
+	        				   <p>하실경우 원금까지 몰수 처리되오니 이점 꼭 숙지하시고</p>
+	        				   <p>이용부탁드립니다.</p>
+	        			</div>
+	        			<table class="w-100 _table_list_content">
+	        				<tr>
+	        					<td style="width: 30%; text-align: left;">이벤트 머니 환전 유의사항</td>
+	        					<td style="width: 50%;">03-15 10:26</td>
+	        					<td style="white-space: nowrap;">상태</td>
+	        				</tr>
+	        			</table>
+	        			<div class="_next_table_content" style="height: 0; overflow: hidden; padding: 0;">
+	        				   <p>***&nbsp;쿠폰만 사용시 롤링 300% 출금 최대 3배 입니다 ***</p>
+	        				   <p>&nbsp;- 입금 + 쿠폰 혹은 보너스금액 받을시 롤링 300% 출금 제재 없습니다&nbsp;</p>
+	        				   <p>&nbsp;-&nbsp;(쿠폰과 이벤트 머니 입금 사용시 최소 입금은 10만원입니다)</p>
+	        				   <p>&nbsp;-&nbsp;일반 최소 입금액은 3만원 입니다</p>
+	        				   <p>&nbsp;-&nbsp;보너스 금액을 원치 않으신 회원님은 입금전 실시간 채팅으로 문의 바랍니다&nbsp;</p>
+	        				   <p>&nbsp;-&nbsp;매 충전 이벤트는 당일 환전 내역이 있을시 지급 되지 않습니다</p>
+	        				   <p>-보너스 받지않는경우 입금액의 롤링 100% 입니다.</p>
+	        			</div>
+
+	        		</div>
+	      		</div>
+	    	</div>
+	  	</div>
+	</div>
+
+	<!-- Service Modal -->
+	<!-- Modal -->
+	<div class="modal fade" id="ServiceModal" tabindex="-1" role="dialog" aria-labelledby="ServiceModalTitle" aria-hidden="true">
+	  	<div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+	    	<div class="modal-content">
+	      		<div class="modal-body">
+	        		<button data-dismiss="modal" class="mdl-close pt-0 p-3 " style="float: right; background: transparent; color: #fff; border: none; font-size: 20px; padding-top: 0!important;"><i class="fa fa-times" aria-hidden="true" ></i></button>
+	        		<h4>고객센터 <span style="color: #555; font-size: 20px;">Service</span></h4>
+	        		<img src="images/background/site-flash.svg" class="w-100" style="margin-top: -25px;">
+
+	        		<div class="_service_modal_one" >	
+		        		<table class="w-100 text-center _table_design_one">
+		        			<tr>
+		        				<td>제 목</td>
+		        				<td>작성일</td>
+		        				<td>상태</td>
+		        			</tr>
+		        		</table>
+		        		<div class="text-center mt-4">
+		        			<button class="_modal_bottom_button_type_1 _open_service_write">글쓰기</button>
+		        		</div>
+	        		</div>
+
+	        		<div class="_service_modal_write" style="display: none;">
+		        		<div class="_form_tables my-3">
+		        			<table class="w-100">
+		        				<tr>
+		        					<td>제목	</td>
+		        					<td>
+		        						<div class="d-flex _table_form_inputs">	
+			        						<input type="text" name="" class="w-100 _deposit_input">
+		        						</div>
+		        					</td>
+		        				</tr>
+		        				<tr>
+		        					<td>내용	</td>
+		        					<td>
+		        						<div class="d-flex _table_form_inputs">	
+			        						<textarea class="w-100 py-1"></textarea>
+		        						</div>
+		        					</td>
+		        				</tr>
+		        			</table>
+		        			<div class="text-center mt-4 d-flex">
+		        				<button class="_modal_bottom_button_type_1 _service_goBack">뒤로가기</button>
+		        				<button class="_modal_bottom_button_type_1 ">저장하기</button>
+		        			</div>
+		        		</div>
+	        		</div>
+	      		</div>
+	    	</div>
+	  	</div>
+	</div>
+
+
+	<!-- Event Modal -->
+
+	<!-- Mypage Modal -->
+	<!-- Modal -->
+	<div class="modal fade" id="MypageModal" tabindex="-1" role="dialog" aria-labelledby="MypageModalTitle" aria-hidden="true">
+	  	<div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+	    	<div class="modal-content">
+	      		<div class="modal-body">
+	        		<button data-dismiss="modal" class="mdl-close pt-0 p-3 " style="float: right; background: transparent; color: #fff; border: none; font-size: 20px;"><i class="fa fa-times" aria-hidden="true" ></i></button>
+	        		<h4>마이페이지 <span style="color: #555; font-size: 20px;">My Page</span></h4>
+	        		<img src="images/background/site-flash.svg" class="w-100" style="margin-top: -25px;">
+
+	        		<div class="_menu_modal_head_button d-flex">
+	        			<button class="_menu_tabs_btn _mypage_content_1 active">회원정보</button>
+	        			<button class="_menu_tabs_btn _mypage_content_2">롤링 포인트</button>
+	        			<button class="_menu_tabs_btn _mypage_content_3">쪽지함</button>
+	        			<button class="_menu_tabs_btn _mypage_content_4">입금출 기록</button>
+	        		</div>
+
+	        		<div class="_myPageTabs _myPage_content_1">	
+		        		<div class="_modal_box_infomation">
+		        			<p style="color: #ffd200">로그인 비밀번호를 변경합니다.</p>
+		        		</div>
+		        		<div class="_form_tables my-3">
+		        			<table class="w-100">
+		        				<tr>
+		        					<td class="w-25">변경 비밀번호</td>
+		        					<td><input type="text" name="" class="w-100"></td>
+		        				</tr>
+		        				<tr>
+		        					<td class="w-25">확인 비밀번호</td>
+		        					<td><input type="text" name="" class="w-100"></td>
+		        				</tr>
+		        			</table>
+			        	</div>
+			        	<div class="text-center mt-4">
+			        		<button class="_modal_bottom_button_type_1 ">비밀번호 변경</button>
+			        	</div>
+	        		</div>
+	        		<div class="_myPageTabs _myPage_content_2" style="display: none;">
+	        			<div class="text-center">
+	        				현재 롤링 포인트 <span class="text-info">0</span> 원
+	        				<div class="text-center mt-4">
+	        					<button class="_modal_bottom_button_type_1 ">변환하기</button>
+	        				</div>
+	        			</div>
+	        		</div>
+
+	        		<div class="_myPageTabs _myPage_content_3" style="display: none;">
+	        			<table class="w-100 text-center _table_design_one">
+	        				<tr>
+	        					<td>제 목</td>
+	        					<td>작성일</td>
+	        					<td>상태</td>
+	        				</tr>
+	        			</table>
+	        		</div>
+
+
+	        		<div class="_myPageTabs _myPage_content_4" style="display: none;">
+	        			<table class="w-100 text-center _table_design_one">
+	        				<tr>
+	        					<td>날짜</td>
+	        					<td>타입</td>
+	        					<td>금액</td>
+	        					<td>상태</td>
+	        				</tr>
+	        				<tr style="border-top:1px solid #333; background: #222">
+	        					<td>03-09 18:47</td>
+	        					<td>충전	</td>
+	        					<td>1,000,000원</td>
+	        					<td>완료</td>
+	        				</tr>
+	        				<tr style="border-top:1px solid #333; background: #222">
+	        					<td>03-09 18:47</td>
+	        					<td>충전	</td>
+	        					<td>1,000,000원</td>
+	        					<td>완료</td>
+	        				</tr>
+	        			</table>
+	        		</div>
+
+	      		</div>
+	    	</div>
+	  	</div>
+	</div>
+
+</body>
+<script type="text/javascript" src="js/script.js"></script>
+</html>

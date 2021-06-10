@@ -41,9 +41,9 @@
   },
   "scripts": {
     "start": "set PORT=3007 && react-scripts start",
-    "start:sty": "env-cmd -f .env.sty react-scripts start",
+    "start:pow": "env-cmd -f .env.pow react-scripts start",
     "build": "react-scripts build",
-    "build:sty": "env-cmd -f .env.sty react-scripts build",
+    "build:pow": "env-cmd -f .env.pow react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
