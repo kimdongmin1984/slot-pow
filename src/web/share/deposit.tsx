@@ -111,7 +111,7 @@ export class Deposit extends Component<Props, State> {
       return;
     }
 
-    if (Number(this.state.balance) < 10000) {
+    if (Number(this.state.balance) < 10000 || 10000 < (Number(this.state.balance) % 10000)) {
       confirmAlert({
         title: "입금",
         message: "입금은 만원 단위로 가능합니다.",

@@ -51,7 +51,7 @@ export class Withdraw extends Component<Props, State> {
 
 
   handleDoWithdraw = () => {
-    if (10000 < this.state.balance % 10000) {
+    if (10000 < (Number(this.state.balance) % 10000)) {
       confirmAlert({
         title: "출금",
         message: "출금은 만원 단위로 가능합니다.",
@@ -64,7 +64,7 @@ export class Withdraw extends Component<Props, State> {
       });
       return;
     }
-    if (this.state.balance < 10000) {
+    if (Number(this.state.balance) < 10000) {
       confirmAlert({
         title: "출금",
         message: "출금금액을 입력해주세요.",
