@@ -564,7 +564,7 @@ class topBar extends Component<Props, State> {
                     </li>
                 </ul>
                 <div className="bal-container">
-                                <div className="before-login h-100 active">
+                  <div className="before-login h-100 active">
                     <div className="desktop h-100">
                     {
                       !this.props.authenticated  && (
@@ -574,14 +574,22 @@ class topBar extends Component<Props, State> {
                     </div>
                     {
                       !this.props.authenticated  && (
-                    <div className="mobile">
-                        <button data-toggle="modal" data-target=".loginModal" onClick={()=>{ this.handleSetState(popupView.login) }}><i className="fa fa-edit" aria-hidden="true"></i> 로그인</button>
-                        <button data-toggle="modal" data-target=".joinModal" onClick={()=>{ this.handleSetState(popupView.reg) }}><i className="fa fa-user-plus" aria-hidden="true"></i> 회원가입</button>
-                    </div>)
-                                        }
+                        <div className="mobile">
+                            <button data-toggle="modal" data-target=".loginModal" onClick={()=>{ this.handleSetState(popupView.login) }}><i className="fa fa-edit" aria-hidden="true"></i> 로그인</button>
+                            <button data-toggle="modal" data-target=".joinModal" onClick={()=>{ this.handleSetState(popupView.reg) }}><i className="fa fa-user-plus" aria-hidden="true"></i> 회원가입</button>
+                        </div>)
+                    }
 
-                </div>
-                                            </div>
+                    {
+                      this.props.authenticated  && (
+                        <div className="mobile">
+                            <button data-toggle="modal" data-target=".loginModal"><i className="fa  fa-user" aria-hidden="true"></i> {user.id}</button>
+                            <button data-toggle="modal" data-target=".joinModal"><i className="fa fa-user-plus" aria-hidden="true"></i> {ConverMoeny(this.state.balance)}</button>
+                        </div>)
+                    }
+
+                    </div>
+                  </div>
            
 
              
