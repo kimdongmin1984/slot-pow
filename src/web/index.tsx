@@ -123,6 +123,8 @@ export class Web extends Component<Props, State> {
           bankname: s.user.bankname,
           banknum: s.user.banknum,
           bankowner: s.user.bankowner,
+          helpCount: s.helpCount,
+          noteCount: s.noteCount,
         };
 
         if (JSON.stringify(user) !== JSON.stringify(this.state.user)) {

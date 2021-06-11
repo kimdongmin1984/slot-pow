@@ -222,6 +222,9 @@ class topBar extends Component<Props, State> {
     // if(this.state.messageCount > 0){
     //   return 
     // }
+    if(this.props.authenticated === false){
+      return 
+    }
 
     this.slotService.get_help_no_read_message().then((data: any) => {
       if (data.status === "success") {
@@ -239,24 +242,41 @@ class topBar extends Component<Props, State> {
   };
 
   handleUpdateNote = () => {
+    if(this.props.authenticated === false || this.props.user == null){
+      return 
+    }
+
     if(this.state.popupStatuses === popupView.note){
       return 
     }
-    this.userService.get_user_note().then((data: any) => {
-      if (data.status === "success") {
-        // this.setState({
-        //   postCount: data.count,
-        //   note: data.note,
-        //   isOpen: data.count > 0 ? true : false,
-        // });
-        if(data.count > 0){
-          this.handleSetState(popupView.note)
-        }
 
-      } else if (this.props.authenticated) {
-        this.props.tryLoginOut();
-      }
-    });
+    // helpCount: s.helpCount,
+    // noteCount: s.noteCount,
+    if(this.props.user.helpCount > 0){
+      this.handleSetState(popupView.help)
+      return 
+    }
+
+    if(this.props.user.noteCount > 0){
+      this.handleSetState(popupView.note)
+      return 
+    }
+    // this.userService.get_user_note().then((data: any) => {
+    //   if (data.status === "success") {
+    //     // this.setState({
+    //     //   postCount: data.count,
+    //     //   note: data.note,
+    //     //   isOpen: data.count > 0 ? true : false,
+    //     // });
+    //     if(data.count > 0){
+    //       this.handleSetState(popupView.note)
+    //       return 
+    //     }
+
+    //   } else if (this.props.authenticated) {
+    //     this.props.tryLoginOut();
+    //   }
+    // });
   };
 
   handleSetState = (state: string)=>{

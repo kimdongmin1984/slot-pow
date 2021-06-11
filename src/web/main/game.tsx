@@ -267,24 +267,24 @@ class game extends Component<Props, State> {
 
     return (
       <div>
-<div className="wrapper">
-   
-    <TopBar 
-      tryLogin={this.props.tryLogin}
-      tryLoginOut={this.props.tryLoginOut}
-      user={this.props.user}
-      authenticated={this.props.authenticated}
-    ></TopBar>
+      <div className="wrapper">
+        
+          <TopBar 
+            tryLogin={this.props.tryLogin}
+            tryLoginOut={this.props.tryLoginOut}
+            user={this.props.user}
+            authenticated={this.props.authenticated}
+          ></TopBar>
 
-    <section className="banner-section">
+          <section className="banner-section">
 
-    <div className="background-images">
-        <img className="glow-left" src="/last/image/main/glow-left.png" />
-        <img className="glow-right" src="/last/image/main/glow-right.png" />
-        <img className="girl" src="/last/image/main/girl.png" />
-        <img className="caishen" src="/last/image/main/caishen.png" />
-    </div>
-</section>
+          <div className="background-images">
+              <img className="glow-left" src="/last/image/main/glow-left.png" />
+              <img className="glow-right" src="/last/image/main/glow-right.png" />
+              <img className="girl" src="/last/image/main/girl.png" />
+              <img className="caishen" src="/last/image/main/caishen.png" />
+          </div>
+      </section>
     
     {<Companylist></Companylist>}
 
