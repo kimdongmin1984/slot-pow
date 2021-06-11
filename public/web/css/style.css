@@ -21,3 +21,5 @@
 .slide_pager {position:absolute; left:50%; bottom:0px;  z-index:110; transform:translateX(-50%);} /* 점의 위치설성 */
 .slide_pager span {font-size:50px; float: left; width:35px; color: #eee; cursor:pointer; text-align:left;} /* 점의 기본 색상 */
 .slide_pager span.cycle-pager-active {color: #6b411f;} /* 점의 선택시 색상 */
+
+

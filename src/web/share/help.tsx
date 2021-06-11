@@ -163,7 +163,6 @@ export class Help extends Component<Props, State> {
   render() {
     let helps = this.state.helps;
 
-    console.log(helps)
 
     return (
       <Popup
@@ -224,7 +223,7 @@ export class Help extends Component<Props, State> {
                                 this.setState({detail : row, mode :  helpView.detail})
                                 this.doReadMessage(row._id)}}
                               >
-                              <td className="td_subject " style={{color : row.title_color}}>{row.title}</td>
+                              <td className={(row.isRead !== 'y' && row.status === 'already' ) ? "td_subject activeText " : "td_subject" }  style={{color : row.title_color}}>{row.title}</td>
                               <td className="td_name sv_use hidden visible-lg text-center" style={{width:'15%'}}><span>관리자</span></td>
                               <td className="td_date  text-center" style={{width:'15%'}}>{ConvertDate(row.regDate)}</td>
                               </tr>

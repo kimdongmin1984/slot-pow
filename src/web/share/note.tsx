@@ -150,7 +150,7 @@ export class Note extends Component<Props, State> {
                                                 this.setState({detail : row, mode :  Mode.detail})
                                                 this.handleDoReadNote(row._id)
                                               }}>
-                                              <td className="td_subject text-left" style={{color : row.title_color}}>{row.title}</td>
+                                              <td  className={row.isRead === 'y' ? "td_subject text-left" : "td_subject text-left activeText" }    style={{color : row.title_color}}  >{row.title}</td>
                                               <td className="td_name sv_use hidden visible-lg text-center" style={{width:'15%'}}><span>관리자</span></td>
                                               <td className="td_date  text-center" style={{width:'15%'}}>{ConvertDate(row.regDate)}</td>
                                             </tr>

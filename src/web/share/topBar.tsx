@@ -195,12 +195,12 @@ class topBar extends Component<Props, State> {
       this.handleUpdateNote();
     }, 30000);
 
-    setInterval(() => {
-      this.handleUpdateMessage();
-    }, 10000);
+    // setInterval(() => {
+    //   this.handleUpdateMessage();
+    // }, 10000);
     this.handleUpdateNote();
     this.handleUpdateInBalance();
-    this.handleUpdateMessage();
+    // this.handleUpdateMessage();
     
   }
 
@@ -218,28 +218,28 @@ class topBar extends Component<Props, State> {
   };
 
   
-  handleUpdateMessage = () => {
-    // if(this.state.messageCount > 0){
-    //   return 
-    // }
-    if(this.props.authenticated === false){
-      return 
-    }
+  // handleUpdateMessage = () => {
+  //   // if(this.state.messageCount > 0){
+  //   //   return 
+  //   // }
+  //   if(this.props.authenticated === false){
+  //     return 
+  //   }
 
-    this.slotService.get_help_no_read_message().then((data: any) => {
-      if (data.status === "success") {
-        this.setState({
-          messageCount: data.count ?? 0,
-        });
+  //   this.slotService.get_help_no_read_message().then((data: any) => {
+  //     if (data.status === "success") {
+  //       this.setState({
+  //         messageCount: data.count ?? 0,
+  //       });
 
 
-        if( data.count > 0) {
-          // SoundPlays('helpCount')
-        }
-      } else {
-      }
-    });
-  };
+  //       if( data.count > 0) {
+  //         // SoundPlays('helpCount')
+  //       }
+  //     } else {
+  //     }
+  //   });
+  // };
 
   handleUpdateNote = () => {
     if(this.props.authenticated === false || this.props.user == null){
