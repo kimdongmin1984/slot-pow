@@ -67,28 +67,28 @@ export class NotePopup extends React.Component<Props, State> {
       return (
 
         <div className="pop01_popup1 draggable02" id="divpopup20210131045005" style={isMobile ? {position: 'absolute', top: `${pop.posY}px`,  zIndex: 1000} : {position: 'absolute', top: `${pop.posY}px`, left: `${pop.posX}px`, zIndex: 1000}} >
-        <div className="pop01_popup_wrap">
-            <div className="pop01_popup_btn_wrap">
-                <ul>
-                    <li><a href="#"><span className="pop01_popup_btn" onClick={()=>{this.props.SetCookie(`pop_${pop.idx}`, GetTimeStemp())}}>8시간동안 창을 열지 않음</span></a></li>
-                    <li><a href="#"><span className="pop01_popup_btn" onClick={()=>{
-                      this.state.close_popup[`pop_${pop.idx}`] = true
-                      this.setState({ close_popup : this.state.close_popup })}}>닫기 X</span></a></li>            
-                </ul>
-            </div>
-            <div className="pop01_popup_box">
-              <div className="pop01_popup_text" style={isMobile ?  {padding:'30px', width:'100%'} :  {padding:'30px', width:'500px'} }>
-                  <span className="pop01_popup_font1" style={{borderBottom:'2px solid #fff', marginBottom:'15px', color : pop.titleColor}}>{pop.title}</span>
-                  <span className="pop01_popup_font2" >
-                        <div dangerouslySetInnerHTML={{ __html:  pop.contents }}></div>
-                  </span> 
+          <div className="pop01_popup_wrap">
+              <div className="pop01_popup_btn_wrap">
+                  <ul>
+                      <li><a href="#"><span className="pop01_popup_btn" onClick={()=>{this.props.SetCookie(`pop_${pop.idx}`, GetTimeStemp())}}>8시간동안 창을 열지 않음</span></a></li>
+                      <li><a href="#"><span className="pop01_popup_btn" onClick={()=>{
+                        this.state.close_popup[`pop_${pop.idx}`] = true
+                        this.setState({ close_popup : this.state.close_popup })}}>닫기 X</span></a></li>            
+                  </ul>
+              </div>
+              <div className="pop01_popup_box">
+                <div className="pop01_popup_text" style={isMobile ?  {padding:'30px', width:'100%'} :  {padding:'30px', width:'500px'} }>
+                    <span className="pop01_popup_font1" style={{borderBottom:'2px solid #fff', marginBottom:'15px', color : pop.titleColor}}>{pop.title}</span>
+                    <span className="pop01_popup_font2" >
+                          <div dangerouslySetInnerHTML={{ __html:  pop.contents }}></div>
+                    </span> 
 
-                </div>
-          
+                  </div>
+            
 
-            </div>
-        </div>
-    </div>
+              </div>
+          </div>
+      </div>
 
     
       );

@@ -40,7 +40,9 @@ import { BalanceService } from "../../service/balance.service";
 
 
 import { Deposit } from "./deposit";
+import { DepositList } from "./depositlist";
 import { Withdraw } from "./withdraw";
+import { WithdrawList } from "./withdrawlist";
 import { Help } from "./help";
 import { User } from "./user";
 import { Notice } from "./notice";
@@ -77,6 +79,8 @@ export enum popupView {
   point= "point",
   balance= "balance",
   bet = "bet",
+  depositlist = "depositlist",
+  withdrawlist = "withdrawlist",
   
   
 }
@@ -452,6 +456,22 @@ class topBar extends Component<Props, State> {
         handleActive={this.handleSetState}     ></Bet>;
       }
       
+      
+      if (this.state.popupStatuses === popupView.depositlist) {
+        return <DepositList   
+        handleClose={this.handleClosePopup} 
+        handleActive={this.handleSetState}     ></DepositList>;
+      }
+
+      
+      
+      if (this.state.popupStatuses === popupView.withdrawlist) {
+        return <WithdrawList   
+        handleClose={this.handleClosePopup} 
+        handleActive={this.handleSetState}     ></WithdrawList>;
+      }
+      
+      
       return <div></div>;
     };
 
@@ -494,15 +514,7 @@ class topBar extends Component<Props, State> {
                                   <p>{user.id}<span>님</span></p>
                               </div>
                           </li>
-                          <li style={{display: 'none'}}>
-                              <div className="labels">
-                                  <i className="icon icon-Dollar"></i>
-                                  <p>보유머니</p>
-                              </div>
-                              <div className="info">
-                                  <p id="_top_money">{ConverMoeny(this.state.balance)}</p>
-                              </div>
-                          </li>
+                     
                           <li>
                               <div className="labels">
                                   <i className="icon icon-Bag"></i>
@@ -512,6 +524,16 @@ class topBar extends Component<Props, State> {
                                   <p id="_top_game_money">{ConverMoeny(this.state.balance)}</p>
                               </div>
                           </li>
+                          <li>
+                              <div className="labels">
+                                  <i className="icon icon-Bag"></i>
+                                  <p>쪽지</p>
+                              </div>
+                              <div className="info" onClick={()=>   this.handleSetState(popupView.note)}>
+                                  <p id="_top_game_money">{ConverMoeny(this.props.user.noteCount)}</p>
+                              </div>
+                          </li>
+                          
                           <li style={{display: 'none'}}>
                               <div className="labels">
                                   <i className="icon icon-Star"></i>

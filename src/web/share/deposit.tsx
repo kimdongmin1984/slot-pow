@@ -197,8 +197,7 @@ export class Deposit extends Component<Props, State> {
                  <div className="modal-body">
                      <div className="modal-menu">
                          <button type="button" className="mm-btn active">입금신청</button>
-                         <button type="button" className="mm-btn withdraw-link" onClick={()=> this.props.handleActive('withdraw')}>출금신청</button>
-                        <button type="button" className="mm-btn withdraw-link"  onClick={()=> this.props.handleActive('point')}>금고</button>
+                         <button type="button" className="mm-btn withdraw-link" onClick={()=> this.props.handleActive('depositlist')}>입금정보</button>
                      </div>
                      <div className="terms-use">
                          <div className="text-cont">

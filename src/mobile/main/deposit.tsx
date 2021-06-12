@@ -143,10 +143,7 @@ class deposit extends Component<Props, State> {
 
   componentDidMount() {
 
-    this.balanceService.getDepositList().then((data: any) => {
-      if (data.status === "success") {
-      }
-    });
+
   }
 
   createData = (

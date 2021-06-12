@@ -160,9 +160,8 @@ export class Withdraw extends Component<Props, State> {
             </div>
             <div className="modal-body">
                 <div className="modal-menu">
-                    <button type="button" className="mm-btn withdraw-link"  onClick={()=> this.props.handleActive('deposit')}>입금신청</button>
                     <button type="button" className="mm-btn active" >출금신청</button>
-                    <button type="button" className="mm-btn withdraw-link"  onClick={()=> this.props.handleActive('point')}>금고</button>
+                    <button type="button" className="mm-btn withdraw-link"  onClick={()=> this.props.handleActive('withdrawlist')}>출금정보</button>
                 </div>
                 {/* <div className="terms-use">
                     <div className="text-cont">
