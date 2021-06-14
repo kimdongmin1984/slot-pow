@@ -625,8 +625,9 @@ class topBar extends Component<Props, State> {
                     {
                       this.props.authenticated  && (
                         <div className="mobile">
-                            <button data-toggle="modal" data-target=".loginModal"><i className="fa  fa-user" aria-hidden="true"></i> {user.id}</button>
-                            <button data-toggle="modal" data-target=".joinModal"><i className="fa fa-user-plus" aria-hidden="true"></i> {ConverMoeny(this.state.balance)}</button>
+                            <button data-toggle="modal" data-target=".loginModal" style={{width : '33%'}}><i className="fa  fa-user" aria-hidden="true"></i> {user.id}</button>
+                            <button data-toggle="modal" data-target=".loginModal" style={{width : '33%'}} onClick={()=>   this.handleSetState(popupView.note)}><i className="fa  fa-user" aria-hidden="true"></i> 쪽지함</button>
+                            <button data-toggle="modal" data-target=".joinModal" style={{width : '33%'}}><i className="fa fa-user-plus" aria-hidden="true"></i> {ConverMoeny(this.state.balance)}</button>
                         </div>)
                     }
 
