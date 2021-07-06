@@ -9,6 +9,13 @@ import { SlotService } from "../../service/slot.service";
 import { SubMenu } from "./submenu";
 import { ConvertDate, ConverMoeny } from "../../utility/help";
 
+import {
+  BrowserView,
+  MobileView,
+  isBrowser,
+  isMobile,
+} from "react-device-detect";
+
 
 interface Props {
   user: any;
@@ -158,7 +165,8 @@ export class Withdraw extends Component<Props, State> {
                 </div>
                 <button className="close-btn" data-dismiss="modal"  onClick={()=> this.props.handleClose()}></button>
             </div>
-            <div className="modal-body">
+            {/* isMobile */}
+            <div className="modal-body" style={isMobile ? { height: '450px',  position: 'relative',  overflow: 'scroll'} : {} }>
                 <div className="modal-menu">
                     <button type="button" className="mm-btn active" >출금신청</button>
                     <button type="button" className="mm-btn withdraw-link"  onClick={()=> this.props.handleActive('withdrawlist')}>출금정보</button>
