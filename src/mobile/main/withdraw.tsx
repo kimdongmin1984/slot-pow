@@ -45,6 +45,13 @@ import { MiniService } from "../../service/mini.service";
 import { SlotService } from "../../service/slot.service";
 
 import { colors } from "@material-ui/core";
+import {
+  BrowserView,
+  MobileView,
+  isBrowser,
+  isMobile,
+} from "react-device-detect";
+
 
 const drawerWidth = 240;
 
@@ -407,19 +414,7 @@ class withdraw extends Component<Props, State> {
                     회원가입한 정보와 입금,출금 이름이 동일해야만 출금이 가능하오니 확인하시고 신청하기 바랍니다.
                   </td>
                 </tr>
-                {/* <tr>
-                  <td className="write_title">입금계좌</td>
-                  <td className="write_basic">
-                    <input
-                      className="input1 userID"
-                      value={this.state.userAccountNumber}
-                      readOnly
-
-                      style={{width:'150px',padding:'4px'}}
-                    />
-                    <span id="bank_call_btn" className="btn1_2" onClick={()=>this.handleAskAccount()} style={{cursor:'pointer'}}>문의</span>
-                  </td>
-                </tr> */}
+             
                 <tr>
                   <td className="write_title">출금금액</td>
                   <td className="write_basic">
@@ -452,57 +447,7 @@ class withdraw extends Component<Props, State> {
                   </td>
                 </tr>
 
-            
-                {/* <tr>
-                  <td className="write_title">계좌번호</td>
-                  <td className="write_basic">
-                    <input
-                      className="input1"
-                      value={this.state.banknumber}
-                      onChange={(e: any) => {
-                        this.setState({ banknumber: e.target.value });
-                      }}
-                    />
-                  </td>
-                </tr>
-                <tr>
-                  <td className="write_title">이름</td>
-                  <td className="write_basic">
-                    <input
-                      className="input1"
-                      value={this.state.bankowner}
-                      onChange={(e: any) => {
-                        this.setState({ bankowner: e.target.value });
-                      }}
-                    />
-                    (이름은 정보와 일치해야합니다.)
-                  </td>
-                </tr>
-                <tr>
-                  <td className="write_title">환전비번</td>
-                  <td className="write_basic">
-                    <input
-                      className="input1"
-                      value={this.state.exchange_pw}
-                      onChange={(e: any) => {
-                        this.setState({ exchange_pw: e.target.value });
-                      }}
-                    />
-                    (이름은 정보와 일치해야합니다.)
-                  </td>
-                </tr>
-                <tr>
-                  <td className="write_title">추천코드</td>
-                  <td className="write_basic">
-                    <input
-                      className="input1"
-                      value={this.state.code}
-                      onChange={(e: any) => {
-                        this.setState({ code: e.target.value });
-                      }}
-                    />
-                  </td>
-                </tr> */}
+     
               </table>
             </div>
             <div className="con_box05">

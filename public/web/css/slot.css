@@ -589,7 +589,7 @@
 .pop01_popup_font1 {float:left; width:100%; font-family:'nanumsquare', sans-serif; font-size:22px; letter-spacing:-1px; font-weight:700; color:#e89006; line-height:40px;}
 .pop01_popup_font2 {float:left; width:100%; font-family:'nanumgothic', sans-serif; font-size:16px; letter-spacing:-1px; font-weight:400; color:#ffffff; line-height:28px;}
 
-div {
+.activeText {
     width: 100px;
     height: 100px;
     background-color: red;
